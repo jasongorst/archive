@@ -3,7 +3,7 @@
 - url = message[0]
 - message = message[1]
 %p
-  %a{href: url}
+  %a.text-reset{href: url}
     .channel
       %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
     %strong

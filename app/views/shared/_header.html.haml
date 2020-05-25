@@ -1,5 +1,6 @@
 .nav.navbar.navbar-expand-md.navbar-light.bg-light.mb-3
-  %span.navbar-brand.mb-0.h1
+  %i.fas.fa-archive
+  %span.navbar-brand.mb-0.h1.pl-1
     Archive
   %button.navbar-toggler{data: {toggle: 'collapse', target: '#navbarNav'}}
     %span.navbar-toggler-icon
@@ -8,6 +9,16 @@
       %li.nav-item{class: "#{'active' if current_page?(controller: :display, action: :index)}"}
         %a.nav-link{href: url_for(:root)}
           Home
+
+      %li.nav-item.dropdown
+        %a.nav-link.dropdown-toggle#navbarDropDownMenuLink{href: '#',
+          class: "#{'active' if current_page?(controller: :display, action: :show)}",
+          data: { toggle: 'dropdown' }}
+          Channels
+        .dropdown-menu
+          - Channel.all.each do |channel|
+            %a.dropdown-item{href: url_for(channel)}= channel.name
+
       %li.nav-item{class: "#{'active' if current_page?(controller: :search, action: :index)}"}
         %a.nav-link{href: url_for(:search)}
           Search

@@ -6,8 +6,9 @@
 
   - unless @results.nil?
     %hr
-    - if @results.empty?
-      %p No results found.
-    - else
-      = render partial: 'message', collection: @urls_results
-      = paginate @results
+    .results
+      - if @results.empty?
+        %p No results found.
+      - else
+        = render partial: 'message', collection: @urls_results
+        = paginate @results

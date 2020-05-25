@@ -4,7 +4,7 @@ class DisplayController < ApplicationController
   end
 
   def show
-    @channel = Channel.find(params[:channel_id])
+    @channel = Channel.friendly.find(params[:channel_id])
     @messages = @channel.messages.page params[:page]
   end
 end

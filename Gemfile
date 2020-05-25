@@ -73,3 +73,6 @@ gem 'font_awesome5_rails'
 
 # BigDecimal
 gem 'bigdecimal'
+
+# Pretty URLs
+gem 'friendly_id', '~> 5.3.0'

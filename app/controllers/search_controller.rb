@@ -46,7 +46,8 @@ class SearchController < ApplicationController
       @results.each do |result|
         index = m_hash[result.channel_id].bsearch_index { |m| m.ts >= result.ts}
         page = (index.to_f / Message.default_per_page.to_f).ceil
-        @urls << channel_path(result.channel_id, page: page, anchor: "ts_#{result.ts}")
+        channel = Channel.find(result.channel_id)
+        @urls << url_for([channel, { page: page, anchor: "ts_#{result.ts}" }])
       end
 
       # zip results with urls to use as a collection

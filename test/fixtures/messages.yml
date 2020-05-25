@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: MyText
+  ts: 9.99
+  user: one
+  channel: one
+
+two:
+  text: MyText
+  ts: 9.99
+  user: two
+  channel: two

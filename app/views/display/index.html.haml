@@ -1,0 +1,8 @@
+.display
+  .page-header
+    %h1 Archive
+
+  %ul.list-group
+    - @channels.each do |channel|
+      - unless channel.messages.empty?
+        %li.list-group-item= link_to "\##{channel.name}", channel

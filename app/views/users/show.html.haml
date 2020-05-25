@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Slack user:
+  = @user.slack_user
+%p
+  %b Display name:
+  = @user.display_name
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path

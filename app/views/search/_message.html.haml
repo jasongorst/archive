@@ -1,0 +1,13 @@
+- # message[0] is the url to the message in channels#show with page and id
+- # message[1] is the message returned by Message.search
+- url = message[0]
+- message = message[1]
+%p
+  %a{href: url}
+    .channel
+      %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
+    %strong
+      %span.display_name= message.user.display_name
+    %span.time= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
+    <br>
+    %span.text!= message.text

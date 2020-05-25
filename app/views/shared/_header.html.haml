@@ -1,0 +1,13 @@
+.nav.navbar.navbar-expand-md.navbar-light.bg-light.mb-3
+  %span.navbar-brand.mb-0.h1
+    Archive
+  %button.navbar-toggler{data: {toggle: 'collapse', target: '#navbarNav'}}
+    %span.navbar-toggler-icon
+  .collapse.navbar-collapse#navbarNav
+    %ul.navbar-nav
+      %li.nav-item{class: "#{'active' if current_page?(controller: :display, action: :index)}"}
+        %a.nav-link{href: url_for(:root)}
+          Home
+      %li.nav-item{class: "#{'active' if current_page?(controller: :search, action: :index)}"}
+        %a.nav-link{href: url_for(:search)}
+          Search

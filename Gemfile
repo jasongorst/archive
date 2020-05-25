@@ -70,3 +70,6 @@ gem 'bootstrap', '~> 4.3.1'
 
 # Font Awesome 5
 gem 'font_awesome5_rails'
+
+# BigDecimal
+gem 'bigdecimal'

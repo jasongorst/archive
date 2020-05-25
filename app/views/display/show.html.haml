@@ -1,0 +1,6 @@
+.page-header
+  %h2 ##{@channel.name}
+
+= render(partial: 'shared/message', collection: @messages)
+
+= paginate @messages

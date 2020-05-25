@@ -1,0 +1,32 @@
+= form_with(scope: :search, url: "/search", method: "get", local: true) do |f|
+  .form-group.form-row
+    = f.label(:query, "Text", class: 'col-sm-1 col-form-label')
+    .col-sm-6
+      = f.search_field(:query, value: params[:search][:query], class: 'form-control input-sm')
+  .form-group.form-row
+    = f.label(:after, "After", class: 'col-sm-1 col-form-label')
+    .col-sm-6
+      = datetime_select(:search, :after, default: params[:search][:after],
+                          include_seconds: false, ampm: true, use_short_month: true,
+                          start_year: oldest_message_time.year, end_year: newest_message_time.year,
+                          class: 'form-control')
+  .form-group.form-row
+    = f.label(:before, "Before", class: 'col-sm-1 col-form-label')
+    .col-sm-6
+      = datetime_select(:search, :before, default: params[:search][:before],
+                          include_seconds: false, ampm: true, use_short_month: true,
+                          start_year: oldest_message_time.year, end_year: newest_message_time.year,
+                          class: 'form-control')
+  .form-group.form-row
+    = f.label(:channel_id, "Channel", class: 'col-sm-1 col-form-label')
+    .col-sm-6
+      = f.collection_select(:channel_id, @channels, :id, :name, selected: params[:search][:channel_id],
+                            include_blank: true, class: 'form-control')
+  .form-group.form-row
+    = f.label(:user_id, "User", class: 'col-sm-1 col-form-label')
+    .col-sm-6
+      = f.collection_select(:user_id, @users, :id, :display_name, selected: params[:search][:user_id],
+                            include_blank: true, class: 'form-control')
+  .form-group.form-row
+    .offset-sm-1
+      = f.submit("Search", class: 'btn btn-primary btn-sm')

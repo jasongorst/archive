@@ -66,7 +66,7 @@ gem 'kaminari'
 gem 'thinking-sphinx', '~> 4.0'
 
 # Bootstrap 4
-gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap', '~> 4.5.0'
 
 # Font Awesome 5
 gem 'font_awesome5_rails'
@@ -76,3 +76,4 @@ gem 'bigdecimal'
 
 # Pretty URLs
 gem 'friendly_id', '~> 5.3.0'
+

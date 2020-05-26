@@ -5,6 +5,7 @@
     %tr
       %th Slack user
       %th Display name
+      %th Color
       %th
       %th
       %th
@@ -14,6 +15,7 @@
       %tr
         %td= user.slack_user
         %td= user.display_name
+        %td= user.color
         %td= link_to 'Show', user
         %td= link_to 'Edit', edit_user_path(user)
         %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }

@@ -69,6 +69,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:slack_user, :display_name)
+      params.require(:user).permit(:slack_user, :display_name, :color)
     end
 end

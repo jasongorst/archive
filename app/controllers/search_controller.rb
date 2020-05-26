@@ -36,9 +36,15 @@ class SearchController < ApplicationController
 
       # get message search results
       @results = Message.search query, with: filters,
-                                order: 'ts DESC',
-                                page: params[:page],
-                                per_page: RESULTS_PER_PAGE
+                                       order: 'ts DESC',
+                                       page: params[:page],
+                                       per_page: RESULTS_PER_PAGE,
+                                       excerpts: {
+                                           before_match: '<mark>',
+                                           after_match: '</mark>',
+                                           chunk_separator: ' &#8230; ' # ellipsis
+                                        }
+      @results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
       # build message hash
       m_hash = message_hash

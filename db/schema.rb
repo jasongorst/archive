@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_25_171430) do
+ActiveRecord::Schema.define(version: 2020_05_26_161258) do
 
   create_table "channels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "slack_channel"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_05_25_171430) do
     t.string "display_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "color", default: "inherit"
     t.index ["slack_user"], name: "index_users_on_slack_user"
   end
 

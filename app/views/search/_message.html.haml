@@ -7,7 +7,8 @@
     .channel
       %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
     %strong
-      %span.display_name= message.user.display_name
+      %span.display_name{style: "color: #{message.user.color}"}
+        = message.user.display_name
     %span.time= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
     <br>
     %span.text!= message.excerpts.text

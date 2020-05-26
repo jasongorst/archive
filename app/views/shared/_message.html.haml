@@ -1,7 +1,0 @@
-%p
-  %a{id: "ts_#{message.ts}"}
-  %strong
-    %span.display_name= message.user.display_name
-  %span.time= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
-  <br>
-  %span.text!= message.text

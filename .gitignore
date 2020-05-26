@@ -40,4 +40,4 @@ yarn-debug.log*
 /config/*.sphinx.conf
 
 # sonarlint issues
-/.idea/sonarlint/issuestore
+/.idea/sonarlint

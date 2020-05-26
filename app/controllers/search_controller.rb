@@ -36,6 +36,7 @@ class SearchController < ApplicationController
 
       # get message search results
       @results = Message.search query, with: filters,
+                                order: 'ts DESC',
                                 page: params[:page],
                                 per_page: RESULTS_PER_PAGE
 

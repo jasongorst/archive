@@ -8,7 +8,8 @@
     %hr
     .results
       - if @results.empty?
-        %p No results found.
+        %p No results found
       - else
+        %small.text-muted #{@results.count} results
         = render partial: 'message', collection: @urls_results
         = paginate @results

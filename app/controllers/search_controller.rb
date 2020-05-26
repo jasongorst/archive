@@ -42,7 +42,8 @@ class SearchController < ApplicationController
                                        excerpts: {
                                            before_match: '<mark>',
                                            after_match: '</mark>',
-                                           chunk_separator: ' &#8230; ' # ellipsis
+                                           limit: 2 ** 32,
+                                           around: 2 ** 32
                                         }
       @results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 

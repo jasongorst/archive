@@ -98,6 +98,6 @@ class SearchController < ApplicationController
   end
 
   def index_of_array_by_ts(m_ary, ts)
-    m_ary.bsearch_index { |m| m.ts >= ts }
+    m_ary.bsearch_index { |m| m.ts >= ts } + 1
   end
 end

@@ -53,7 +53,8 @@ class SearchController < ApplicationController
 
       @urls = []
       @results.each do |result|
-        index = m_hash[result.channel_id].bsearch_index { |m| m.ts >= result.ts}
+        # add one to array index (pagination is 1-based, array is 0-based)
+        index = m_hash[result.channel_id].bsearch_index { |m| m.ts >= result.ts } + 1
         page = (index.to_f / Message.default_per_page.to_f).ceil
         channel = Channel.find(result.channel_id)
         @urls << url_for([channel, { page: page, anchor: "ts_#{result.ts}" }])

@@ -37,7 +37,10 @@ yarn-debug.log*
 
 # Sphinx db and config
 /db/sphinx
-/config/*.sphinx.conf
+/config/development.sphinx.conf
 
-# sonarlint issues
+# sonarlint
 /.idea/sonarlint
+
+# keep passwords out of repository
+/config/database.yml

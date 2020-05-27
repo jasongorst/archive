@@ -3,12 +3,13 @@
 - url = message[0]
 - message = message[1]
 %p
-  %a.text-reset{href: url}
-    .channel
-      %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
-    %strong
-      %span.display_name{style: "color: #{message.user.color}"}
-        = message.user.display_name
-    %span.time= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
-    <br>
-    %span.text!= message.excerpts.text
+  .channel
+    %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
+  .message.position-relative
+    %a.text-reset.stretched-link{href: url}
+      %strong
+        %span.display_name{style: "color: #{message.user.color}"}
+          = message.user.display_name
+      %span.time= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
+      <br>
+      %span.text!= message.excerpts.text

@@ -1,5 +1,6 @@
 require_relative 'slack_client'
 require_relative 'slack_user'
+require_relative '../mrkdwn/line_break_filter'
 
 class SlackNewMessages
   attr_accessor :sc, :channels
@@ -60,8 +61,11 @@ class SlackNewMessages
           u.display_name = slack_user.display_name
         end
 
+        # filter message text
+        text = LineBreakFilter.convert(message.text)
+
         # save message
-        channel.messages.create(text: message.text,
+        channel.messages.create(text: text,
                                 ts: message.ts.to_d,
                                 user_id: user.id)
       end

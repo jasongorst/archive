@@ -1,4 +1,4 @@
-class MrkdwnToHTML
+class BoldItalicFilter
   BOLD = /(\*)(?=\S)(.+?[*]*)(?<=\S)\1/
   ITALIC = /(_)(?=\S)(.+?[*]*)(?<=\S)\1/
   STRIKETHROUGH = /(~)(?=\S)(.+?[*]*)(?<=\S)\1/
@@ -10,13 +10,11 @@ class MrkdwnToHTML
   BOLD_HTML = '<' + BOLD_TAG + '>\2</' + BOLD_TAG + '>'
   ITALIC_HTML = '<' + ITALIC_TAG + '>\2</' + ITALIC_TAG + '>'
   STRIKETHROUGH_HTML = '<' + STRIKETHROUGH_TAG + '>\2</' + STRIKETHROUGH_TAG + '>'
-  BREAK_HTML = '<br>'
 
   class << self
 
     def convert(text)
-      text.gsub(/\n/,BREAK_HTML)
-          .gsub(BOLD,BOLD_HTML)
+      text.gsub(BOLD,BOLD_HTML)
           .gsub(ITALIC,ITALIC_HTML)
           .gsub(STRIKETHROUGH,STRIKETHROUGH_HTML)
     end

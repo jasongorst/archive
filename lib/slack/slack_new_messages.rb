@@ -1,6 +1,7 @@
 require_relative 'slack_client'
 require_relative 'slack_user'
 require_relative '../mrkdwn/line_break_filter'
+require_relative '../mrkdwn/emoji_filter'
 
 class SlackNewMessages
   attr_accessor :sc, :channels
@@ -63,6 +64,7 @@ class SlackNewMessages
 
         # filter message text
         text = LineBreakFilter.convert(message.text)
+        text = EmojiFilter.convert(message.text)
 
         # save message
         channel.messages.create(text: text,

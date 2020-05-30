@@ -83,3 +83,5 @@ gem 'bigdecimal'
 
 # Pretty URLs
 gem 'friendly_id', '~> 5.3.0'
+
+gem 'gemoji'

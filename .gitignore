@@ -39,8 +39,8 @@ yarn-debug.log*
 /db/sphinx
 /config/development.sphinx.conf
 
-# sonarlint
-/.idea/sonarlint
+# RubyMine config
+/.idea
 
 # keep passwords out of repository
 /config/database.yml

@@ -64,7 +64,7 @@ class SlackNewMessages
 
         # filter message text
         text = LineBreakFilter.convert(message.text)
-        text = EmojiFilter.convert(message.text)
+        text = EmojiFilter.convert(text)
 
         # save message
         channel.messages.create(text: text,

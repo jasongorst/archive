@@ -12,6 +12,8 @@ class SearchController < ApplicationController
 
       # escape SphinxQL in query
       query = ThinkingSphinx::Query.escape(search[:query])
+      # unescape double quotes to allow phrase searching
+      query = query.gsub(/\\"/,'"')
 
       # create DateTimes from params
       after  = date_time_from_params(search, :after)

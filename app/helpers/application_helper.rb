@@ -10,4 +10,12 @@ module ApplicationHelper
   def newest_message_time
     Time.at(Message.order(ts: :asc).last.ts)
   end
+
+  def channels_with_messages
+    channels = []
+    Channel.order(name: :asc).each do |channel|
+      channels << channel unless channel.messages.empty?
+    end
+    channels
+  end
 end

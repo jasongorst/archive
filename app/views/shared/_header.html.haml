@@ -16,10 +16,9 @@
           data: { toggle: 'dropdown' }}
           Channels
         .dropdown-menu
-          - Channel.order(name: :asc).each do |channel|
-            - unless channel.messages.empty?
-              %a.dropdown-item{class: "#{'active' if current_page?(channel)}",
-                href: url_for(channel)}= channel.name
+          - channels_with_messages.each do |channel|
+            %a.dropdown-item{class: "#{'active' if current_page?(channel)}",
+              href: url_for(channel)}= "\##{channel.name}"
 
       %li.nav-item{class: "#{'active' if current_page?(controller: :search, action: :index)}"}
         %a.nav-link{href: url_for(:search)}

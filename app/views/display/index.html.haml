@@ -3,7 +3,6 @@
     %h1 Channels
 
   %ul.nav.flex-column
-    - @channels.each do |channel|
-      - unless channel.messages.empty?
-        %li.nav-item
-          = link_to("\##{channel.name}", channel, class: 'nav-link pl-0')
+    - channels_with_messages.each do |channel|
+      %li.nav-item
+        = link_to("\##{channel.name}", channel, class: 'nav-link pl-0')

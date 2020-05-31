@@ -1,7 +1,17 @@
 .display
   %h2 ##{@channel.name}
-  %h5 #{@date.strftime('%B')} #{@date.mday.ordinalize}, #{@date.year}
+  %h5= long_date @date
 
   = render(partial: 'message', collection: @messages)
 
   = paginate @messages
+
+  %nav.row.pb-3
+    .col-auto.mr-auto
+      - p = prev_date(@channel, @date)
+      - unless p.nil?
+        %a{href: "/#{@channel.name}/#{p.iso8601}"} &lsaquo; #{long_date p}
+    .col-auto
+      - n = next_date(@channel, @date)
+      - unless n.nil?
+        %a{href: "/#{@channel.name}/#{n.iso8601}"} #{long_date n} &rsaquo;

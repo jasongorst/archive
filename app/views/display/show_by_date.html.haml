@@ -1,0 +1,7 @@
+.display
+  %h2 ##{@channel.name}
+  %h5 #{@date.strftime('%B')} #{@date.mday.ordinalize}, #{@date.year}
+
+  = render(partial: 'message', collection: @messages)
+
+  = paginate @messages

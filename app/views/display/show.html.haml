@@ -1,6 +1,9 @@
-.page-header
+.display
   %h2 ##{@channel.name}
 
-= render(partial: 'message', collection: @messages)
-
-= paginate @messages
+  %ul.nav.flex-column
+    - @dates_counts.each do |date, count|
+      %li.nav-item
+        = link_to("#{date.strftime('%B')} #{date.mday.ordinalize} (#{pluralize(count, 'message')})",
+          { controller: :display, action: :show_by_date, channel_id: @channel, date: date },
+          { class: 'nav-link pl-0' })

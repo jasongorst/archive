@@ -13,7 +13,7 @@ class SearchController < ApplicationController
       # escape SphinxQL in query
       query = ThinkingSphinx::Query.escape(search[:query])
       # unescape double quotes to allow phrase searching
-      query = query.gsub(/\\"/,'"')
+      query = query.gsub(/\\"/, '"')
 
       # create DateTimes from params
       after  = date_time_from_params(search, :after)
@@ -42,24 +42,22 @@ class SearchController < ApplicationController
                                        page: params[:page],
                                        per_page: RESULTS_PER_PAGE,
                                        excerpts: {
-                                           before_match: '<mark>',
-                                           after_match: '</mark>',
-                                           limit: 2 ** 16,
-                                           around: 2 ** 16,
-                                           force_all_words: true
-                                        }
+                                         before_match: '<mark>',
+                                         after_match: '</mark>',
+                                         limit: 2**16,
+                                         around: 2**16,
+                                         force_all_words: true
+                                       }
       @results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
-      # build message hash
-      m_hash = message_hash
-
+      # build urls for results
       @urls = []
       @results.each do |result|
-        # add one to array index (pagination is 1-based, array is 0-based)
-        index = m_hash[result.channel_id].bsearch_index { |m| m.ts >= result.ts } + 1
-        page = (index.to_f / Message.default_per_page.to_f).ceil
-        channel = Channel.find(result.channel_id)
-        @urls << url_for([channel, { page: page, anchor: "ts_#{result.ts}" }])
+        index = index_of_message_by_date(result)
+        page = (index.to_f / Message.default_per_page).ceil
+        channel = result.channel
+        url = "/#{channel.name}/#{result.date}?page=#{page}#ts_#{result.ts}"
+        @urls << url
       end
 
       # zip results with urls to use as a collection
@@ -88,18 +86,13 @@ class SearchController < ApplicationController
     DateTime.new(*date_array)
   end
 
-  def message_hash
-    # get hash of message ids and ts's by channel_id
-    # {:channel_id => [:messages sorted by ascending ts]}
-    m_hash = Hash.new
-    Channel.all.each do |c|
-      m_ary = c.messages.select(:ts).to_a
-      m_hash.merge!({ c.id => m_ary })
-    end
-    m_hash
-  end
-
-  def index_of_array_by_ts(m_ary, ts)
-    m_ary.bsearch_index { |m| m.ts >= ts } + 1
+  def index_of_message_by_date(message)
+    channel = message.channel
+    date = message.date
+    m_ary = channel.messages.select(:ts)
+                   .where("ts >= #{date.to_time.to_i}")
+                   .where("ts < #{date.succ.to_time.to_i}")
+                   .to_a
+    m_ary.bsearch_index { |m| m.ts >= message.ts } + 1
   end
 end

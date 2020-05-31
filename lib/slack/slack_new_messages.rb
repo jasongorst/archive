@@ -38,9 +38,10 @@ class SlackNewMessages
 
   def fetch_and_save_messages(channel, ts)
     # get new messages in this channel
+    # slack is returning duplicates of the last message. adding a bit to stop that.
     @sc.conversations_history(presence: true,
                               channel: channel.slack_channel,
-                              oldest: ts,
+                              oldest: ts + 0.0001,
                               inclusive: false) do |response|
       messages = response.messages
 

@@ -1,7 +1,4 @@
-require 'gemoji'
-
 class EmojiFilter
-  include ActionView::Helpers::AssetTagHelper
   class << self
     def convert(text)
       add_slack_aliases
@@ -10,7 +7,8 @@ class EmojiFilter
 
       text.gsub(/:([\w+-]+):/) do |match|
         if (emoji = Emoji.find_by_alias(Regexp.last_match(1)))
-          emoji.raw # || image_tag(emoji.image_filename, size: '16')
+          # TODO: figure out how to call image_tag and move these into assets
+          emoji.raw || "<img src=\"#{emoji.image_filename}\" alt=\"#{match}\" width=\"16\" height=\"16\">"
         else
           match
         end
@@ -21,7 +19,7 @@ class EmojiFilter
       aliases = {
         'cheese_wedge' => 'cheese',
         'drum_with_drumsticks' => 'drum',
-        # 'face_with_raised_eyebrow' => 'raised_eyebrow',
+        # 'face_with_raised_eyebrow' => 'raised_eyebrow', # not sure why this one doesn't work
         'face_with_rolling_eyes' => 'roll_eyes',
         'hug' => 'hugs',
         'hugging_face' => 'hugs',

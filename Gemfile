@@ -79,10 +79,14 @@ gem 'bootstrap', '~> 4.5.0'
 # Font Awesome 5
 gem 'font_awesome5_rails'
 
-# BigDecimal
+# BigDecimal for timestamps
 gem 'bigdecimal'
 
 # Pretty URLs
 gem 'friendly_id', '~> 5.3.0'
 
+# Emoji support
 gem 'gemoji'
+
+# Fast html escaping/unescaping
+gem 'escape_utils'

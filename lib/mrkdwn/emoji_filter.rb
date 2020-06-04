@@ -45,7 +45,7 @@ class EmojiFilter
                   soda squirrel teapot thumbsup_all tinfoil troll tumbleweed viking witch]
       custom.each do |emoji|
         Emoji.create(emoji) do |char|
-          char.image_filename = "emoji/#{emoji}.png"
+          char.image_filename = "/emoji/#{emoji}.png"
         end
       end
     end

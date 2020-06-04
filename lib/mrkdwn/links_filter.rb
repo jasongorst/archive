@@ -9,6 +9,10 @@ class LinksFilter
         link_text = Regexp.last_match(2)
         create_link(link_data, link_text)
       end
+      # escape _, *, and ~ in links so they don't get munged by BoldItalicFilter
+      text = text.gsub(/\*/, '&#42;')
+                 .gsub(/_/, '&#95;')
+                 .gsub(/~/, '&#126;')
       text
     end
 

@@ -1,7 +1,6 @@
 require_relative 'slack_client'
 require_relative 'slack_user'
-require_relative '../mrkdwn/line_break_filter'
-require_relative '../mrkdwn/emoji_filter'
+require_relative '../mrkdwn/mrkdwn'
 
 class SlackNewMessages
   attr_accessor :sc, :channels
@@ -56,7 +55,7 @@ class SlackNewMessages
         # ignore messages with empty text
         next if message.text.empty?
         # ignore duplicate messages
-        next if (! channel.messages.last.nil?) && (message.ts.to_d == channel.messages.last.ts)
+        next if !channel.messages.last.nil? && (message.ts.to_d == channel.messages.last.ts)
 
         # find or create archive user
         user = User.find_or_create_by(slack_user: message.user) do |u|
@@ -66,14 +65,15 @@ class SlackNewMessages
         end
 
         # filter message text
-        text = LineBreakFilter.convert(message.text)
-        text = EmojiFilter.convert(text)
+        text = Mrkdwn.convert(message.text)
 
         # save message
         channel.messages.create(text: text,
                                 ts: message.ts.to_d,
                                 user_id: user.id)
+        $stderr.print '.'
       end
     end
+    $stderr.print "\n"
   end
 end

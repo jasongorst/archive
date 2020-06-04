@@ -37,12 +37,15 @@ class SlackNewMessages
 
   def fetch_and_save_messages(channel, ts)
     # get new messages in this channel
-    # slack is returning duplicates of the last message. adding a bit to stop that.
+
     @sc.conversations_history(presence: true,
                               channel: channel.slack_channel,
                               oldest: ts,
                               inclusive: false) do |response|
       messages = response.messages
+
+      # slack is sometimes returning duplicates of the last message
+      last_ts = Channel&.first&.messages&.last&.ts
 
       # save messages
       messages.each do |message|
@@ -55,7 +58,7 @@ class SlackNewMessages
         # ignore messages with empty text
         next if message.text.empty?
         # ignore duplicate messages
-        next if !channel.messages.last.nil? && (message.ts.to_d == channel.messages.last.ts)
+        next if message.ts.to_d == last_ts
 
         # find or create archive user
         user = User.find_or_create_by(slack_user: message.user) do |u|

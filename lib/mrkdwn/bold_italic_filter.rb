@@ -20,11 +20,10 @@ class BoldItalicFilter
   class << self
     def convert(text)
       text = escape_runs(text)
-      # text = escape_emoji(text)
+      text = escape_emoji(text)
       text = text.gsub(BOLD, BOLD_HTML)
                  .gsub(ITALIC, ITALIC_HTML)
                  .gsub(STRIKE, STRIKE_HTML)
-      # text = unescape_emoji(text)
       text
     end
 
@@ -39,17 +38,9 @@ class BoldItalicFilter
     end
 
     def escape_emoji(text)
-      while match = (text.match EMOJI)
-        replace = match.to_s.tr(':_', '!=')
-        text = text.gsub(match.to_s, replace)
-      end
-      text
-    end
-
-    def unescape_emoji(text)
-      while match = (text.match ESCAPED_EMOJI)
-        replace = match.to_s.tr('!=', ':_')
-        text = text.gsub(match.to_s, replace)
+      while matchdata = (text.match EMOJI)
+        replace = matchdata.to_s.gsub(/_/, '&#95;').gsub(/:/, '&#58;')
+        text = text.gsub(matchdata.to_s, replace)
       end
       text
     end

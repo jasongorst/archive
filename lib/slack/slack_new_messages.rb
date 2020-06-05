@@ -45,7 +45,7 @@ class SlackNewMessages
       messages = response.messages
 
       # slack is sometimes returning duplicates of the last message
-      last_ts = Channel&.first&.messages&.last&.ts
+      last_ts = channel&.messages&.last&.ts
 
       # save messages
       messages.each do |message|

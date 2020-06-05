@@ -17,7 +17,7 @@ class SlackNewMessages
 
   def fetch_messages
     @channels.each do |ch|
-      warn "Archiving slack channel \##{ch.name}"
+      $stderr.print "Archiving slack channel \##{ch.name}"
       # join slack channel
       @sc.conversations_join(channel: ch.id)
       # create or find corresponding archive channel

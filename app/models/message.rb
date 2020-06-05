@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   belongs_to :user
 
   def date
-    Time.at(ts).to_date.iso8601
+    Time.at(ts).to_date
   end
 
   after_save ThinkingSphinx::RealTime.callback_for(:message)

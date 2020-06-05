@@ -4,7 +4,7 @@ module DisplayHelper
                       .select("id, ts, FROM_UNIXTIME(ts, '%Y-%m-%d') as date")
                       .group(:date)
     dates = []
-    messages.each { |m| dates << Date.parse(m.date) }
+    messages.each { |m| dates << m.date }
     dates
   end
 
@@ -24,5 +24,13 @@ module DisplayHelper
 
   def long_date(date)
     "#{date.strftime('%B')} #{date.mday.ordinalize}, #{date.year}"
+  end
+
+  def month_in?(month, year, dates_with_counts)
+    !dates_in_month(month, year, dates_with_counts).empty?
+  end
+
+  def dates_in_month(month, year, dates_with_counts)
+    dates_with_counts.select { |el| el[0].year == year && el[0].month == month }
   end
 end

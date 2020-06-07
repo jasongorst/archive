@@ -25,18 +25,14 @@ class SearchController < ApplicationController
 
       # filter search on attributes
       filters = { ts: after_ts..before_ts }
-      unless search[:channel_id].empty?
-        filters.merge!({ channel_id: search[:channel_id].to_i })
-      end
-      unless search[:user_id].empty?
-        filters.merge!({ user_id: search[:user_id].to_i })
-      end
+      filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].empty?
+      filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].empty?
 
       # set defaults for datetime_selects
       params[:search][:after]  = after
       params[:search][:before] = before
 
-      # get message search results
+      # get message search results with maximum size excerpts (i.e., no excerpting)
       @results = Message.search query, with: filters,
                                        order: 'ts DESC',
                                        page: params[:page],
@@ -48,6 +44,7 @@ class SearchController < ApplicationController
                                          around: 2**16,
                                          force_all_words: true
                                        }
+      # highlight search terms in results
       @results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
       # build urls for results
@@ -64,21 +61,17 @@ class SearchController < ApplicationController
       @urls_results = @urls.zip(@results.to_a)
     else
       # set defaults for search form
-      params[:search] = default_search_params
+      params[:search] = {
+        query: '',
+        after: 1.week.ago.localtime,
+        before: Time.now,
+        channel_id: '',
+        user_id: ''
+      }
     end
   end
 
   private
-
-  def default_search_params
-    search = {}
-    search[:query]       = ''
-    search[:after]       = 1.week.ago.localtime
-    search[:before]      = Time.now
-    search[:channel_id]  = ''
-    search[:user_id]     = ''
-    search
-  end
 
   def date_time_from_params(params, date_key)
     date_keys = params.keys.select { |k| k.to_s.match?(date_key.to_s + '\(\di\)') }.sort
@@ -87,12 +80,11 @@ class SearchController < ApplicationController
   end
 
   def index_of_message_by_date(message)
-    channel = message.channel
-    date = message.date
-    m_ary = channel.messages.select(:ts)
-                   .where("ts >= #{date.to_time.to_i}")
-                   .where("ts < #{date.succ.to_time.to_i}")
-                   .to_a
+    m_ary = message.channel.messages
+                           .select(:ts)
+                           .where("ts >= #{message.date.to_time.to_i}")
+                           .where("ts < #{message.date.succ.to_time.to_i}")
+                           .to_a
     m_ary.bsearch_index { |m| m.ts >= message.ts } + 1
   end
 end

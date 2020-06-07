@@ -15,13 +15,13 @@ class SearchController < ApplicationController
       # unescape double quotes to allow phrase searching
       query = query.gsub(/\\"/, '"')
 
-      # create DateTimes from params
-      after  = date_time_from_params(search, :after)
-      before = date_time_from_params(search, :before)
+      # parse datetime strings
+      after  = Time.parse(search[:after])
+      before = Time.parse(search[:before])
 
       # convert time filters to UTC timestamps
-      after_ts = after.to_time.utc.to_f
-      before_ts = before.to_time.utc.to_f
+      after_ts = after.utc.to_f
+      before_ts = before.utc.to_f
 
       # filter search on attributes
       filters = { ts: after_ts..before_ts }
@@ -80,11 +80,12 @@ class SearchController < ApplicationController
   end
 
   def index_of_message_by_date(message)
-    m_ary = message.channel.messages
-                           .select(:ts)
-                           .where("ts >= #{message.date.to_time.to_i}")
-                           .where("ts < #{message.date.succ.to_time.to_i}")
-                           .to_a
+    m_ary = message.channel
+                   .messages
+                   .select(:ts)
+                   .where("ts >= #{message.date.to_time.to_i}")
+                   .where("ts < #{message.date.succ.to_time.to_i}")
+                   .to_a
     m_ary.bsearch_index { |m| m.ts >= message.ts } + 1
   end
 end

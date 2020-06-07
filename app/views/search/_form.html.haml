@@ -5,18 +5,18 @@
       = f.search_field(:query, value: params[:search][:query], class: 'form-control input-sm')
   .form-group.form-row
     = f.label(:after, "After", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6.input-group.date#datetimepicker7{data: {target-input: 'nearest'}}
-      %input.form-control.datetimepicker-input{type: 'text', data: {target: '#datetimepicker7'}}
-      .input-group-append{data: {target: '#datetimepicker7', toggle: 'datetimepicker'}}
+    .col-md-6.input-group.date#after{data: {target: {input: 'nearest'}}}
+      %input.form-control.datetimepicker-input{name: 'search[after]', type: 'text', data: {target: '#after'}}
+      .input-group-append{data: {target: '#after', toggle: 'datetimepicker'}}
         .input-group-text
-          %i.fa.fa-calendar
+          %i.far.fa-calendar
   .form-group.form-row
     = f.label(:before, "Before", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6
-      = datetime_select(:search, :before,
-        { default: params[:search][:before], include_seconds: false, ampm: true, use_short_month: true,
-        start_year: oldest_message_time.year, end_year: newest_message_time.year },
-        { class: '' })
+    .col-md-6.input-group.date#before{data: {target: {input: 'nearest'}}}
+      %input.form-control.datetimepicker-input{name: 'search[before]', type: 'text', data: {target: '#before'}}
+      .input-group-append{data: {target: '#before', toggle: 'datetimepicker'}}
+        .input-group-text
+          %i.far.fa-calendar
   .form-group.form-row
     = f.label(:channel_id, "Channel", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
     .col-md-6
@@ -32,7 +32,34 @@
   .form-group.form-row
     .offset-md-2.offset-lg-1.pl-1
       = f.submit("Search", class: 'btn btn-primary btn-sm')
-%script{type: 'text/javascript'
+%script{type: 'text/javascript'}
+  $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+  icons: {
+  time: 'far fa-clock',
+  date: 'far fa-calendar',
+  up: 'fas fa-arrow-up',
+  down: 'fas fa-arrow-down',
+  previous: 'fas fa-chevron-left',
+  next: 'fas fa-chevron-right',
+  today: 'far fa-calendar-check',
+  clear: 'far fa-trash',
+  close: 'far fa-times'
+  } });
   $(function () {
-    $('#datetimepicker7').datetimepicker();
+  $('#after').datetimepicker({
+  defaultDate: '#{params[:search][:after].iso8601}',
+  allowInputToggle: true,
+  format: 'YYYY-MM-DD hh:mma'
+  });
+  $('#before').datetimepicker({
+  defaultDate: '#{params[:search][:before].iso8601}',
+  allowInputToggle: true,
+  format: 'YYYY-MM-DD hh:mma'
+  });
+  $("#after").on("change.datetimepicker", function (e) {
+  $('#before').datetimepicker('minDate', e.date);
+  });
+  $("#before").on("change.datetimepicker", function (e) {
+  $('#after').datetimepicker('maxDate', e.date);
+  });
   });

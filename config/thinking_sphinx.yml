@@ -1,4 +1,5 @@
 development:
+  socket: /tmp/development.sphinx.sock
   morphology: stem_en
   charset_table: "0..9, a..z, _, A..Z->a..z, U+00C0->a, U+00C1->a,
     U+00C2->a, U+00C3->a, U+00C4->a, U+00C5->a, U+00C7->c, U+00C8->e,
@@ -143,6 +144,7 @@ development:
     U+2C74->v, U+2C75->h, U+2C76->h, U+2C9E->o, U+2C9F->o, U+10300->a,
     U+10309->i, U+1030F->o, U+10316->u"
 test:
+  socket: /tmp/test.sphinx.sock
   morphology: stem_en
   charset_table: "0..9, a..z, _, A..Z->a..z, U+00C0->a, U+00C1->a,
     U+00C2->a, U+00C3->a, U+00C4->a, U+00C5->a, U+00C7->c, U+00C8->e,
@@ -287,6 +289,7 @@ test:
     U+2C74->v, U+2C75->h, U+2C76->h, U+2C9E->o, U+2C9F->o, U+10300->a,
     U+10309->i, U+1030F->o, U+10316->u"
 production:
+  socket: tmp/sockets/production.sphinx.sock
   morphology: stem_en
   charset_table: "0..9, a..z, _, A..Z->a..z, U+00C0->a, U+00C1->a,
     U+00C2->a, U+00C3->a, U+00C4->a, U+00C5->a, U+00C7->c, U+00C8->e,

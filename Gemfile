@@ -55,6 +55,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use capistrano for deployment
 group :development do
+  gem 'bcrypt_pbkdf', '~> 1.0', require: false
+  gem 'ed25519', '~> 1.2', require: false
   gem 'capistrano', '~> 3.14', require: false
   gem 'capistrano-rails', '~> 1.5', require: false
   gem 'capistrano-rbenv', '~> 2.1', require: false

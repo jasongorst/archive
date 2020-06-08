@@ -4,7 +4,7 @@ namespace :setup do
   task :upload_yml do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/config"
-      upload! StringIO.new(File.read('config/database.yml')), "#{shared_path}/config/database.yml"
+      upload! StringIO.new(File.read('config/database.remote.yml')), "#{shared_path}/config/database.yml"
     end
   end
 

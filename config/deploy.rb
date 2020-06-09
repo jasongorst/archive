@@ -1,3 +1,5 @@
+require 'thinking_sphinx/capistrano/v3'
+
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.14.0"
 
@@ -22,7 +24,7 @@ set :deploy_user, "deploy"
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/database.yml"
+append :linked_files, "config/database.yml", "config/master.key"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "dir", "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"

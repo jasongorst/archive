@@ -92,3 +92,6 @@ gem 'gemoji'
 
 # Fast html escaping/unescaping
 gem 'escape_utils'
+
+# Ruby cron jobs
+gem 'whenever', '~> 1.0.0'

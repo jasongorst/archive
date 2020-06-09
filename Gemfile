@@ -88,7 +88,7 @@ gem 'bigdecimal'
 gem 'friendly_id', '~> 5.3.0'
 
 # Emoji support
-gem 'gemoji'
+gem 'gemoji', '~> 4.0.0.rc2'
 
 # Fast html escaping/unescaping
 gem 'escape_utils'

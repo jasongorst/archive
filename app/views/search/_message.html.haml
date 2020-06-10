@@ -1,15 +1,15 @@
-- # message[0] is the url to the message in channels#show with page and id
-- # message[1] is the message returned by Message.search
+- # message[0] is the url to the message in display#show with id and page
+- # message[1] is the result returned by Message.search
 - url = message[0]
 - message = message[1]
 %p
-  .channel
+  %div
     %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
   .message.position-relative
-    %a.text-reset.stretched-link{href: url}
-      %strong
-        %span.display_name{style: "color: #{message.user.color}"}
-          = message.user.display_name
-      %span.time= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
-      <br>
-      %span.text!= message.excerpts.text
+    %div
+      %a.text-reset.stretched-link{href: url}
+        %strong
+          %span{style: "color: #{message.user.color}"}
+            = message.user.display_name
+        %span= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
+    %div!= message.excerpts.text

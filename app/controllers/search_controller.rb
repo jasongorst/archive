@@ -25,8 +25,7 @@ class SearchController < ApplicationController
 
       # build urls for results
       @urls = @results.map do |result|
-        index = index_of_message_by_date(result)
-        page = (index.to_f / Message.default_per_page).ceil
+        page = page_from_index(index_of_message_by_date(result))
         "/#{result.channel.name}/#{result.date}?page=#{page}#ts_#{result.ts}"
       end
 
@@ -52,11 +51,11 @@ class SearchController < ApplicationController
     # unescape double quotes to allow phrase searching
     query = query.gsub(/\\"/, '"')
 
-    # parse datetime strings
-    after  = Time.parse(search[:after])
-    before = Time.parse(search[:before])
+    # convert strings to times
+    after  = search[:after].to_time
+    before = search[:before].to_time
 
-    # set search params to parsed values
+    # set search params to times to pass back to the form js
     params[:search][:after] = after
     params[:search][:before] = before
 
@@ -80,5 +79,9 @@ class SearchController < ApplicationController
                    .where("ts < #{message.date.succ.to_time.to_i}")
                    .to_a
     m_ary.bsearch_index { |m| m.ts >= message.ts } + 1
+  end
+
+  def page_from_index(index)
+    (index.to_f / Message.default_per_page).ceil
   end
 end

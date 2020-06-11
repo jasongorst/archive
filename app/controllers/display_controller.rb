@@ -16,7 +16,7 @@ class DisplayController < ApplicationController
 
   def show_by_date
     @channel = Channel.friendly.find(params[:channel_id])
-    @date = Date.parse(params[:date])
+    @date = params[:date].to_date
     @messages = @channel.messages
                         .where("ts >= #{@date.to_time.to_i}")
                         .where("ts < #{@date.succ.to_time.to_i}")

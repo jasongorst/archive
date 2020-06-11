@@ -1,4 +1,5 @@
 class EmojiFilter
+
   class << self
     def convert(text)
       # TODO: move alias lists into external JSON files
@@ -8,8 +9,7 @@ class EmojiFilter
 
       text.gsub(/:([\w+-]+):/) do |match|
         if (emoji = Emoji.find_by_alias(Regexp.last_match(1)))
-          # TODO: figure out how to call image_tag and move these into assets
-          emoji.raw || "<img src=\"#{emoji.image_filename}\" alt=\"#{match}\" width=\"16\" height=\"16\">"
+          emoji.raw || ActionController::Base.helpers.image_tag(emoji.image_filename, alt: match, size: '16')
         else
           match
         end
@@ -47,7 +47,8 @@ class EmojiFilter
                   soda squirrel teapot thumbsup_all tinfoil troll tumbleweed viking witch]
       custom.each do |emoji|
         Emoji.create(emoji) do |char|
-          char.image_filename = "/emoji/#{emoji}.png"
+          # char.image_filename = "/assets/emoji/#{emoji}.png"
+          char.image_filename = ActionController::Base.helpers.image_url("emoji/#{emoji}.png")
         end
       end
     end

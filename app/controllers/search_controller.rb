@@ -4,8 +4,6 @@ class SearchController < ApplicationController
     @channels = Channel.all.order(name: :asc)
     @users = User.all.order(display_name: :asc)
 
-    @results = nil
-
     if params.key? :search
       # munge search params
       query, filters = process_search_params(params[:search])

@@ -8,29 +8,7 @@ class SearchController < ApplicationController
 
     if params.key? :search
       # munge search params
-      search = params[:search]
-
-      # escape SphinxQL in query
-      query = ThinkingSphinx::Query.escape(search[:query])
-      # unescape double quotes to allow phrase searching
-      query = query.gsub(/\\"/, '"')
-
-      # parse datetime strings
-      after  = Time.parse(search[:after])
-      before = Time.parse(search[:before])
-
-      # convert time filters to UTC timestamps
-      after_ts = after.utc.to_f
-      before_ts = before.utc.to_f
-
-      # filter search on attributes
-      filters = { ts: after_ts..before_ts }
-      filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].empty?
-      filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].empty?
-
-      # set defaults for datetime_selects
-      params[:search][:after]  = after
-      params[:search][:before] = before
+      query, filters = process_search_params(params[:search])
 
       # get message search results with maximum size excerpts (i.e., no excerpting)
       @results = Message.search query, with: filters,
@@ -48,19 +26,16 @@ class SearchController < ApplicationController
       @results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
       # build urls for results
-      @urls = []
-      @results.each do |result|
+      @urls = @results.map do |result|
         index = index_of_message_by_date(result)
         page = (index.to_f / Message.default_per_page).ceil
-        channel = result.channel
-        url = "/#{channel.name}/#{result.date}?page=#{page}#ts_#{result.ts}"
-        @urls << url
+        "/#{result.channel.name}/#{result.date}?page=#{page}#ts_#{result.ts}"
       end
 
       # zip results with urls to use as a collection
       @urls_results = @urls.zip(@results.to_a)
     else
-      # set defaults for search form
+      # set defaults for new search form
       params[:search] = {
         query: '',
         after: 1.week.ago.localtime,
@@ -73,10 +48,30 @@ class SearchController < ApplicationController
 
   private
 
-  def date_time_from_params(params, date_key)
-    date_keys = params.keys.select { |k| k.to_s.match?(date_key.to_s + '\(\di\)') }.sort
-    date_array = params.values_at(*date_keys).map(&:to_i)
-    DateTime.new(*date_array)
+  def process_search_params(search)
+    # escape SphinxQL in query
+    query = ThinkingSphinx::Query.escape(search[:query])
+    # unescape double quotes to allow phrase searching
+    query = query.gsub(/\\"/, '"')
+
+    # parse datetime strings
+    after  = Time.parse(search[:after])
+    before = Time.parse(search[:before])
+
+    # set search params to parsed values
+    params[:search][:after] = after
+    params[:search][:before] = before
+
+    # convert time filters to UTC timestamps
+    after_ts = after.utc.to_f
+    before_ts = before.utc.to_f
+
+    # filter search on attributes
+    filters = { ts: after_ts..before_ts }
+    filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].empty?
+    filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].empty?
+
+    [query, filters]
   end
 
   def index_of_message_by_date(message)

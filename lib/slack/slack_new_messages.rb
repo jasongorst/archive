@@ -26,7 +26,7 @@ class SlackNewMessages
       end
 
       # find ts of last message in archive channel
-      last_message = channel.messages.last
+      last_message = channel.messages&.last
       ts = last_message.nil? ? 0 : last_message.ts
 
       fetch_and_save_messages(channel, ts)
@@ -43,7 +43,8 @@ class SlackNewMessages
                               inclusive: false) do |response|
       messages = response.messages
 
-      # slack is sometimes returning duplicates of the last message
+      # slack will sometimes return duplicates of the last message
+      # check the ts against the last message saved
       last_ts = channel.messages&.last&.ts
 
       # save messages

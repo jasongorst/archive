@@ -23,7 +23,11 @@ module DisplayHelper
   end
 
   def long_date(date)
-    "#{date.strftime('%B')} #{date.mday.ordinalize}, #{date.year}"
+    "#{date.strftime('%B')} #{date.mday.ordinalize}"
+  end
+
+  def long_date_with_year(date)
+    "#{long_date(date)}, #{date.year}"
   end
 
   def month_in?(month, year, dates_with_counts)

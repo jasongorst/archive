@@ -1,6 +1,6 @@
 .display
   %h2 ##{@channel.name}
-  %h5= long_date @date
+  %h5= long_date_with_year(@date)
 
   = render(partial: 'message', collection: @messages)
 
@@ -10,8 +10,10 @@
     .col-auto.mr-auto
       - p = prev_date(@channel, @date)
       - unless p.nil?
-        %a{href: "/#{@channel.name}/#{p.iso8601}"} &lsaquo; #{long_date p}
+        = link_to channel_date_path(@channel, p) do
+          &lsaquo;&nbsp;#{long_date(p)}
     .col-auto
       - n = next_date(@channel, @date)
       - unless n.nil?
-        %a{href: "/#{@channel.name}/#{n.iso8601}"} #{long_date n} &rsaquo;
+        = link_to channel_date_path(@channel, n) do
+          #{long_date(n)}&nbsp;&rsaquo;

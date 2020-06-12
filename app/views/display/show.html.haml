@@ -5,9 +5,8 @@
   - dates_in_month(@this_month, @this_year, @dates_with_counts).each do |dc|
     - date = dc[0]; count = dc[1]
     %div
-      = link_to("#{date.strftime('%B')} #{date.mday.ordinalize} (#{pluralize(count, 'message')})",
-        { controller: :display, action: :show_by_date, date: date },
-        { class: 'nav-link pl-0' })
+      = link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
+        channel_date_path(@channel, date), { class: 'nav-link pl-0' })
   -# previous months of this year
   - (@this_month - 1).downto(1).each do |month|
     - if month_in?(month, @this_year, @dates_with_counts)
@@ -17,7 +16,6 @@
           - dates_in_month(month, @this_year, @dates_with_counts).each do |dc|
             - date = dc[0]; count = dc[1]
             %div
-              = link_to("#{date.strftime('%B')} #{date.mday.ordinalize} (#{pluralize(count, 'message')})",
-                { controller: :display, action: :show_by_date, date: date },
-                { class: 'nav-link pl-0' })
+              = link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
+                channel_date_path(@channel, date), { class: 'nav-link pl-0' })
   -# TODO: previous years

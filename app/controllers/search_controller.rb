@@ -26,7 +26,7 @@ class SearchController < ApplicationController
       # build urls for results
       @urls = @results.map do |result|
         page = page_from_index(index_of_message_by_date(result))
-        "/#{result.channel.name}/#{result.date}?page=#{page}#ts_#{result.ts}"
+        channel_date_path(result.channel, result.date, page: page, anchor: "ts_#{result.ts}")
       end
 
       # zip results with urls to use as a collection

@@ -12,10 +12,6 @@ module ApplicationHelper
   end
 
   def channels_with_messages
-    channels = []
-    Channel.order(name: :asc).each do |channel|
-      channels << channel unless channel.messages.empty?
-    end
-    channels
+    Channel.joins(:messages).distinct.order(name: :asc)
   end
 end

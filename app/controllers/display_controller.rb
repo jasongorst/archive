@@ -5,10 +5,10 @@ class DisplayController < ApplicationController
 
   def show
     @channel = Channel.friendly.find(params[:channel_id])
-    messages = Message.where("channel_id = #{@channel.id}")
-                      .select("id, ts, FROM_UNIXTIME(ts, '%Y-%m-%d') as date, count(*) as count")
-                      .group(:date)
-                      .order(date: :desc)
+    messages = @channel.messages
+                       .select("id, ts, FROM_UNIXTIME(ts, '%Y-%m-%d') as date, count(*) as count")
+                       .group(:date)
+                       .reorder(date: :desc)
     @dates_with_counts = messages.map { |m| [m.date, m.count] }
     @this_month = Time.now.month
     @this_year = Time.now.year
@@ -18,8 +18,7 @@ class DisplayController < ApplicationController
     @channel = Channel.friendly.find(params[:channel_id])
     @date = params[:date].to_date
     @messages = @channel.messages
-                        .where("ts >= #{@date.to_time.to_i}")
-                        .where("ts < #{@date.succ.to_time.to_i}")
+                        .where(ts: (@date.to_time.to_i)..(@date.succ.to_time.to_i))
                         .page params[:page]
   end
 end

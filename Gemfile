@@ -67,10 +67,10 @@ end
 gem 'haml-rails', '~> 2.0'
 
 # Slack api client
-gem 'slack-ruby-client'
+gem 'slack-ruby-client', '~> 0.14.6'
 
 # Pagination
-gem 'kaminari'
+gem 'kaminari', '~> 1.2.0'
 
 # Full-text search middleware for sphinx/manticore
 gem 'thinking-sphinx', '~> 4.0'
@@ -91,7 +91,7 @@ gem 'friendly_id', '~> 5.3.0'
 gem 'gemoji', '~> 4.0.0.rc2'
 
 # Fast html escaping/unescaping
-gem 'escape_utils'
+gem 'escape_utils', '~> 1.2.1'
 
 # Ruby cron jobs
-gem 'whenever', '~> 1.0.0'
+gem 'whenever', '~> 1.0.0', require: false

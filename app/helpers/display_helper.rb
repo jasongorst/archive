@@ -3,9 +3,7 @@ module DisplayHelper
     messages = channel.messages
                       .select("id, ts, FROM_UNIXTIME(ts, '%Y-%m-%d') as date")
                       .group(:date)
-    dates = []
-    messages.each { |m| dates << m.date }
-    dates
+    messages.map { |m| m.date }
   end
 
   def next_date(channel, date)
@@ -35,6 +33,14 @@ module DisplayHelper
   end
 
   def dates_in_month(month, year, dates_with_counts)
-    dates_with_counts.select { |el| el[0].year == year && el[0].month == month }
+    dates_with_counts.select { |dc| dc[0].year == year && dc[0].month == month }
+  end
+
+  def this_month
+    Time.now.month
+  end
+
+  def this_year
+    Time.now.year
   end
 end

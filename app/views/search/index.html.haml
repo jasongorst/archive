@@ -6,9 +6,7 @@
   - unless @results.nil?
     %hr
     .results
-      - if @results.empty?
-        %p No results found
-      - else
-        %small.text-muted #{@results.count} results
+      %small.text-muted #{pluralize(@results.count, 'message')} found
+      - unless @results.empty?
         = render partial: 'message', collection: @urls_results
         = paginate @results

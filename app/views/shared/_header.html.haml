@@ -6,13 +6,13 @@
     %span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarNav
     %ul.navbar-nav
-      %li.nav-item{class: "#{'active' if current_page?(controller: :display, action: :index)}"}
+      %li.nav-item{class: "#{'active' if current_page?({ controller: :display, action: :index })}"}
         %a.nav-link{href: url_for(:root)}
           Home
 
       %li.nav-item.dropdown
         %a.nav-link.dropdown-toggle#navbarDropDownMenuLink{href: '#',
-          class: "#{'active' if current_page?(controller: :display, action: :show)}",
+          class: "#{'active' if current_page?({ controller: :display, action: :show} )}",
           data: { toggle: 'dropdown' }}
           Channels
         .dropdown-menu
@@ -20,6 +20,6 @@
             %a.dropdown-item{class: "#{'active' if current_page?(channel)}",
               href: url_for(channel)}= "\##{channel.name}"
 
-      %li.nav-item{class: "#{'active' if current_page?(controller: :search, action: :index)}"}
+      %li.nav-item{class: "#{'active' if current_page?({ controller: :search, action: :index })}"}
         %a.nav-link{href: url_for(:search)}
           Search

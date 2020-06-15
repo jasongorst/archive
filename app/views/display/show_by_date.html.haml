@@ -1,18 +1,9 @@
 .display
   %h2 ##{@channel.name}
+  = render(partial: 'next_prev_day')
   %h5= long_date_with_year(@date)
 
   = render(partial: 'message', collection: @messages)
   = paginate @messages
 
-  %nav.row.pb-3
-    .col-auto.mr-auto
-      - p = prev_date(@channel, @date)
-      - unless p.nil?
-        = link_to channel_date_path(@channel, p), { class: 'nav-link pl-0' } do
-          &lsaquo;&nbsp;#{long_date(p)}
-    .col-auto
-      - n = next_date(@channel, @date)
-      - unless n.nil?
-        = link_to channel_date_path(@channel, n), { class: 'nav-link pr-0' } do
-          #{long_date(n)}&nbsp;&rsaquo;
+  = render(partial: 'next_prev_day')

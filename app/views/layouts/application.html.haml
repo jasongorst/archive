@@ -47,4 +47,8 @@
   %body
     .container
       = render(partial: 'shared/header')
+
+      %p.notice= notice
+      %p.alert= alert
+
       = yield

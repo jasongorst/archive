@@ -66,32 +66,30 @@ end
 # Use haml for templates
 gem 'haml-rails', '~> 2.0'
 
-# Slack api client
-gem 'slack-ruby-client', '~> 0.14.6'
-
-# Pagination
-gem 'kaminari', '~> 1.2.0'
-
-# Full-text search middleware for sphinx/manticore
-gem 'thinking-sphinx', '~> 4.0'
-
-# Bootstrap 4
-gem 'bootstrap', '~> 4.5.0'
-
-# Font Awesome 5
-gem 'font_awesome5_rails'
-
 # BigDecimal for timestamps
 gem 'bigdecimal'
-
+# Slack api client
+gem 'slack-ruby-client', '~> 0.14.6'
+# Pagination
+gem 'kaminari', '~> 1.2.0'
+# Full-text search middleware for sphinx/manticore
+gem 'thinking-sphinx', '~> 4.0'
+# Bootstrap 4
+gem 'bootstrap', '~> 4.5.0'
+# Font Awesome 5
+gem 'font_awesome5_rails', '~>1.1.1'
 # Pretty URLs
 gem 'friendly_id', '~> 5.3.0'
-
 # Emoji support
 gem 'gemoji', '~> 4.0.0.rc2'
-
 # Fast html escaping/unescaping
 gem 'escape_utils', '~> 1.2.1'
-
 # Ruby cron jobs
 gem 'whenever', '~> 1.0.0', require: false
+
+# admin
+gem 'rails_admin', '~> 2.0.2'
+# authentication
+gem 'devise', '~> 4.7.2'
+# authorization
+gem 'cancancan', '~> 3.1.0'

@@ -3,40 +3,40 @@ require_relative 'slack_user'
 require_relative '../mrkdwn/mrkdwn'
 
 class SlackNewMessages
-  attr_accessor :sc, :channels
+  attr_accessor :sc, :slack_channels
 
   def initialize
     @sc = SlackClient.new
   end
 
-  def fetch_slack_channels
+  def slack_channels
     # get channel list
-    @channels = @sc.conversations_list(types: 'public_channel',
-                                       exclude_archived: true).channels
+    @slack_channels = @sc.conversations_list(types: 'public_channel',
+                                             exclude_archived: true).channels
   end
 
-  def fetch_messages
-    @channels.each do |ch|
-      $stderr.print "Archiving slack channel \##{ch.name}"
+  def slack_messages
+    @slack_channels.each do |sch|
+      $stderr.print "Archiving slack channel \##{sch.name}"
       # join slack channel
-      @sc.conversations_join(channel: ch.id)
+      @sc.conversations_join(channel: sch.id)
       # create or find corresponding archive channel
-      channel = Channel.find_or_create_by(slack_channel: ch.id) do |c|
-        c.name = ch.name
+      channel = Channel.find_or_create_by(slack_channel: sch.id) do |c|
+        c.name = sch.name
       end
 
       # find ts of last message in archive channel
       last_message = channel.messages&.last
       ts = last_message.nil? ? 0 : last_message.ts
 
-      fetch_and_save_messages(channel, ts)
+      retrieve_and_save_messages(channel, ts)
     end
   end
 
   private
 
-  def fetch_and_save_messages(channel, ts)
-    # get new messages in this channel
+  def retrieve_and_save_messages(channel, ts)
+    # get new messages in this channel (in default slack batch size)
     @sc.conversations_history(presence: true,
                               channel: channel.slack_channel,
                               oldest: ts,
@@ -44,7 +44,7 @@ class SlackNewMessages
       messages = response.messages
 
       # slack will sometimes return duplicates of the last message
-      # check the ts against the last message saved
+      # check the ts against the last message saved (if any)
       last_ts = channel.messages&.last&.ts
 
       # save messages

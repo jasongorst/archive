@@ -6,13 +6,8 @@ begin
   fetch = SlackNewMessages.new
 
   # fetch fetch channels
-  fetch.fetch_slack_channels
+  fetch.slack_channels
 
   # fetch messages
-  fetch.fetch_messages
-
-rescue Slack::Web::Api::Errors::SlackError => e
-  warn e.full_message
-rescue StandardError
-  warn e.full_message
+  fetch.slack_messages
 end

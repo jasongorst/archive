@@ -1,5 +1,5 @@
 class Message < ApplicationRecord
-  paginates_per 20
+  paginates_per 50
 
   validates :channel_id, :user_id, presence: true
 

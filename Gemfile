@@ -91,5 +91,4 @@ gem 'whenever', '~> 1.0.0', require: false
 gem 'rails_admin', '~> 2.0.2'
 # authentication
 gem 'devise', '~> 4.7.2'
-# authorization
-gem 'cancancan', '~> 3.1.0'
+

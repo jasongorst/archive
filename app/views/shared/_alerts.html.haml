@@ -1,0 +1,8 @@
+- if notice
+  %div.notice.alert.alert-dark.alert-dismissible
+    = notice
+    %button.close{data: {dismiss: 'alert'}} &times;
+- if alert
+  %div.alert.alert-danger.alert-dismissible
+    = alert
+    %button.close{data: {dismiss: 'alert'}} &times;

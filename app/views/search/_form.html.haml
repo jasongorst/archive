@@ -1,6 +1,6 @@
 = form_with(scope: :search, url: "/search", method: "get", local: true) do |f|
   .form-group.form-row
-    = f.label(:query, "Text", class: 'col-md-2 col-lg-1 col-form-label text-md-right text-md-right')
+    = f.label(:query, "Text", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
     .col-md-6
       = f.search_field(:query, value: params[:search][:query], class: 'form-control input-sm')
   .form-group.form-row

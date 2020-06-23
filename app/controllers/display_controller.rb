@@ -1,4 +1,6 @@
 class DisplayController < ApplicationController
+  layout 'main'
+
   def index
     @channels = Channel.order(name: :asc)
   end

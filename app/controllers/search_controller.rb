@@ -1,5 +1,8 @@
 class SearchController < ApplicationController
+  layout 'main'
+
   RESULTS_PER_PAGE = 20
+  
   def index
     @channels = Channel.all.order(name: :asc)
     @users = User.all.order(display_name: :asc)

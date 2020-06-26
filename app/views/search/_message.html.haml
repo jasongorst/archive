@@ -1,7 +1,5 @@
-- # message[0] is the url to the message in display#show with id and page
-- # message[1] is the result returned by Message.search
-- url = message[0]
-- message = message[1]
+- # unpack url result array
+- url, message = message
 %p
   %div
     %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
@@ -13,3 +11,7 @@
             = message.user.display_name
         %span= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
     %div!= message.excerpts.text
+    - message.attachments.each do |attachment|
+      %div
+        %i.fas.fa-caret-right
+        = link_to attachment.name, attachment.url

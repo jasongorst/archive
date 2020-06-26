@@ -3,8 +3,6 @@ require_relative 'slack_user'
 require_relative '../mrkdwn/mrkdwn'
 
 class SlackNewMessages
-  attr_accessor :sc, :slack_channels
-
   def initialize
     @sc = SlackClient.new
   end
@@ -27,56 +25,62 @@ class SlackNewMessages
 
       # find ts of last message in archive channel
       last_message = channel.messages&.last
-      ts = last_message.nil? ? 0 : last_message.ts
+      last_ts = last_message.nil? ? 0 : last_message.ts
 
-      retrieve_and_save_messages(channel, ts)
+      retrieve_and_save_messages(channel, last_ts)
     end
   end
 
   private
 
-  def retrieve_and_save_messages(channel, ts)
+  def retrieve_and_save_messages(channel, last_ts)
     # get new messages in this channel (in default slack batch size)
     @sc.conversations_history(presence: true,
                               channel: channel.slack_channel,
-                              oldest: ts,
+                              oldest: last_ts,
                               inclusive: false) do |response|
       messages = response.messages
 
-      # slack will sometimes return duplicates of the last message
-      # check the ts against the last message saved (if any)
-      last_ts = channel.messages&.last&.ts
-
-      # save messages
+      # process messages
       messages.each do |message|
         # ignore bot messages
         next if message.key?(:subtype) && message.subtype == 'bot_message'
         # ignore messages without a user
         next unless message.key? :user
-        # ignore messages without text
-        next unless message.key? :text
-        # ignore messages with empty text
-        next if message.text.empty?
-        # ignore duplicate messages
+        # slack will sometimes return the last message regardless of ts
+        # check the ts against the last message saved
         next if message.ts.to_d == last_ts
 
-        # find or create user
-        user = User.find_or_create_by(slack_user: message.user) do |u|
-          # fetch slack user info
-          slack_user = SlackUser.new(message.user)
-          u.display_name = slack_user.display_name
-        end
-
-        # filter message text
-        text = Mrkdwn.convert(message.text)
-
         # save message
-        channel.messages.create(text: text,
-                                ts: message.ts.to_d,
-                                user_id: user.id)
+        save_message(message, channel)
         $stderr.print '.'
       end
     end
     $stderr.print "\n"
+  end
+
+  def save_message(message, channel)
+    # find or create user
+    user = User.find_or_create_by(slack_user: message.user) do |u|
+      # fetch slack user info
+      slack_user = SlackUser.new(message.user)
+      u.display_name = slack_user.display_name
+    end
+
+    # convert message text to html
+    text = Mrkdwn.convert(message.text)
+
+    # save message
+    m = channel.messages.create(text: text,
+                                ts: message.ts.to_d,
+                                user_id: user.id)
+
+    return unless message.key? :files
+
+    # save attachments
+    message.files.each do |f|
+      m.attachments.create(name: f.name,
+                           url: f.url_private)
+    end
   end
 end

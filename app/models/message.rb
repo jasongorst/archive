@@ -5,6 +5,7 @@ class Message < ApplicationRecord
 
   belongs_to :channel
   belongs_to :user
+  has_many :attachments
 
   def date
     Time.at(ts).to_date

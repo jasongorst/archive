@@ -6,3 +6,7 @@
         = message.user.display_name
     %span= Time.at(message.ts).strftime("%-l:%M%P %Z")
   %div!= message.text
+  - message.attachments.each do |attachment|
+    %div
+      %i.fas.fa-caret-right
+      = link_to attachment.name, attachment.url

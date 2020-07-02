@@ -1,5 +1,5 @@
 class LinksFilter
-  # handle links, slack mentions (with user lookup), slack channels (with lookup), slack notifications
+  # handle url links, slack mentions, slack channels, slack notifications
   LINK = /<([^>|]+)(?:\|([^>]+))?>/.freeze
   class << self
     def convert(text)
@@ -17,13 +17,25 @@ class LinksFilter
       klass, link, text =
         case data
         when /\A#(C.+)\z/ # slack channel
-          # TODO: look up channel via slack api
-          ['channel', nil, data]
-        when /\A@((?:U|B).+)/ # slack user or bot
-          # TODO: look up user via slack api
-          ['mention', nil, data]
+          # look up channel by slack_channel
+          channel = Channel.find_by(slack_channel: Regexp.last_match(1))
+          channel_name = if channel
+                           # TODO: figure out where the "#" goes
+                           "\##{channel.name}"
+                         else
+                           data
+                         end
+          ['channel', nil, channel_name]
+        when /\A@([UB].+)/ # slack user or bot
+          # look up user by slack_user
+          user = User.find_by(slack_user: Regexp.last_match(1))
+          user_display_name = if user
+                                "@#{user.display_name}"
+                              else
+                                data
+                              end
+          ['mention', nil, user_display_name]
         when /\A@(.+)/ # slack user name
-          # TODO: look up user by name via slack api
           ['mention', nil, data]
         when /\A!/ # special slack command
           ['link', nil, data]
@@ -33,7 +45,6 @@ class LinksFilter
 
       if link
         escaped_link = EscapeUtils.escape_html(link).to_s
-        # escape _/*/~ in link and link_text || text so they don't get munged by BoldItalicFilter
         escaped_link = escape_special(escaped_link)
         if link_text.nil?
           text = EscapeUtils.escape_html(text)
@@ -49,6 +60,7 @@ class LinksFilter
     end
 
     def escape_special(text)
+      # escape _/*/~ so they don't get munged by BoldItalicFilter
       text.gsub(/\*/, '&#42;')
           .gsub(/_/, '&#95;')
           .gsub(/~/, '&#126;')

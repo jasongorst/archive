@@ -2,7 +2,7 @@ require_relative 'slack_client'
 require_relative 'slack_user'
 require_relative '../mrkdwn/mrkdwn'
 
-class SlackNewMessages
+class SlackSandboxMessages
   ROLLER_ID = 'B9NN70B0F'.freeze
 
   def initialize
@@ -13,42 +13,30 @@ class SlackNewMessages
     # get channel list
     @slack_channels = @sc.conversations_list(types: 'public_channel',
                                              exclude_archived: true).channels
+    # find sandbox channel
+    @sandbox = @slack_channels.find { |ch| ch.name == 'sandbox' }
   end
 
   def slack_messages
-    @slack_channels.each do |sch|
-      $stderr.print "Archiving slack channel \##{sch.name}"
-      # join slack channel
-      @sc.conversations_join(channel: sch.id)
-      # create or find corresponding archive channel
-      channel = Channel.find_or_create_by(slack_channel: sch.id) do |c|
-        c.name = sch.name
-      end
+    $stderr.print 'Archiving channel sandbox'
+    # join slack channel
+    @sc.conversations_join(channel: @sandbox.id)
+    # create or find corresponding archive channel
+    channel = Channel.find_by(slack_channel: @sandbox.id)
 
-      # find ts of last message in archive channel
-      last_message = channel.messages&.last
-      last_ts = last_message.nil? ? 0 : last_message.ts
-
-      retrieve_and_save_messages(channel, last_ts)
-    end
+    retrieve_and_save_messages(channel)
   end
 
   private
 
-  def retrieve_and_save_messages(channel, last_ts)
-    # get new messages in this channel (in default slack batch size)
+  def retrieve_and_save_messages(channel)
+    # get messages in this channel (in default slack batch size)
     @sc.conversations_history(presence: true,
-                              channel: channel.slack_channel,
-                              oldest: last_ts,
-                              inclusive: false) do |response|
+                              channel: channel.slack_channel) do |response|
       messages = response.messages
 
       # process messages
       messages.each do |message|
-        # slack will sometimes return the last message regardless of ts
-        # check the ts against the last message saved
-        next if message.ts.to_d == last_ts
-
         # save roller messages
         if message.key?(:bot_id) && message.bot_id == ROLLER_ID
           save_roller_message(message, channel)
@@ -91,7 +79,6 @@ class SlackNewMessages
       m.attachments.create(name: f.name,
                            url: f.url_private)
     end
-
   end
 
   def save_roller_message(message, channel)

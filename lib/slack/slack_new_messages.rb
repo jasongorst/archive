@@ -9,10 +9,14 @@ class SlackNewMessages
     @sc = SlackClient.new
   end
 
-  def slack_channels
+  def slack_channels(channel_names=nil)
     # get channel list
     @slack_channels = @sc.conversations_list(types: 'public_channel',
                                              exclude_archived: true).channels
+    # only fetch channels with given names, if any
+    if channel_names
+      @slack_channels.filter! {|sch| channel_names.include? sch.name}
+    end
   end
 
   def slack_messages
@@ -48,7 +52,6 @@ class SlackNewMessages
         # slack will sometimes return the last message regardless of ts
         # check the ts against the last message saved
         next if message.ts.to_d == last_ts
-
         # save roller messages
         if message.key?(:bot_id) && message.bot_id == ROLLER_ID
           save_roller_message(message, channel)
@@ -91,7 +94,6 @@ class SlackNewMessages
       m.attachments.create(name: f.name,
                            url: f.url_private)
     end
-
   end
 
   def save_roller_message(message, channel)
@@ -106,10 +108,17 @@ class SlackNewMessages
       f['value'] = Mrkdwn.convert(f['value'])
     end
 
+    # save message
+    channel.messages.create(text: create_roller_message_html(color, text, fields),
+                            ts: message.ts.to_d,
+                            user_id: user.id)
+  end
+
+  def create_roller_message_html(color, text, fields)
     # messily construct message html
     html = <<~HTML
-      <div class="attachment" style="border-left: 4px solid \##{color}; border-radius: 8px;">
-        <div class="attachment_text" style="padding-left: 12px;">
+      <div class="bot-attachment #{color}">
+        <div class="bot-attachment-text">
           <div>#{text}</div>
     HTML
 
@@ -119,10 +128,5 @@ class SlackNewMessages
     end
 
     html << "    </div>\n  </div>\n"
-
-    # save message
-    channel.messages.create(text: html,
-                            ts: message.ts.to_d,
-                            user_id: user.id)
   end
 end

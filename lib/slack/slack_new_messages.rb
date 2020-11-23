@@ -4,19 +4,22 @@ require_relative '../mrkdwn/mrkdwn'
 
 class SlackNewMessages
   ROLLER_ID = 'B9NN70B0F'.freeze
+  SLACK_COLORS = {
+    '2eb886' => 'good',
+    'daa038' => 'warning',
+    'a30200' => 'danger'
+  }.freeze
 
   def initialize
     @sc = SlackClient.new
   end
 
-  def slack_channels(channel_names=nil)
+  def slack_channels(channel_names = nil)
     # get channel list
     @slack_channels = @sc.conversations_list(types: 'public_channel',
                                              exclude_archived: true).channels
     # only fetch channels with given names, if any
-    if channel_names
-      @slack_channels.filter! {|sch| channel_names.include? sch.name}
-    end
+    @slack_channels.filter! { |sch| channel_names.include? sch.name } if channel_names
   end
 
   def slack_messages
@@ -52,6 +55,7 @@ class SlackNewMessages
         # slack will sometimes return the last message regardless of ts
         # check the ts against the last message saved
         next if message.ts.to_d == last_ts
+
         # save roller messages
         if message.key?(:bot_id) && message.bot_id == ROLLER_ID
           save_roller_message(message, channel)
@@ -60,6 +64,7 @@ class SlackNewMessages
         end
         # ignore other bot messages
         next if message.key?(:subtype) && message.subtype == 'bot_message'
+
         # ignore messages without a user
         next unless message.key? :user
 
@@ -101,9 +106,9 @@ class SlackNewMessages
 
     # parse message attachment (assume only one)
     m = message.attachments.first
-    color = m.color
+    color = SLACK_COLORS[m.color]
     text = Mrkdwn.convert(m.text)
-    fields = m.fields.to_a.map(&:to_h)
+    fields = m.fields
     fields.each do |f|
       f['value'] = Mrkdwn.convert(f['value'])
     end
@@ -116,17 +121,24 @@ class SlackNewMessages
 
   def create_roller_message_html(color, text, fields)
     # messily construct message html
+    # TODO: redo as haml partial?
     html = <<~HTML
-      <div class="bot-attachment #{color}">
+      <div class="bot-attachment">
+        <div class="bot-attachment-border slack-#{color}"></div>
         <div class="bot-attachment-text">
           <div>#{text}</div>
     HTML
 
     fields.each do |f|
-      html << "      <div><b>#{f['title']}</b></div>\n"
-      html << "      <div>#{f['value']}</div>\n"
+      html << <<~HTML
+        <div><strong>#{f['title']}</strong></div>
+        <div>#{f['value']}</div>
+      HTML
     end
 
-    html << "    </div>\n  </div>\n"
+    html << <<~HTML
+      </div>
+      </div>
+    HTML
   end
 end

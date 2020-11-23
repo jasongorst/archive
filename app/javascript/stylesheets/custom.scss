@@ -5,9 +5,25 @@
   text-decoration: none !important;
 }
 .bot-attachment {
-  border-left: 4px solid;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
 }
+.bot-attachment-border {
+  width: 4px;
+  border-radius: 2px;
+}
+.slack-good {
+  background: #2eb886;
+}
+.slack-warning {
+  background: #daa038;
+}
+.slack-danger {
+  background: #a30200;
+}
+
 .bot-attachment-text {
   padding-left: 12px;
 }

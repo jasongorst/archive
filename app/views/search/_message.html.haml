@@ -1,17 +1,17 @@
-- # unpack url result array
-- url, message = message
-%div
-  %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
-.message.position-relative
-  %div
-    %a.text-reset.stretched-link{href: url}
-      %strong
-        %span{style: "color: #{message.user.color}"}
-          = message.user.display_name
-      %span= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
-  %div!= message.excerpts.text
-  - message.attachments.each do |attachment|
-    %div
-      %i.fas.fa-caret-right
-      = link_to attachment.name, attachment.url
 %p
+  - # unpack url result array
+  - url, message = message
+  %div
+    %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
+  .message.position-relative
+    %div
+      %a.text-reset.stretched-link{href: url}
+        %strong
+          %span{style: "color: #{message.user.color}"}
+            = message.user.display_name
+        %span= Time.at(message.ts).strftime("%b %-e, %Y at %-l:%M%P %Z")
+    %div!= message.excerpts.text
+    - message.attachments.each do |attachment|
+      %div
+        %i.fas.fa-caret-right
+        = link_to attachment.name, attachment.url

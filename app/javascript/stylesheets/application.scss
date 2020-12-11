@@ -1,5 +1,7 @@
 // app/javascript/stylesheets/application.scss
-@import "bootstrap";
 @import '@fortawesome/fontawesome-free';
-@import './custom';
+@import 'bootswatch/dist/pulse/_variables.scss';
+@import "bootstrap";
+@import 'bootswatch/dist/pulse/_bootswatch.scss';
 
+@import './custom';

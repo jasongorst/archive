@@ -29,7 +29,7 @@ module DisplayHelper
   end
 
   def month_in?(month, year, dates_with_counts)
-    !dates_in_month(month, year, dates_with_counts).empty?
+    not dates_in_month(month, year, dates_with_counts).empty?
   end
 
   def dates_in_month(month, year, dates_with_counts)

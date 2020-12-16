@@ -20,7 +20,7 @@ class DisplayController < ApplicationController
     @channel = Channel.friendly.find(params[:channel_id])
     @date = params[:date].to_date
     @messages = @channel.messages
-                        .where(ts: (@date.to_time.to_i)..(@date.succ.to_time.to_i))
+                        .where(ts: (@date.to_time.to_i)...(@date.succ.to_time.to_i))
                         .page params[:page]
   end
 end

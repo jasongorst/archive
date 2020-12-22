@@ -8,7 +8,7 @@ set :repo_url, "git@gitlab.com:jasongorst/archive.git"
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/var/www/archive_production"
+set :deploy_to, "/var/www/archive"
 set :deploy_user, "deploy"
 
 # Default value for :format is :airbrussh.

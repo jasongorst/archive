@@ -289,11 +289,11 @@ test:
     U+2C74->v, U+2C75->h, U+2C76->h, U+2C9E->o, U+2C9F->o, U+10300->a,
     U+10309->i, U+1030F->o, U+10316->u"
 production:
-  socket: /var/www/archive_production/shared/tmp/sockets/production.sphinx.sock
-  pid_file: /var/www/archive_production/shared/tmp/searchd.pid
-  indices_location: /var/www/archive_production/shared/db/sphinx
-  configuration_file: /var/www/archive_production/shared/production.sphinx.conf
-  binlog_path: /var/www/archive_production/shared/tmp/binlog
+  socket: /var/www/archive/shared/tmp/sockets/production.sphinx.sock
+  pid_file: /var/www/archive/shared/tmp/searchd.pid
+  indices_location: /var/www/archive/shared/db/sphinx
+  configuration_file: /var/www/archive/shared/production.sphinx.conf
+  binlog_path: /var/www/archive/shared/tmp/binlog
   morphology: stem_en
   charset_table: "0..9, a..z, _, A..Z->a..z, U+00C0->a, U+00C1->a,
     U+00C2->a, U+00C3->a, U+00C4->a, U+00C5->a, U+00C7->c, U+00C8->e,

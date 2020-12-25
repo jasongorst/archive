@@ -28,12 +28,20 @@ module DisplayHelper
     "#{long_date(date)}, #{date.year}"
   end
 
-  def month_in?(month, year, dates_with_counts)
+  def month_contained_in?(month, year, dates_with_counts)
     not dates_in_month(month, year, dates_with_counts).empty?
+  end
+
+  def year_contained_in?(year, dates_with_counts)
+    not dates_in_year(year, dates_with_counts).empty?
   end
 
   def dates_in_month(month, year, dates_with_counts)
     dates_with_counts.select { |dc| dc[0].year == year && dc[0].month == month }
+  end
+
+  def dates_in_year(year, dates_with_counts)
+    dates_with_counts.select { |dc| dc[0].year == year }
   end
 
   def this_month
@@ -42,5 +50,9 @@ module DisplayHelper
 
   def this_year
     Time.now.year
+  end
+
+  def oldest_message_date
+    Message.order(ts: :asc).first.date
   end
 end

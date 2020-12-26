@@ -1,5 +1,5 @@
 module DisplayHelper
-  def message_dates(channel)
+  def dates_with_messages(channel)
     messages = channel.messages
                       .select("id, ts, FROM_UNIXTIME(ts, '%Y-%m-%d') as date")
                       .group(:date)
@@ -7,14 +7,14 @@ module DisplayHelper
   end
 
   def next_date(channel, date)
-    dates = message_dates(channel)
+    dates = dates_with_messages(channel)
     index = dates.bsearch_index { |d| d >= date }
     return nil if index.nil? || index == (dates.length - 1)
     dates[index + 1]
   end
 
   def prev_date(channel, date)
-    dates = message_dates(channel)
+    dates = dates_with_messages(channel)
     index = dates.bsearch_index { |d| d >= date }
     return nil if index == 0
     dates[index - 1]

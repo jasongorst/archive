@@ -23,3 +23,11 @@ set :output, 'log/cron.log'
 every 1.day, at: '3:00 am' do
   runner 'script/fetch_new_slack_messages.rb'
 end
+
+every 1.week, at: 'Sunday 4:00 am' do
+  rake 'ts:index'
+end
+
+every '@reboot' do
+  rake 'ts:start'
+end

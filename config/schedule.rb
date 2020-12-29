@@ -20,7 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 set :output, 'log/cron.log'
 
-every 1.day, at '2:55 am' do
+every 1.day, at: '2:55 am' do
   rake 'ts:restart'
 end
 

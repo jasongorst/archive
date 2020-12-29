@@ -20,6 +20,10 @@
 # Learn more: http://github.com/javan/whenever
 set :output, 'log/cron.log'
 
+every 1.day, at '2:55 am' do
+  rake 'ts:restart'
+end
+
 every 1.day, at: '3:00 am' do
   runner 'script/fetch_new_slack_messages.rb'
 end

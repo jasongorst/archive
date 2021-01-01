@@ -4,7 +4,7 @@
     %strong
       %span{style: "color: #{message.user.color}"}
         = message.user.display_name
-    %span= Time.at(message.ts).strftime("%-l:%M%P %Z")
+    %span= message.posted_at.strftime("%-l:%M%P")
   %div!= message.text
   - message.attachments.each do |attachment|
     %div

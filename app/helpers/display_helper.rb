@@ -1,9 +1,6 @@
 module DisplayHelper
   def dates_with_messages(channel)
-    messages = channel.messages
-                      .select("id, ts, FROM_UNIXTIME(ts, '%Y-%m-%d') as date")
-                      .group(:date)
-    messages.map { |m| m.date }
+    channel.messages.group(:posted_on).pluck(:posted_on)
   end
 
   def next_date(channel, date)
@@ -37,11 +34,11 @@ module DisplayHelper
   end
 
   def dates_in_month(month, year, dates_with_counts)
-    dates_with_counts.select { |dc| dc[0].year == year && dc[0].month == month }
+    dates_with_counts.select { |date, _| date.year == year && date.month == month }
   end
 
   def dates_in_year(year, dates_with_counts)
-    dates_with_counts.select { |dc| dc[0].year == year }
+    dates_with_counts.select { |date, _| date.year == year }
   end
 
   def this_month
@@ -52,7 +49,7 @@ module DisplayHelper
     Time.now.year
   end
 
-  def oldest_message_date
-    Message.order(ts: :asc).first.date
+  def oldest_message_date(channel)
+    channel.messages.order(posted_at: :asc).first.posted_on
   end
 end

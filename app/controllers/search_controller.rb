@@ -73,7 +73,7 @@ class SearchController < ApplicationController
     # build urls for results
     urls = results.map do |result|
       page = page_from_index(index_of_message_by_date(result))
-      channel_date_path(result.channel, result.date, page: page, anchor: "ts_#{result.ts}")
+      channel_date_path(result.channel, result.posted_on, page: page, anchor: "ts_#{result.ts}")
     end
 
     # zip results with urls to use as a collection
@@ -81,13 +81,8 @@ class SearchController < ApplicationController
   end
 
   def index_of_message_by_date(message)
-    m_ary = message.channel
-                   .messages
-                   .select(:ts)
-                   .where("ts >= #{message.date.to_time.to_i}")
-                   .where("ts < #{message.date.succ.to_time.to_i}")
-                   .to_a
-    m_ary.bsearch_index { |m| m.ts >= message.ts } + 1
+    m_ary = message.channel.messages.where(posted_on: message.posted_on).pluck(:posted_at)
+    m_ary.bsearch_index { |m| m >= message.posted_at } + 1
   end
 
   def page_from_index(index)

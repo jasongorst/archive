@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_215448) do
+ActiveRecord::Schema.define(version: 2021_01_01_010609) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -49,7 +49,11 @@ ActiveRecord::Schema.define(version: 2020_06_25_215448) do
     t.bigint "channel_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "posted_on", null: false
+    t.datetime "posted_at", precision: 6, null: false
     t.index ["channel_id"], name: "index_messages_on_channel_id"
+    t.index ["posted_at"], name: "index_messages_on_posted_at"
+    t.index ["posted_on"], name: "index_messages_on_posted_on"
     t.index ["ts"], name: "index_messages_on_ts"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end

@@ -14,7 +14,7 @@ class SearchController < ApplicationController
       # execute search
       @results = search_with_excerpts(query, filters)
 
-      # build urls for results
+      # build [url, result] array
       @urls_results = build_url_result_array(@results)
 
     else
@@ -29,7 +29,7 @@ class SearchController < ApplicationController
     # escape SphinxQL in query
     query = ThinkingSphinx::Query.escape(search[:query])
     # unescape double quotes to allow phrase searching
-    query = query.gsub(/\\"/, '"')
+    query.gsub!(/\\"/, '"')
 
     # convert strings to times
     after  = search[:after].to_time
@@ -39,12 +39,8 @@ class SearchController < ApplicationController
     params[:search][:after] = after
     params[:search][:before] = before
 
-    # convert times to UTC timestamps
-    after_ts = after.utc.to_f
-    before_ts = before.utc.to_f
-
     # filter search on attributes
-    filters = { ts: after_ts..before_ts }
+    filters = { posted_at: after...before }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].empty?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].empty?
 
@@ -52,9 +48,9 @@ class SearchController < ApplicationController
   end
 
   def search_with_excerpts(query, filters)
-    # get message search results with maximum size excerpts (i.e., no excerpting)
+    # get message search results with maximum size excerpts (i.e., entire messages)
     results = Message.search query, with: filters,
-                                    order: 'ts DESC',
+                                    order: 'posted_at DESC',
                                     page: params[:page],
                                     per_page: RESULTS_PER_PAGE,
                                     excerpts: {
@@ -64,7 +60,7 @@ class SearchController < ApplicationController
                                       around: 2**16,
                                       force_all_words: true
                                     }
-    # highlight search terms in results with excerpts pane
+    # highlight search terms in results using excerpts pane
     results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
     results
   end
@@ -76,16 +72,18 @@ class SearchController < ApplicationController
       channel_date_path(result.channel, result.posted_on, page: page, anchor: "ts_#{result.ts}")
     end
 
-    # zip results with urls to use as a collection
+    # zip urls with results for use in view
     urls.zip(results.to_a)
   end
 
   def index_of_message_by_date(message)
+    # find index of message on posted_on date
     m_ary = message.channel.messages.where(posted_on: message.posted_on).pluck(:posted_at)
     m_ary.bsearch_index { |m| m >= message.posted_at } + 1
   end
 
   def page_from_index(index)
+    # calculate page of posted_on date for a given index
     (index.to_f / Message.default_per_page).ceil
   end
 

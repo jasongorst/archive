@@ -11,9 +11,9 @@
   - (this_month - 1).downto(1).each do |month|
     - if month_contained_in?(month, this_year, @dates_with_counts)
       %div
-        %a.nav-link.pl-0{href: "#this-year-month-#{month}", data: {toggle: 'collapse'}}
+        %a.nav-link.pl-0{href: "#month-#{this_year}-#{month}", data: {toggle: 'collapse'}}
           #{Date::MONTHNAMES[month]} #{this_year}
-        %div.collapse{id: "this-year-month-#{month}"}
+        %div.collapse{id: "month-#{this_year}-#{month}"}
           - dates_in_month(month, this_year, @dates_with_counts).each do |date, count|
             %div
               = link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
@@ -21,16 +21,13 @@
 
   - (this_year - 1).downto(oldest_message_date(@channel).year).each do |year|
     - if year_contained_in?(year, @dates_with_counts)
-      %div
-        %a.nav-link.pl-0{href: "#year-#{year}", data: {toggle: 'collapse'}}
-          = year
-        - 12.downto(1).each do |month|
-          - if month_contained_in?(month, year, @dates_with_counts)
-            %div
-              %a.nav-link.pl-0{href: "#year-#{year}-month-#{month}", data: {toggle: 'collapse'}}
-                #{Date::MONTHNAMES[month]} #{year}
-              %div.collapse{id: "year-#{year}-month-#{month}"}
-                - dates_in_month(month, year, @dates_with_counts).each do |date, count|
-                  %div
-                    = link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
-                      channel_date_path(@channel, date), { class: 'nav-link pl-0' })
+      - 12.downto(1).each do |month|
+        - if month_contained_in?(month, year, @dates_with_counts)
+          %div
+            %a.nav-link.pl-0{href: "#month-#{year}-#{month}", data: {toggle: 'collapse'}}
+              #{Date::MONTHNAMES[month]} #{year}
+            %div.collapse{id: "month-#{year}-#{month}"}
+              - dates_in_month(month, year, @dates_with_counts).each do |date, count|
+                %div
+                  = link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
+                    channel_date_path(@channel, date), { class: 'nav-link pl-0' })

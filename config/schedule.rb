@@ -35,3 +35,7 @@ end
 every '@reboot' do
   rake 'ts:start'
 end
+
+every 1.day, at: '12:01 am' do
+  rake 'ts:start'
+end

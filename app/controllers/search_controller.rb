@@ -32,8 +32,8 @@ class SearchController < ApplicationController
     query.gsub!(/\\"/, '"')
 
     # convert strings to times
-    after  = search[:after].to_time
-    before = search[:before].to_time
+    after  = search[:after].to_time.localtime
+    before = search[:before].to_time.localtime
 
     # set search params to times to pass back to the datepicker
     params[:search][:after] = after
@@ -91,7 +91,7 @@ class SearchController < ApplicationController
     {
       query: '',
       after: 1.week.ago.localtime,
-      before: Time.now,
+      before: Time.now.localtime,
       channel_id: '',
       user_id: ''
     }

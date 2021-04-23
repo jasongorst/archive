@@ -88,7 +88,7 @@ gem 'escape_utils', '~> 1.2.1'
 gem 'whenever', '~> 1.0.0', require: false
 
 # admin
-gem 'rails_admin', '~> 2.0.2'
+gem 'rails_admin', '~> 2.1'
 # authentication
 gem 'devise', '~> 4.7.2'
 

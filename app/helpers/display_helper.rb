@@ -50,6 +50,6 @@ module DisplayHelper
   end
 
   def oldest_message_date(channel)
-    channel.messages.order(posted_at: :asc).first.posted_on
+    channel.messages.order(:posted_at).pick(:posted_on)
   end
 end

@@ -90,7 +90,7 @@ class SearchController < ApplicationController
   def search_defaults
     {
       query: '',
-      after: 1.week.ago.localtime,
+      after: Message.order(:posted_at).pick(:posted_at),
       before: Time.now.localtime,
       channel_id: '',
       user_id: ''

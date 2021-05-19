@@ -2,6 +2,7 @@ class SearchController < ApplicationController
   layout 'main'
 
   RESULTS_PER_PAGE = 20
+  MAX_RESULTS = 10_000
 
   def index
     @channels = Channel.all.order(name: :asc)
@@ -49,17 +50,19 @@ class SearchController < ApplicationController
 
   def search_with_excerpts(query, filters)
     # get message search results with maximum size excerpts (i.e., entire messages)
-    results = Message.search query, with: filters,
-                                    order: 'posted_at DESC',
-                                    page: params[:page],
-                                    per_page: RESULTS_PER_PAGE,
-                                    excerpts: {
-                                      before_match: '<mark>',
-                                      after_match: '</mark>',
-                                      limit: 2**16,
-                                      around: 2**16,
-                                      force_all_words: true
-                                    }
+    results = Message.search query,
+                             with: filters,
+                             order: 'posted_at DESC',
+                             page: params[:page],
+                             per_page: RESULTS_PER_PAGE,
+                             max_matches: MAX_RESULTS,
+                             excerpts: {
+                               before_match: '<mark>',
+                               after_match: '</mark>',
+                               limit: 2**16,
+                               around: 2**16,
+                               force_all_words: true
+                             }
     # highlight search terms in results using excerpts pane
     results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
     results

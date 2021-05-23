@@ -11,4 +11,4 @@ server 'server.evilpaws.org', user: 'deploy', port: 7822, roles: %w{app db web},
 # http://capistranorb.com/documentation/getting-started/configuration/
 set :stage, :production
 set :rails_env, :production
-set :default_env, { secret_key_base: `rails secret`, # dummy key to appease rake assets:precompile }
+set :default_env, { secret_key_base: `rails secret` } # dummy key to appease rake assets:precompile

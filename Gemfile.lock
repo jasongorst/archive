@@ -307,11 +307,11 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.8.2)
-    thinking-sphinx (4.4.1)
-      activerecord (>= 3.1.0)
+    thinking-sphinx (5.1.0)
+      activerecord (>= 4.2.0)
       builder (>= 2.1.2)
       innertube (>= 1.0.2)
-      joiner (>= 0.2.0)
+      joiner (>= 0.3.4)
       middleware (>= 0.1.0)
       riddle (~> 2.3)
     thor (1.1.0)
@@ -378,7 +378,7 @@ DEPENDENCIES
   slack-ruby-client (~> 0.14.6)
   spring
   spring-watcher-listen (~> 2.0.0)
-  thinking-sphinx (~> 4.0)
+  thinking-sphinx (~> 5.1)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

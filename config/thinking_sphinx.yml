@@ -1,15 +1,21 @@
 development:
-  morphology: stem_en
+  common_sphinx_configuration: true
+  morphology: lemmatize_en
+  lemmatizer_base: /usr/local/share
   max_matches: 10000
   charset_table: non-cjk
   socket: /tmp/development.sphinx.sock
 test:
-  morphology: stem_en
+  common_sphinx_configuration: true
+  morphology: lemmatize_en
+  lemmatizer_base: /usr/local/share
   max_matches: 10000
   charset_table: non-cjk
   socket: /tmp/test.sphinx.sock
 production:
-  morphology: stem_en
+  common_sphinx_configuration: true
+  morphology: lemmatize_en
+  lemmatizer_base: /usr/local/share
   max_matches: 10000
   charset_table: non-cjk
   socket: /var/www/archive/shared/tmp/sockets/production.sphinx.sock

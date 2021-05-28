@@ -8,8 +8,9 @@ class Message < ApplicationRecord
   belongs_to :user
   has_many :attachments
 
+  ThinkingSphinx::Callbacks.append(self, :behaviours => [:real_time])
+
   before_save :set_posted_at_and_posted_on
-  after_save ThinkingSphinx::RealTime.callback_for(:message)
 
   private
 

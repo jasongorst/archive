@@ -73,7 +73,7 @@ gem 'slack-ruby-client', '~> 0.14.6'
 # Pagination
 gem 'kaminari', '~> 1.2.0'
 # Full-text search middleware for sphinx/manticore
-gem 'thinking-sphinx', '~> 4.0'
+gem 'thinking-sphinx', '~> 5.1'
 # Bootstrap 4
 gem 'bootstrap', '~> 4.5.0'
 # Font Awesome 5

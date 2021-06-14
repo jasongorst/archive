@@ -8,8 +8,6 @@ class DisplayController < ApplicationController
   def show
     @channel = Channel.friendly.find(params[:channel_id])
     @dates_with_counts = @channel.messages.reorder(posted_on: :desc).group(:posted_on).count
-    @this_month = Time.now.month
-    @this_year = Time.now.year
   end
 
   def show_by_date

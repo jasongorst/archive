@@ -1,17 +1,5 @@
 module ApplicationHelper
   def channels_with_messages
-    Channel.joins(:messages).distinct.order(name: :asc)
+    Channel.joins(:messages).order(name: :asc).distinct
   end
-
-  # def message_time(message)
-  #   Time.at(message.ts)
-  # end
-  #
-  # def oldest_message_time
-  #   Time.at(Message.order(ts: :asc).first.ts)
-  # end
-  #
-  # def newest_message_time
-  #   Time.at(Message.order(ts: :asc).last.ts)
-  # end
 end

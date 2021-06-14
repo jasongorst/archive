@@ -5,8 +5,8 @@ class SearchController < ApplicationController
   MAX_RESULTS = 10_000
 
   def index
-    @channels = Channel.all.order(name: :asc)
-    @users = User.all.order(display_name: :asc)
+    @channels = Channel.order(name: :asc)
+    @users = User.order(display_name: :asc)
 
     if params.key? :search
       # munge search params

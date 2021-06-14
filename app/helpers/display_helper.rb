@@ -6,15 +6,21 @@ module DisplayHelper
   def next_date(channel, date)
     dates = dates_with_messages(channel)
     index = dates.bsearch_index { |d| d >= date }
-    return nil if index.nil? || index == (dates.length - 1)
-    dates[index + 1]
+    if index.nil? || index == (dates.length - 1)
+      nil
+    else
+      dates[index + 1]
+    end
   end
 
   def prev_date(channel, date)
     dates = dates_with_messages(channel)
     index = dates.bsearch_index { |d| d >= date }
-    return nil if index == 0
-    dates[index - 1]
+    if index == 0
+      nil
+    else
+      dates[index - 1]
+    end
   end
 
   def long_date(date)

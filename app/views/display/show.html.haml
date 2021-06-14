@@ -19,6 +19,7 @@
               = link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
                 channel_date_path(@channel, date), { class: 'nav-link pl-0' })
 
+  -# previous years
   - (this_year - 1).downto(oldest_message_date(@channel).year).each do |year|
     - if year_contained_in?(year, @dates_with_counts)
       - 12.downto(1).each do |month|

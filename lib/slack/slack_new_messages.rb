@@ -1,6 +1,6 @@
-require_relative 'slack_client'
-require_relative 'slack_user'
-require_relative '../mrkdwn/mrkdwn'
+require 'slack/slack_client'
+require 'slack/slack_user'
+require 'mrkdwn/mrkdwn'
 
 class SlackNewMessages
   ROLLER_ID = 'B9NN70B0F'.freeze

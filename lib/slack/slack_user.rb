@@ -1,4 +1,4 @@
-require_relative 'slack_client'
+require 'slack/slack_client'
 
 class SlackUser
   attr_reader :user_id, :display_name, :tz_offset

@@ -1,5 +1,5 @@
 #!/usr/bin/env rails runner
-require_relative '../lib/slack/slack_new_messages'
+require 'slack/slack_new_messages'
 
 begin
   # initialize

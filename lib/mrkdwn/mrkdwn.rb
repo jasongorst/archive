@@ -1,8 +1,8 @@
-require_relative 'line_break_filter'
-require_relative 'emoji_filter'
-require_relative 'links_filter'
-require_relative 'bold_italic_filter'
-require_relative 'unescape_special'
+require 'mrkdwn/line_break_filter'
+require 'mrkdwn/emoji_filter'
+require 'mrkdwn/links_filter'
+require 'mrkdwn/bold_italic_filter'
+require 'mrkdwn/unescape_special'
 
 class Mrkdwn
   class << self

@@ -1,0 +1,6 @@
+%div
+  %a.nav-link.pl-0{href: "#month-#{year}-#{month}", data: {toggle: 'collapse'}}
+    #{Date::MONTHNAMES[month]} #{year}
+  %div.collapse{id: "month-#{year}-#{month}"}
+    = render(partial: 'dates_in_month',
+      locals: { dates_with_counts: @dates_with_counts, month: month, year: year })

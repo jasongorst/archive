@@ -9,7 +9,7 @@
       %small.text-muted
         - if @results.count > SearchController::MAX_RESULTS
           showing
-          #{number_with_delimiter([@results.count, SearchController::MAX_RESULTS].min)}
+          #{number_with_delimiter(SearchController::MAX_RESULTS)}
           of
         #{pluralize(number_with_delimiter(@results.count), 'message')} found
       - unless @results.empty?

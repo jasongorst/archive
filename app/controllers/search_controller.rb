@@ -13,11 +13,7 @@ class SearchController < ApplicationController
       query, filters = process_search_params(params[:search])
 
       # execute search
-      @results = search_with_excerpts(query, filters)
-
-      # build [url, result] array
-      @urls_results = build_url_result_array(@results)
-
+      @messages = search_with_excerpts(query, filters)
     else
       # set defaults for new search form
       params[:search] = search_defaults
@@ -50,7 +46,7 @@ class SearchController < ApplicationController
 
   def search_with_excerpts(query, filters)
     # get message search results with maximum size excerpts (i.e., entire messages)
-    results = Message.search query,
+    messages = Message.search query,
                              with: filters,
                              order: 'posted_at DESC',
                              page: params[:page],
@@ -64,30 +60,9 @@ class SearchController < ApplicationController
                                force_all_words: true
                              }
     # highlight search terms in results using excerpts pane
-    results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
-    results
-  end
+    messages.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
-  def build_url_result_array(results)
-    # build urls for results
-    urls = results.map do |result|
-      page = page_from_index(index_of_message_by_date(result))
-      channel_date_path(result.channel, result.posted_on, page: page, anchor: "ts_#{result.ts}")
-    end
-
-    # zip urls with results for use in view
-    urls.zip(results.to_a)
-  end
-
-  def index_of_message_by_date(message)
-    # find index of message on posted_on date
-    m_ary = message.channel.messages.where(posted_on: message.posted_on).pluck(:posted_at)
-    m_ary.bsearch_index { |m| m >= message.posted_at } + 1
-  end
-
-  def page_from_index(index)
-    # calculate page of posted_on date for a given index
-    (index.to_f / Message.default_per_page).ceil
+    messages
   end
 
   def search_defaults

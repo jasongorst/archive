@@ -1,6 +1,8 @@
+- url = channel_date_path(message.channel,
+                          message.posted_on,
+                          page: page_from_index(index_of_message_by_date(message)),
+                          anchor: "ts_#{message.ts}")
 %p
-  - # unpack url result array
-  - url, message = message
   %div
     %small.text-muted= "\##{message.channel.name}" if params[:search][:channel_id].empty?
   .message.position-relative

@@ -3,15 +3,14 @@
 
   = render partial: 'form'
 
-  - unless @results.nil?
+  - unless @messages.nil?
     %hr
     .results
       %small.text-muted
-        - if @results.count > SearchController::MAX_RESULTS
+        - if @messages.count > SearchController::MAX_RESULTS
           showing
           #{number_with_delimiter(SearchController::MAX_RESULTS)}
           of
-        #{pluralize(number_with_delimiter(@results.count), 'message')} found
-      - unless @results.empty?
-        = render partial: 'message', collection: @urls_results
-        = paginate @results
+        #{pluralize(number_with_delimiter(@messages.count), 'message')} found
+      = render partial: 'message', collection: @messages
+      = paginate @messages

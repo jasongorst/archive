@@ -76,10 +76,6 @@ gem 'slack-ruby-client', '~> 0.14.6'
 gem 'kaminari'
 # Full-text search middleware for sphinx/manticore
 gem 'thinking-sphinx', '~> 5.1'
-# Bootstrap 4
-gem 'bootstrap', '~> 4.5.0'
-# Font Awesome 5
-gem 'font_awesome5_rails', '~> 1.1.1'
 # Pretty URLs
 gem 'friendly_id', '~> 5.3.0'
 # Emoji support (prerelease)

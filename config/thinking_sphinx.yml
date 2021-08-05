@@ -1,14 +1,14 @@
 development:
   common_sphinx_configuration: true
   morphology: lemmatize_en
-  lemmatizer_base: /Users/jason/Library/Mobile Documents/com~apple~CloudDocs/Documents/Projects/archive/config
+  lemmatizer_base: /Users/jason/Projects/archive/config
   max_matches: 10000
   charset_table: non-cjk
   socket: /tmp/development.sphinx.sock
 test:
   common_sphinx_configuration: true
   morphology: lemmatize_en
-  lemmatizer_base: /Users/jason/Library/Mobile Documents/com~apple~CloudDocs/Documents/Projects/archive/config
+  lemmatizer_base: /Users/jason/Projects/archive/config
   max_matches: 10000
   charset_table: non-cjk
   socket: /tmp/test.sphinx.sock

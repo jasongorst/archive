@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root 'display#index'
   get 'search', to: 'search#index'
   get '/:channel_id', to: 'display#show', as: :channel

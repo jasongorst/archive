@@ -84,3 +84,6 @@ gem 'gemoji', '~> 4.0.0.rc2'
 gem 'escape_utils', '~> 1.2.1'
 # Ruby cron jobs
 gem 'whenever', '~> 1.0.0', require: false
+
+gem 'activeadmin'
+gem 'devise'

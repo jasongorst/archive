@@ -1,5 +1,5 @@
 {
-  "name": "archival",
+  "name": "archive",
   "private": true,
   "dependencies": {
     "@activeadmin/activeadmin": "^2.9.0",

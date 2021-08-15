@@ -114,31 +114,15 @@ class SlackNewMessages
     end
 
     # save message
-    channel.messages.create(text: create_roller_message_html(color, text, fields),
+    channel.messages.create(text: render_roller_message_text(color, text, fields),
                             ts: message.ts.to_d,
                             user_id: user.id)
   end
 
-  def create_roller_message_html(color, text, fields)
-    # messily construct message html
-    # TODO: redo as haml partial?
-    html = <<~HTML
-      <div class="bot-attachment">
-        <div class="bot-attachment-border slack-#{color}"></div>
-        <div class="bot-attachment-text">
-          <div>#{text}</div>
-    HTML
-
-    fields.each do |f|
-      html << <<~HTML
-        <div><strong>#{f['title']}</strong></div>
-        <div>#{f['value']}</div>
-      HTML
-    end
-
-    html << <<~HTML
-      </div>
-      </div>
-    HTML
+  def render_roller_message_text(color, text, fields)
+    ApplicationController.renderer.render(partial: 'roller/message',
+                                          locals: { color: color,
+                                                    text: text,
+                                                    fields: fields })
   end
 end

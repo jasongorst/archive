@@ -38,8 +38,8 @@ class SearchController < ApplicationController
 
     # filter search on attributes
     filters = { posted_at: after...before }
-    filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].empty?
-    filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].empty?
+    filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
+    filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 
     [query, filters]
   end
@@ -47,18 +47,18 @@ class SearchController < ApplicationController
   def search_with_excerpts(query, filters)
     # get message search results with maximum size excerpts (i.e., entire messages)
     messages = Message.search query,
-                             with: filters,
-                             order: 'posted_at DESC',
-                             page: params[:page],
-                             per_page: RESULTS_PER_PAGE,
-                             max_matches: MAX_RESULTS,
-                             excerpts: {
-                               before_match: '<mark>',
-                               after_match: '</mark>',
-                               limit: 2**16,
-                               around: 2**16,
-                               force_all_words: true
-                             }
+                              with: filters,
+                              order: 'posted_at DESC',
+                              page: params[:page],
+                              per_page: RESULTS_PER_PAGE,
+                              max_matches: MAX_RESULTS,
+                              excerpts: {
+                                before_match: '<mark>',
+                                after_match: '</mark>',
+                                limit: 2**16,
+                                around: 2**16,
+                                force_all_words: true
+                              }
     # highlight search terms in results using excerpts pane
     messages.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
@@ -68,7 +68,7 @@ class SearchController < ApplicationController
   def search_defaults
     {
       query: '',
-      after: Message.order(:posted_at).pick(:posted_at),
+      after: Message.minimum(:posted_at),
       before: Time.now.localtime,
       channel_id: '',
       user_id: ''

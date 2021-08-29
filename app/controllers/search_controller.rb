@@ -29,12 +29,16 @@ class SearchController < ApplicationController
     query.gsub!(/\\"/, '"')
 
     # convert strings to times
-    after  = search[:after].to_time.localtime
-    before = search[:before].to_time.localtime
+    after  = search[:after].to_time
+    before = search[:before].to_time
 
-    # set search params to times to pass back to the datepicker
+    # set search params to pass back to the datepicker
     params[:search][:after] = after
     params[:search][:before] = before
+
+    # localize times
+    after  = after.localtime
+    before = before.localtime
 
     # filter search on attributes
     filters = { posted_at: after...before }

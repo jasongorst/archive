@@ -36,9 +36,10 @@ class SearchController < ApplicationController
     params[:search][:after] = after
     params[:search][:before] = before
 
-    # localize times
-    after  = after.localtime
-    before = before.localtime
+    # times are in local server time (America/New York on evilpaws.org)
+    local_offset = Time.now.utc_offset
+    after += local_offset
+    before += local_offset
 
     # filter search on attributes
     filters = { posted_at: after...before }
@@ -73,7 +74,7 @@ class SearchController < ApplicationController
     {
       query: '',
       after: Message.minimum(:posted_at),
-      before: Time.now.localtime,
+      before: Time.now,
       channel_id: '',
       user_id: ''
     }

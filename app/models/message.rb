@@ -16,7 +16,7 @@ class Message < ApplicationRecord
 
   def set_posted_at_and_posted_on
     # times are in local server time (America/New York on evilpaws.org)
-    local_offset = Time.now.localtime.utc_offset
+    local_offset = Time.now.utc_offset
     self.posted_at = Time.at(ts + local_offset)
     self.posted_on = posted_at.to_date
   end

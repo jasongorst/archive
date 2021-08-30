@@ -20,7 +20,7 @@ class SearchController < ApplicationController
 
   private
 
-  def parse_search_times()
+  def parse_search_times
     params[:search][:after] = params[:search][:after].to_time
     params[:search][:before] = params[:search][:before].to_time
   end

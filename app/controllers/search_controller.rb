@@ -9,10 +9,8 @@ class SearchController < ApplicationController
     @users = User.order(display_name: :asc)
 
     if params.key? :search
-      # munge search params
-      query, filters = process_search_params(params[:search])
-
-      # execute search
+      parse_search_times
+      query, filters = query_from_search_params(params[:search])
       @messages = search_with_excerpts(query, filters)
     else
       # set defaults for new search form
@@ -22,27 +20,24 @@ class SearchController < ApplicationController
 
   private
 
-  def process_search_params(search)
+  def parse_search_times()
+    params[:search][:after] = params[:search][:after].to_time
+    params[:search][:before] = params[:search][:before].to_time
+  end
+
+  def query_from_search_params(search)
     # escape SphinxQL in query
     query = ThinkingSphinx::Query.escape(search[:query])
     # unescape double quotes to allow phrase searching
     query.gsub!(/\\"/, '"')
 
-    # convert strings to times
-    after  = search[:after].to_time
-    before = search[:before].to_time
-
-    # set search params to pass back to the datepicker
-    params[:search][:after] = after
-    params[:search][:before] = before
-
-    # times are in local server time (America/New York on evilpaws.org)
+    # posted_at is stored in local server time (America/New York on evilpaws.org)
     local_offset = Time.now.utc_offset
-    after += local_offset
-    before += local_offset
+    after = search[:after] + local_offset
+    before = search[:before] + local_offset
 
     # filter search on attributes
-    filters = { posted_at: after...before }
+    filters = { posted_at: after..before }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 
@@ -72,11 +67,11 @@ class SearchController < ApplicationController
 
   def search_defaults
     {
-      query: '',
+      query: nil,
       after: Message.minimum(:posted_at),
       before: Time.now,
-      channel_id: '',
-      user_id: ''
+      channel_id: nil,
+      user_id: nil
     }
   end
 end

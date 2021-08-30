@@ -10,7 +10,7 @@
         value: "#{params[:search][:after].strftime('%F %I:%M%P')}"}
       .input-group-append{data: {target: '#after', toggle: 'datetimepicker'}}
         .input-group-text
-          %i.far.fa-calendar
+          %i.far.fa-calendar-alt
   .form-group.form-row
     = f.label(:before, "and", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
     .col-md-6.input-group.date#before{data: {target: {input: 'nearest'}}}
@@ -18,7 +18,7 @@
         value: "#{params[:search][:before].strftime('%F %I:%M%P')}"}
       .input-group-append{data: {target: '#before', toggle: 'datetimepicker'}}
         .input-group-text
-          %i.far.fa-calendar
+          %i.far.fa-calendar-alt
   .form-group.form-row
     = f.label(:channel_id, "Channel", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
     .col-md-6
@@ -38,13 +38,13 @@
   $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
   icons: {
   time: 'far fa-clock',
-  date: 'far fa-calendar',
+  date: 'far fa-calendar-alt',
   up: 'fas fa-arrow-up',
   down: 'fas fa-arrow-down',
   previous: 'fas fa-chevron-left',
   next: 'fas fa-chevron-right',
   today: 'far fa-calendar-check',
-  clear: 'far fa-trash',
+  clear: 'far fa-trash-alt',
   close: 'far fa-times'
   } });
   $(function () {

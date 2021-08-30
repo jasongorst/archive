@@ -16,7 +16,7 @@ module DisplayHelper
   def prev_date(channel, date)
     dates = dates_with_messages(channel)
     index = dates.bsearch_index { |d| d >= date }
-    if index == 0
+    if index.zero?
       nil
     else
       dates[index - 1]

@@ -1,5 +1,5 @@
 .display
-  %h2 ##{@channel.name}
+  %h1= '#' + @channel.name
 
   -# this month
   = render(partial: 'dates_in_month',

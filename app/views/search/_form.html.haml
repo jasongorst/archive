@@ -6,16 +6,16 @@
   .form-group.form-row
     = f.label(:after, "Between", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
     .col-md-6.input-group.date#after{data: {target: {input: 'nearest'}}}
-      %input.form-control.datetimepicker-input{name: 'search[after]', type: 'text', data: {target: '#after'},
-        value: "#{params[:search][:after].strftime('%F %I:%M%P')}"}
+      %input.form-control.datetimepicker-input#search_after{name: 'search[after]', type: 'text', data: {target: '#after'},
+        value: params[:search][:after].strftime('%F %I:%M%P')}
       .input-group-append{data: {target: '#after', toggle: 'datetimepicker'}}
         .input-group-text
           %i.far.fa-calendar-alt
   .form-group.form-row
     = f.label(:before, "and", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
     .col-md-6.input-group.date#before{data: {target: {input: 'nearest'}}}
-      %input.form-control.datetimepicker-input{name: 'search[before]', type: 'text', data: {target: '#before'},
-        value: "#{params[:search][:before].strftime('%F %I:%M%P')}"}
+      %input.form-control.datetimepicker-input#search_before{name: 'search[before]', type: 'text', data: {target: '#before'},
+        value: params[:search][:before].strftime('%F %I:%M%P')}
       .input-group-append{data: {target: '#before', toggle: 'datetimepicker'}}
         .input-group-text
           %i.far.fa-calendar-alt

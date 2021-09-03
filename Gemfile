@@ -77,7 +77,7 @@ gem 'kaminari'
 # Full-text search middleware for sphinx/manticore
 gem 'thinking-sphinx', '~> 5.1'
 # Pretty URLs
-gem 'friendly_id', '~> 5.3.0'
+gem 'friendly_id', '~> 5.4.2'
 # Emoji support (prerelease)
 gem 'gemoji', '~> 4.0.0.rc2'
 # Fast html escaping/unescaping

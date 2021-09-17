@@ -19,20 +19,20 @@ class LinksFilter
         when /\A#(C.+)\z/ # slack channel
           # look up channel by slack_channel
           channel = Channel.find_by(slack_channel: Regexp.last_match(1))
-          channel_name = if channel
+          channel_name = if channel.nil?
+                           data
+                         else
                            # TODO: figure out where the "#" goes
                            "\##{channel.name}"
-                         else
-                           data
                          end
           ['channel', nil, channel_name]
         when /\A@([UB].+)/ # slack user or bot
           # look up user by slack_user
           user = User.find_by(slack_user: Regexp.last_match(1))
-          user_display_name = if user
-                                "@#{user.display_name}"
-                              else
+          user_display_name = if user.nil?
                                 data
+                              else
+                                "@#{user.display_name}"
                               end
           ['mention', nil, user_display_name]
         when /\A@(.+)/ # slack user name

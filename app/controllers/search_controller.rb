@@ -21,8 +21,8 @@ class SearchController < ApplicationController
   private
 
   def parse_search_times
-    params[:search][:after] = params[:search][:after].to_time
-    params[:search][:before] = params[:search][:before].to_time
+    params[:search][:after] = params[:search][:after].try(:to_time) || oldest_message_time
+    params[:search][:before] = params[:search][:before].try(:to_time) || Time.now
   end
 
   def query_from_search_params(search)
@@ -68,10 +68,14 @@ class SearchController < ApplicationController
   def search_defaults
     {
       query: nil,
-      after: Message.minimum(:posted_at),
+      after: oldest_message_time,
       before: Time.now,
       channel_id: nil,
       user_id: nil
     }
+  end
+
+  def oldest_message_time
+    Message.minimum(:posted_at)
   end
 end

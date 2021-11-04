@@ -12,4 +12,4 @@ server 'server.evilpaws.org', user: 'deploy', port: 7822, roles: %w{app db web},
 set :stage, :production
 set :rails_env, :production
 set :default_env, { secret_key_base: `rails secret` } # dummy key to appease rake assets:precompile
-set :bundle_jobs, 2
+set :bundle_jobs, 4

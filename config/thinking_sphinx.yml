@@ -2,22 +2,19 @@ development:
   common_sphinx_configuration: true
   morphology: lemmatize_en
   lemmatizer_base: /Users/jason/Projects/archive/config
-  max_matches: 10000
-  charset_table: non-cjk
+  charset_table: non_cjk
   socket: /tmp/development.sphinx.sock
 test:
   common_sphinx_configuration: true
   morphology: lemmatize_en
   lemmatizer_base: /Users/jason/Projects/archive/config
-  max_matches: 10000
-  charset_table: non-cjk
+  charset_table: non_cjk
   socket: /tmp/test.sphinx.sock
 production:
   common_sphinx_configuration: true
   morphology: lemmatize_en
   lemmatizer_base: /var/www/archive/current/config
-  max_matches: 10000
-  charset_table: non-cjk
+  charset_table: non_cjk
   socket: /var/www/archive/shared/tmp/sockets/production.sphinx.sock
   pid_file: /var/www/archive/shared/tmp/searchd.pid
   indices_location: /var/www/archive/shared/db/sphinx

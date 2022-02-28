@@ -378,7 +378,7 @@ DEPENDENCIES
   ed25519
   escape_utils (~> 1.2.1)
   friendly_id (~> 5.4.2)
-  gemoji (~> 4.0.0.rc2)
+  gemoji (~> 4.0.0.rc3)
   haml-rails
   jbuilder (~> 2.7)
   kaminari

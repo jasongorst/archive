@@ -79,7 +79,7 @@ gem 'thinking-sphinx', '~> 5.1'
 # Pretty URLs
 gem 'friendly_id', '~> 5.4.2'
 # Emoji support (prerelease)
-gem 'gemoji', '~> 4.0.0.rc2'
+gem 'gemoji', '~> 4.0.0.rc3'
 # Fast html escaping/unescaping
 gem 'escape_utils', '~> 1.2.1'
 # Ruby cron jobs

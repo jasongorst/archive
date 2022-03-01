@@ -1,65 +1,31 @@
-= form_with(scope: :search, url: "/search", method: "get", local: true) do |f|
-  .form-group.form-row
-    = f.label(:query, "Text", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6
-      = f.search_field(:query, value: params[:search][:query], class: 'form-control input-sm')
-  .form-group.form-row
-    = f.label(:after, "Between", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6.input-group.date#after{data: {target: {input: 'nearest'}}}
-      %input.form-control.datetimepicker-input#search_after{name: 'search[after]', type: 'text', data: {target: '#after'},
-        value: params[:search][:after].strftime('%F %I:%M%P')}
-      .input-group-append{data: {target: '#after', toggle: 'datetimepicker'}}
-        .input-group-text
-          %i.far.fa-calendar-alt
-  .form-group.form-row
-    = f.label(:before, "and", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6.input-group.date#before{data: {target: {input: 'nearest'}}}
-      %input.form-control.datetimepicker-input#search_before{name: 'search[before]', type: 'text', data: {target: '#before'},
-        value: params[:search][:before].strftime('%F %I:%M%P')}
-      .input-group-append{data: {target: '#before', toggle: 'datetimepicker'}}
-        .input-group-text
-          %i.far.fa-calendar-alt
-  .form-group.form-row
-    = f.label(:channel_id, "Channel", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6
-      = f.collection_select(:channel_id, @channels, :id, :name,
-        { selected: params[:search][:channel_id], include_blank: true },
-        { class: 'custom-select' })
-  .form-group.form-row
-    = f.label(:user_id, "User", class: 'col-md-2 col-lg-1 col-form-label text-md-right')
-    .col-md-6
-      = f.collection_select(:user_id, @users, :id, :display_name,
-        { selected: params[:search][:user_id], include_blank: true },
-        { class: 'custom-select' })
-  .form-group.form-row
-    .offset-md-2.offset-lg-1.pl-1
-      = f.submit("Search", class: 'btn btn-primary btn-sm')
-%script{type: 'text/javascript'}
-  $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
-  icons: {
-  time: 'far fa-clock',
-  date: 'far fa-calendar-alt',
-  up: 'fas fa-arrow-up',
-  down: 'fas fa-arrow-down',
-  previous: 'fas fa-chevron-left',
-  next: 'fas fa-chevron-right',
-  today: 'far fa-calendar-check',
-  clear: 'far fa-trash-alt',
-  close: 'far fa-times'
-  } });
-  $(function () {
-  $('#after').datetimepicker({
-  allowInputToggle: true,
-  format: 'YYYY-MM-DD hh:mma'
-  });
-  $('#before').datetimepicker({
-  allowInputToggle: true,
-  format: 'YYYY-MM-DD hh:mma'
-  });
-  $("#after").on("change.datetimepicker", function (e) {
-  $('#before').datetimepicker('minDate', e.date);
-  });
-  $("#before").on("change.datetimepicker", function (e) {
-  $('#after').datetimepicker('maxDate', e.date);
-  });
-  });
+= form_with(scope: :search, url: '/search', method: 'get', local: true) do |f|
+  .form-floating.mb-3
+    = f.search_field(:query, value: params[:search][:query], placeholder: '', class: 'form-control rounded')
+    = f.label(:query, 'Keywords')
+  .row
+    .col-md
+      .form-floating.mb-3
+        = f.text_field(:after, value: params[:search][:after],
+          placeholder: 'Someday', class: 'form-control rounded',
+          data: { controller: 'flatpickr', flatpickr_enable_time: true, flatpickr_allow_input: true,
+          flatpickr_alt_input: true, flatpickr_alt_format: 'Y-m-d h:iK' })
+        = f.label(:after, 'Between')
+    .col-md
+      .form-floating.mb-3
+        = f.text_field(:before, value: params[:search][:before],
+          placeholder: 'Someday later', class: 'form-control rounded',
+          data: { controller: 'flatpickr', flatpickr_enable_time: true, flatpickr_allow_input: true,
+          flatpickr_alt_input: true, flatpickr_alt_format: 'Y-m-d h:iK' })
+        = f.label(:after, 'and')
+  .form-floating.mb-3
+    = f.collection_select(:channel_id, @channels, :id, :name,
+        { selected: params[:search][:channel_id], prompt: 'Any channel' },
+        { class: 'form-select rounded' })
+    = f.label(:channel_id, 'Channel')
+  .form-floating.mb-3
+    = f.collection_select(:user_id, @users, :id, :display_name,
+      { selected: params[:search][:user_id], prompt: 'Any user' },
+      { class: 'form-select rounded' })
+    = f.label(:user_id, 'User')
+
+  = f.submit('Search', class: 'btn btn-primary rounded')

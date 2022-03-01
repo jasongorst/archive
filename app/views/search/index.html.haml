@@ -1,11 +1,11 @@
-.search
+#search
   %h1 Search
 
   = render partial: 'form'
 
   - unless @messages.nil?
     %hr
-    .results
+    #results
       %small.text-muted
         - if @messages.count > SearchController::MAX_RESULTS
           showing

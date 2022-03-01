@@ -1,9 +1,10 @@
-.search .results .message:hover {
+#search #results .message:hover {
   background: #f8f9fa !important;
 }
-.search .results a:hover {
+#search #results a:hover {
   text-decoration: none !important;
 }
+
 .bot-attachment {
   display: flex;
   flex-direction: row;

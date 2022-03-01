@@ -8,9 +8,8 @@
     #results
       %small.text-muted
         - if @messages.count > SearchController::MAX_RESULTS
-          showing
-          #{number_with_delimiter(SearchController::MAX_RESULTS)}
-          of
+          showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
         #{pluralize(number_with_delimiter(@messages.count), 'message')} found
+      = paginate @messages
       = render partial: 'message', collection: @messages
       = paginate @messages

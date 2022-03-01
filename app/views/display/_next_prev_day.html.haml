@@ -1,11 +1,11 @@
 %nav.row.pb-3
-  .col-auto.mr-auto
+  .col-auto.me-auto
     - p = prev_date(@channel, @date)
     - unless p.nil?
-      = link_to channel_date_path(@channel, p), { class: 'nav-link pl-0' } do
+      = link_to channel_date_path(@channel, p), { class: 'nav-link px-0' } do
         &lsaquo;&nbsp;#{long_date(p)}
   .col-auto
     - n = next_date(@channel, @date)
     - unless n.nil?
-      = link_to channel_date_path(@channel, n), { class: 'nav-link pr-0' } do
+      = link_to channel_date_path(@channel, n), { class: 'nav-link px-0' } do
         #{long_date(n)}&nbsp;&rsaquo;

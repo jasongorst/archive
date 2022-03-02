@@ -1,13 +1,7 @@
 - if notice
-  %div.notice.alert.alert-dark.alert-dismissible
+  %div.alert.alert-info.alert-dismissible.fade.show{role: 'alert'}
     = notice
-    %button.close{data: {dismiss: 'alert'}} &times;
+    %button.btn-close{data: {bs: {dismiss: 'alert'}}}
 - if alert
-  %div.alert.alert-danger.alert-dismissible
+  %div.alert.alert-warning{role: 'alert'}
     = alert
-    %button.close{data: {dismiss: 'alert'}} &times;
-- if flash
-  %div#flash
-    - flash.each do |key, value|
-      %div{class: "flash #{key}"}
-        = value

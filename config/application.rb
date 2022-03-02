@@ -18,5 +18,12 @@ module Archive
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Set layouts for Clearance views
+    config.to_prepare do
+      Clearance::PasswordsController.layout "main"
+      Clearance::SessionsController.layout "main"
+      Clearance::UsersController.layout "main"
+    end
   end
 end

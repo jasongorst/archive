@@ -86,3 +86,4 @@ gem 'escape_utils', '~> 1.2.1'
 gem 'whenever', '~> 1.0.0', require: false
 
 gem 'administrate'
+gem 'clearance'

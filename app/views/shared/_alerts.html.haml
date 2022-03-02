@@ -6,3 +6,8 @@
   %div.alert.alert-danger.alert-dismissible
     = alert
     %button.close{data: {dismiss: 'alert'}} &times;
+- if flash
+  %div#flash
+    - flash.each do |key, value|
+      %div{class: "flash #{key}"}
+        = value

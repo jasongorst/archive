@@ -57,8 +57,7 @@ class ChannelDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how channels are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(channel)
-  #   "Channel ##{channel.id}"
-  # end
+  def display_resource(channel)
+    channel.name
+  end
 end

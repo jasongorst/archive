@@ -19,7 +19,8 @@ ActiveStorage.start()
 
 import "bootstrap";
 import "@fortawesome/fontawesome-free/js/all";
-import "../stylesheets/application";
-import "./custom";
 
 import "../controllers"
+import "./custom";
+
+import "../stylesheets/application";

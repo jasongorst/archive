@@ -1,12 +1,14 @@
 = form_for :session, url: session_path do |form|
-  .text-field
+  .form-floating.mb-3
+    = form.text_field :email, type: 'email', placeholder: 'Email',
+      class: 'form-control rounded'
     = form.label :email
-    = form.text_field :email, type: 'email'
-  .password-field
+  .form-floating.mb-3
+    = form.password_field :password, placeholder: 'Password',
+      class: 'form-control rounded'
     = form.label :password
-    = form.password_field :password
-  .submit-field
-    = form.submit
+  .mb-3
+    = form.submit class: 'btn btn-primary rounded'
   .other-links
     - if Clearance.configuration.allow_sign_up?
       = link_to t(".sign_up"), sign_up_path

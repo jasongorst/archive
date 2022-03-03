@@ -1,11 +1,12 @@
 #clearance.password-reset
-  %h2= t(".title")
+  %h1= t(".title")
   %p= t(".description")
   = form_for :password_reset,                                 |
     url: [@user, :password, token: @user.confirmation_token], |
-    html: { method: :put } do |form|                          |
-    .password-field
+    html: { method: :put } do |form|
+    .form-floating.mb-3
+      = form.password_field :password, placeholder: 'Password',
+        class: 'form-control rounded'
       = form.label :password
-      = form.password_field :password
-    .submit-field
-      = form.submit
+    .mb-3
+      = form.submit class: 'btn btn-primary rounded'

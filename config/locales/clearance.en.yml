@@ -21,9 +21,9 @@ en:
   helpers:
     label:
       password:
-        email: Email address
+        email: Email
       password_reset:
-        password: Choose password
+        password: Password
       session:
         password: Password
       user:

@@ -7,4 +7,5 @@
         class: "navigation__link navigation__link--#{nav_link_state(resource)}"                   |
       ) if valid_action?(:index, resource) && show_action?(:index, model_from_resource(resource)) |
 
-  = link_to "Sign out", sign_out_path, method: :delete, class: 'button button--alt button--nav'
+  = link_to "Sign out", sign_out_path, method: :delete, class: 'button button--alt button--nav',
+    style: 'margin-top: 1.5em'

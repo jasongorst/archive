@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_042847) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
   create_table "admin_users", charset: "utf8mb4", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
     t.string "confirmation_token", limit: 128
@@ -27,16 +26,16 @@ ActiveRecord::Schema.define(version: 2022_03_02_042847) do
     t.string "name"
     t.string "url"
     t.bigint "message_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["message_id"], name: "index_attachments_on_message_id"
   end
 
   create_table "channels", charset: "utf8mb4", force: :cascade do |t|
     t.string "slack_channel"
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_channels_on_name"
     t.index ["slack_channel"], name: "index_channels_on_slack_channel"
   end
@@ -46,10 +45,10 @@ ActiveRecord::Schema.define(version: 2022_03_02_042847) do
     t.decimal "ts", precision: 20, scale: 6
     t.bigint "user_id", null: false
     t.bigint "channel_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.date "posted_on", null: false
-    t.datetime "posted_at", precision: 6, null: false
+    t.datetime "posted_at", null: false
     t.index ["channel_id"], name: "index_messages_on_channel_id"
     t.index ["posted_at"], name: "index_messages_on_posted_at"
     t.index ["posted_on"], name: "index_messages_on_posted_on"
@@ -60,8 +59,8 @@ ActiveRecord::Schema.define(version: 2022_03_02_042847) do
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "slack_user"
     t.string "display_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "color", default: "inherit"
     t.index ["slack_user"], name: "index_users_on_slack_user"
   end

@@ -3,7 +3,7 @@ Clearance.configure do |config|
   config.routes = false
   config.mailer_sender = "reply@evilpaws.org"
   config.rotate_csrf_on_sign_in = true
-  config.user_model = AdminUser
+  config.user_model = "AdminUser"
   config.redirect_url = "/admin"
   config.same_site = true
   config.secure_cookie = false

@@ -28,7 +28,7 @@ class SlackNewMessages
       # join slack channel
       @sc.conversations_join(channel: sch.id)
       # create or find corresponding archive channel
-      channel = Channel.find_or_create_by(slack_channel: sch.id) do |c|
+      channel = Channel.find_or_create_by!(slack_channel: sch.id) do |c|
         c.name = sch.name
       end
 
@@ -78,7 +78,7 @@ class SlackNewMessages
 
   def save_message(message, channel)
     # find or create user
-    user = User.find_or_create_by(slack_user: message.user) do |u|
+    user = User.find_or_create_by!(slack_user: message.user) do |u|
       # fetch slack user info
       slack_user = SlackUser.new(message.user)
       u.display_name = slack_user.display_name
@@ -88,17 +88,19 @@ class SlackNewMessages
     text = Mrkdwn.convert(message.text)
 
     # save message
-    m = channel.messages.create(text: text,
-                                ts: message.ts.to_d,
-                                user_id: user.id)
-
-    return unless message.key? :files
+    m = channel.messages.create!(text: text,
+                                 ts: message.ts.to_d,
+                                 user_id: user.id)
 
     # save attachments
-    message.files.each do |f|
-      m.attachments.create(name: f.name,
-                           url: f.url_private)
+    if message.key? :files
+      message.files.each do |f|
+        m.attachments.create!(name: f.name, url: f.url_private)
+      end
     end
+
+    # expire caches for this channel and date
+    expire_cache_keys(channel, m.posted_on)
   end
 
   def save_roller_message(message, channel)
@@ -114,9 +116,12 @@ class SlackNewMessages
     end
 
     # save message
-    channel.messages.create(text: render_roller_message_text(color, text, fields),
-                            ts: message.ts.to_d,
-                            user_id: user.id)
+    m = channel.messages.create!(text: render_roller_message_text(color, text, fields),
+                                 ts: message.ts.to_d,
+                                 user_id: user.id)
+
+    # expire caches for this channel and date
+    expire_cache_keys(channel, m.posted_on)
   end
 
   def render_roller_message_text(color, text, fields)
@@ -124,5 +129,10 @@ class SlackNewMessages
                                           locals: { color: color,
                                                     text: text,
                                                     fields: fields })
+  end
+
+  def expire_cache_keys(channel, date)
+    Rails.cache.delete_multi(%W[dates_with_counts_in_channel_#{channel.id} messages_in_channel_#{channel.id}_on_#{date}
+      dates_with_messages_in_channel_#{channel.id} channels_with_messages])
   end
 end

@@ -7,8 +7,8 @@ class DisplayController < ApplicationController
 
   def show
     @channel = Channel.friendly.find(params[:channel_id])
-    Rails.cache.fetch("dates_with_counts_in_channel_#{@channel.id}") do
-      @dates_with_counts = @channel.messages.reorder(posted_on: :desc).group(:posted_on).count
+    @dates_with_counts = Rails.cache.fetch("dates_with_counts_in_channel_#{@channel.id}") do
+      @channel.messages.reorder(posted_on: :desc).group(:posted_on).count
     end
   end
 

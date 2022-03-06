@@ -1,7 +1,6 @@
 module DisplayHelper
   def dates_with_messages(channel)
-    Rails.cache.fetch("dates_with_messages_in_channel_#{channel.id}",
-                            expires_in: 24.hours) do
+    Rails.cache.fetch("dates_with_messages_in_channel_#{channel.id}") do
       channel.messages.group(:posted_on).pluck(:posted_on)
     end
   end

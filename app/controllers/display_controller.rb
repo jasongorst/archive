@@ -18,6 +18,6 @@ class DisplayController < ApplicationController
     ids = Rails.cache.fetch("messages_in_channel_#{@channel.id}_on_#{@date.to_s}") do
       @channel.messages.where(posted_on: @date).pluck(:id)
     end
-    @messages = Message.where(id: ids).page(params[:page])
+    @messages = Message.where(id: ids).order(posted_at: :asc).page(params[:page])
   end
 end

@@ -76,6 +76,8 @@ class SearchController < ApplicationController
   end
 
   def oldest_message_time
-    Message.minimum(:posted_at)
+    Rails.cache.fetch("oldest_message_time") do
+      Message.minimum(:posted_at)
+    end
   end
 end

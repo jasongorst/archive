@@ -2,6 +2,6 @@
 = render(partial: 'next_prev_day')
 = paginate @messages
 %h5= long_date_with_year(@date)
-= render(partial: 'message', collection: @messages)
+= render(partial: 'message', collection: @messages, cached: true)
 = paginate @messages
 = render(partial: 'next_prev_day')

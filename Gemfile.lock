@@ -126,6 +126,7 @@ GEM
       railties (>= 5.0)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    dalli (3.2.1)
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
     debug (1.4.0)
@@ -393,6 +394,7 @@ DEPENDENCIES
   capistrano-rbenv
   capybara
   clearance
+  dalli
   debug
   ed25519
   escape_utils (~> 1.2.1)

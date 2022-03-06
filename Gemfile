@@ -58,6 +58,9 @@ group :test do
   gem "webdrivers"
 end
 
+# use memcached for caching
+gem 'dalli'
+
 # Use capistrano for deployment
 group :development do
   gem 'bcrypt_pbkdf', require: false

@@ -1,6 +1,9 @@
 module DisplayHelper
   def dates_with_messages(channel)
-    channel.messages.group(:posted_on).pluck(:posted_on)
+    Rails.cache.fetch("dates_with_messages_in_channel_#{channel.id}",
+                            expires_in: 24.hours) do
+      channel.messages.group(:posted_on).pluck(:posted_on)
+    end
   end
 
   def next_date(channel, date)
@@ -56,6 +59,8 @@ module DisplayHelper
   end
 
   def oldest_message_date(channel)
-    channel.messages.minimum(:posted_on)
+    Rails.cache.fetch("oldest_message_date_in_channel_#{channel.id}") do
+      channel.messages.minimum(:posted_on)
+    end
   end
 end

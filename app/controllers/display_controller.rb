@@ -7,12 +7,17 @@ class DisplayController < ApplicationController
 
   def show
     @channel = Channel.friendly.find(params[:channel_id])
-    @dates_with_counts = @channel.messages.reorder(posted_on: :desc).group(:posted_on).count
+    Rails.cache.fetch("dates_with_counts_in_channel_#{@channel.id}") do
+      @dates_with_counts = @channel.messages.reorder(posted_on: :desc).group(:posted_on).count
+    end
   end
 
   def show_by_date
     @channel = Channel.friendly.find(params[:channel_id])
     @date = params[:date].to_date
-    @messages = @channel.messages.where(posted_on: @date).page params[:page]
+    ids = Rails.cache.fetch("messages_in_channel_#{@channel.id}_on_#{@date.to_s}") do
+      @channel.messages.where(posted_on: @date).pluck(:id)
+    end
+    @messages = Message.where(id: ids).page(params[:page])
   end
 end

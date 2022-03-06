@@ -3,13 +3,15 @@
 %nav.nav.flex-column
   -# this month
   = render(partial: 'dates_in_month',
-    locals: { dates_with_counts: @dates_with_counts, month: this_month, year: this_year })
+    locals: { dates_with_counts: @dates_with_counts, month: this_month, year: this_year },
+      cached: true)
 
   -# previous months of this year
   - (this_month - 1).downto(1).each do |month|
     - if month_contained_in?(month, this_year, @dates_with_counts)
       = render(partial: 'month',
-        locals: { dates_with_counts: @dates_with_counts, month: month, year: this_year })
+        locals: { dates_with_counts: @dates_with_counts, month: month, year: this_year },
+          cached: true)
 
   -# previous years
   - (this_year - 1).downto(oldest_message_date(@channel).year).each do |year|
@@ -17,4 +19,5 @@
       - 12.downto(1).each do |month|
         - if month_contained_in?(month, year, @dates_with_counts)
           = render(partial: 'month',
-            locals: { dates_with_counts: @dates_with_counts, month: month, year: year })
+            locals: { dates_with_counts: @dates_with_counts, month: month, year: year },
+              cached: true)

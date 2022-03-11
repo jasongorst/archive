@@ -25,14 +25,18 @@
           %i.fas.fa-calendar-alt
 
   .form-floating.mb-3
-    = f.collection_select(:channel_id, @channels, :id, :name,
-        { selected: params[:search][:channel_id], prompt: 'Any channel' },
-        { class: 'form-select rounded' })
+    - options = [['Any channel', '']] + @channels.map {|channel| [channel.name, channel.id]}
+    = f.select :channel_id,
+               (options_for_select options, selected: params[:search][:channel_id]),
+               { },
+               { class: 'form-select rounded' }
     = f.label(:channel_id, 'Channel')
   .form-floating.mb-3
-    = f.collection_select(:user_id, @users, :id, :display_name,
-      { selected: params[:search][:user_id], prompt: 'Any user' },
-      { class: 'form-select rounded' })
+    - options = [['Any user', '']] + @users.map {|user| [user.display_name, user.id]}
+    = f.select :user_id,
+               (options_for_select options, selected: params[:search][:user_id]),
+               { },
+               { class: 'form-select rounded' }
     = f.label(:user_id, 'User')
 
   = f.submit('Search', class: 'btn btn-primary rounded')

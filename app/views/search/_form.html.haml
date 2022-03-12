@@ -8,8 +8,8 @@
         .form-floating.form-floating-group.flex-grow-1
           = f.text_field(:after, value: params[:search][:after],
              placeholder: '', class: 'form-control rounded-0 rounded-start',
-             data: { controller: 'flatpickr', flatpickr_enable_time: true, flatpickr_allow_input: true,
-             flatpickr_alt_input: true, flatpickr_alt_format: 'Y-m-d h:iK' })
+             data: { controller: 'flatpickr', flatpickr_allow_input: true,
+             flatpickr_alt_input: true, flatpickr_alt_format: 'Y-m-d' })
           = f.label(:after, 'Between')
         %span.input-group-text.rounded-0.rounded-end
           %i.fas.fa-calendar-alt
@@ -18,8 +18,8 @@
         .form-floating.form-floating-group.flex-grow-1
           = f.text_field(:before, value: params[:search][:before],
             placeholder: '', class: 'form-control rounded-0 rounded-start',
-            data: { controller: 'flatpickr', flatpickr_enable_time: true, flatpickr_allow_input: true,
-            flatpickr_alt_input: true, flatpickr_alt_format: 'Y-m-d h:iK' })
+            data: { controller: 'flatpickr', flatpickr_allow_input: true,
+            flatpickr_alt_input: true, flatpickr_alt_format: 'Y-m-d' })
           = f.label(:after, 'and')
         %span.input-group-text.rounded-0.rounded-end
           %i.fas.fa-calendar-alt

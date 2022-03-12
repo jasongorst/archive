@@ -21,8 +21,8 @@ class SearchController < ApplicationController
   private
 
   def parse_search_times
-    params[:search][:after] = params[:search][:after].try(:to_time) || oldest_message_time
-    params[:search][:before] = params[:search][:before].try(:to_time) || Time.now
+    params[:search][:after] = params[:search][:after].try(:to_date) || oldest_message_date
+    params[:search][:before] = params[:search][:before].try(:to_date) || Date.today
   end
 
   def query_from_search_params(search)
@@ -31,13 +31,8 @@ class SearchController < ApplicationController
     # unescape double quotes to allow phrase searching
     query.gsub!(/\\"/, '"')
 
-    # posted_at is stored in local server time (America/New York on evilpaws.org)
-    local_offset = Time.now.utc_offset
-    after = search[:after] + local_offset
-    before = search[:before] + local_offset
-
     # filter search on attributes
-    filters = { posted_at: after..before }
+    filters = { posted_on: search[:after]..search[:before] }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 
@@ -48,7 +43,7 @@ class SearchController < ApplicationController
     # get message search results with maximum size excerpts (i.e., entire messages)
     messages = Message.search query,
                               with: filters,
-                              order: 'posted_at DESC',
+                              order: 'posted_on DESC',
                               page: params[:page],
                               per_page: RESULTS_PER_PAGE,
                               max_matches: MAX_RESULTS,
@@ -68,16 +63,16 @@ class SearchController < ApplicationController
   def search_defaults
     {
       query: nil,
-      after: oldest_message_time,
-      before: Time.now,
+      after: oldest_message_date,
+      before: Date.today,
       channel_id: nil,
       user_id: nil
     }
   end
 
-  def oldest_message_time
-    Rails.cache.fetch("oldest_message_time") do
-      Message.minimum(:posted_at)
+  def oldest_message_date
+    Rails.cache.fetch("oldest_message_date") do
+      Message.minimum(:posted_on)
     end
   end
 end

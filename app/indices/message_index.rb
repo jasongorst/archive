@@ -3,5 +3,5 @@ ThinkingSphinx::Index.define :message, :with => :real_time do
 
   has user_id, type: :integer
   has channel_id, type: :integer
-  has posted_at, type: :timestamp
+  has posted_on, type: :timestamp
 end

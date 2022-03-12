@@ -25,7 +25,7 @@ set :deploy_user, "deploy"
 append :linked_files, "config/database.yml", "config/master.key", "config/en.pak"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "dir", "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", ".bundle"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", ".bundle", "public/assets", "node_modules"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

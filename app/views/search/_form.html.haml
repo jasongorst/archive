@@ -1,10 +1,10 @@
-= form_with(scope: :search, url: '/search', method: 'get', local: true) do |f|
-  .form-floating.mb-3
+= form_with(scope: :search, url: '/search', method: 'get', local: true, class: 'd-grid gap-3') do |f|
+  .form-floating
     = f.search_field(:query, value: params[:search][:query], placeholder: '', class: 'form-control rounded')
     = f.label(:query, 'Keywords')
   .row
     .col-md
-      .input-group.mb-3
+      .input-group
         .form-floating.form-floating-group.flex-grow-1
           = f.text_field(:after, value: params[:search][:after],
              placeholder: '', class: 'form-control rounded-0 rounded-start',
@@ -14,7 +14,7 @@
         %span.input-group-text.rounded-0.rounded-end
           %i.fas.fa-calendar-alt
     .col-md
-      .input-group.mb-3
+      .input-group
         .form-floating.form-floating-group.flex-grow-1
           = f.text_field(:before, value: params[:search][:before],
             placeholder: '', class: 'form-control rounded-0 rounded-start',
@@ -24,14 +24,14 @@
         %span.input-group-text.rounded-0.rounded-end
           %i.fas.fa-calendar-alt
 
-  .form-floating.mb-3
+  .form-floating
     - options = [['Any channel', '']] + @channels.map {|channel| [channel.name, channel.id]}
     = f.select :channel_id,
                (options_for_select options, selected: params[:search][:channel_id]),
                { },
                { class: 'form-select rounded' }
     = f.label(:channel_id, 'Channel')
-  .form-floating.mb-3
+  .form-floating
     - options = [['Any user', '']] + @users.map {|user| [user.display_name, user.id]}
     = f.select :user_id,
                (options_for_select options, selected: params[:search][:user_id]),

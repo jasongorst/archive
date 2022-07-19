@@ -1,6 +1,9 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.0"
 
+# disable capistrano from injecting public/assets into linked_dirs
+Rake::Task["deploy:set_linked_dirs"].clear_actions
+
 set :application, "archive"
 set :repo_url, "git@gitlab.com:jasongorst/archive.git"
 
@@ -25,7 +28,7 @@ set :deploy_user, "deploy"
 append :linked_files, "config/database.yml", "config/master.key", "config/en.pak"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", ".bundle", "public/assets", "node_modules"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", ".bundle", "node_modules"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

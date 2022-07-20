@@ -18,6 +18,11 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+# override default rake job to remove --silent switch
+# job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task --silent :output"
+job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
+
 set :output, 'log/cron.log'
 
 every 1.day, at: '3:00 am' do
@@ -32,6 +37,6 @@ every '@reboot' do
   rake 'ts:start'
 end
 
-every 1.day, at: '12:01 am' do
+every 1.day, at: '11:00 am' do
   rake 'ts:restart'
 end

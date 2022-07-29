@@ -10,7 +10,8 @@ class SearchController < ApplicationController
 
     if params.key? :search
       parse_search_times
-      query, filters = query_from_search_params(params[:search])
+      query = query_from_search_params(params[:search])
+      filters = filters_from_search_params(params[:search])
       @messages = search_with_excerpts(query, filters)
     else
       # set defaults for new search form
@@ -31,12 +32,16 @@ class SearchController < ApplicationController
     # unescape double quotes to allow phrase searching
     query.gsub!(/\\"/, '"')
 
+    query
+  end
+
+  def filters_from_search_params(search)
     # filter search on attributes
     filters = { posted_on: search[:after]..search[:before] }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 
-    [query, filters]
+    filters
   end
 
   def search_with_excerpts(query, filters)

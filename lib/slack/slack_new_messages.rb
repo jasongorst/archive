@@ -49,6 +49,7 @@ class SlackNewMessages
                               oldest: last_ts,
                               inclusive: false) do |response|
       messages = response.messages
+      @sc.logger.info "Saving #{messages.count} messages"
 
       # process messages
       messages.each do |message|

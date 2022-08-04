@@ -93,7 +93,7 @@ gem 'haml-rails'
 # BigDecimal for timestamps
 gem 'bigdecimal'
 # Slack api client
-gem 'slack-ruby-client', '~> 0.14.6'
+gem 'slack-ruby-client', '~> 1.1.0'
 # Pagination
 gem 'kaminari'
 # Full-text search middleware for sphinx/manticore

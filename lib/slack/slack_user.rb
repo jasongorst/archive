@@ -10,6 +10,15 @@ class SlackUser
     # fetch user info
     u = sc.users_info(user: user_id).user
     @display_name = u.profile.display_name
+
+    if @display_name.empty?
+      @display_name = u.profile.real_name
+    end
+
+    if @display_name.empty?
+      @display_name = "Unknown User"
+    end
+
     @tz_offset = u.tz_offset
   end
 end

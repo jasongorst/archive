@@ -24,7 +24,7 @@ class SlackNewMessages
 
   def slack_messages
     @slack_channels.each do |sch|
-      logger.info "Archiving slack channel \##{sch.name}"
+      @sc.logger.info "Archiving slack channel \##{sch.name}"
       # join slack channel
       @sc.conversations_join(channel: sch.id)
       # create or find corresponding archive channel

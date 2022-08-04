@@ -24,7 +24,7 @@ class SlackNewMessages
 
   def slack_messages
     @slack_channels.each do |sch|
-      $stderr.print "Archiving slack channel \##{sch.name}"
+      logger.info "Archiving slack channel \##{sch.name}"
       # join slack channel
       @sc.conversations_join(channel: sch.id)
       # create or find corresponding archive channel
@@ -59,7 +59,6 @@ class SlackNewMessages
         # save roller messages
         if message.key?(:bot_id) && message.bot_id == ROLLER_ID
           save_roller_message(message, channel)
-          $stderr.print '-'
           next
         end
         # ignore other bot messages
@@ -70,10 +69,8 @@ class SlackNewMessages
 
         # save message
         save_message(message, channel)
-        $stderr.print '.'
       end
     end
-    $stderr.print "\n"
   end
 
   def save_message(message, channel)

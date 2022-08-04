@@ -5,8 +5,8 @@ class SlackClient < Slack::Web::Client
     # authenticate with Slack
     Slack.configure do |config|
       config.token = Rails.application.credentials.slack_api_token
-      config.logger = ::Logger.new(STDERR)
-      config.logger.level = Logger::WARN
+      config.logger = ::Logger.new(STDOUT)
+      config.logger.level = Logger::INFO
     end
 
     # set up new Web API client

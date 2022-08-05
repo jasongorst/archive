@@ -9,13 +9,13 @@ class SlackUser
     sc = SlackClient.new
     # fetch user info
     u = sc.users_info(user: user_id).user
-    @display_name = u.profile.display_name
 
-    if @display_name.empty?
+    # set @display_name to first non-empty of display_name, real_name, or default
+    if !u.profile.display_name.empty?
+      @display_name = u.profile.display_name
+    elsif !u.profile.real_name.empty?
       @display_name = u.profile.real_name
-    end
-
-    if @display_name.empty?
+    else
       @display_name = "Unknown User"
     end
 

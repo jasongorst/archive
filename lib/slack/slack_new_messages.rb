@@ -91,7 +91,7 @@ class SlackNewMessages
                                  user_id: user.id)
 
     # save attachments
-    if message.key? :files
+    if message.key?(:files)
       message.files.each do |f|
         m.attachments.create!(name: f.name, url: f.url_private)
       end
@@ -130,7 +130,13 @@ class SlackNewMessages
   end
 
   def expire_cache_keys(channel, date)
-    Rails.cache.delete_multi(%W[dates_with_counts_in_channel_#{channel.id} messages_in_channel_#{channel.id}_on_#{date}
-      dates_with_messages_in_channel_#{channel.id} channels_with_messages])
+    Rails.cache.delete_multi(
+      %W[
+        dates_with_counts_in_channel_#{channel.id}
+        messages_in_channel_#{channel.id}_on_#{date}
+        dates_with_messages_in_channel_#{channel.id}
+        channels_with_messages
+      ]
+    )
   end
 end

@@ -4,9 +4,9 @@
   = form_for :password_reset,
       url: [@user, :password, token: @user.confirmation_token],
       html: { method: :put } do |form|
-    .form-floating.mb-3
+    %div
       = form.password_field :password, placeholder: 'Password',
           class: 'form-control rounded'
       = form.label :password
-    .mb-3
+    %div
       = form.submit class: 'btn btn-primary rounded'

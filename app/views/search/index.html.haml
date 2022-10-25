@@ -6,7 +6,7 @@
   - unless @messages.nil?
     %hr
     #results
-      %small.text-muted
+      %small
         - if @messages.count > SearchController::MAX_RESULTS
           showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
         #{pluralize(number_with_delimiter(@messages.count), 'message')} found

@@ -2,11 +2,6 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 
-import * as ActiveStorage from "@rails/activestorage"
-ActiveStorage.start()
-
-import "bootstrap"
-
 // fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core"
 import { faArchive,

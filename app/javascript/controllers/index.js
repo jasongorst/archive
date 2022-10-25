@@ -3,6 +3,3 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
-
-import FlatpickrController from "./flatpickr_controller.js"
-application.register("flatpickr", FlatpickrController)

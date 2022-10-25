@@ -5,7 +5,6 @@
     = render(partial: 'shared/favicon')
 
   %body
-    .container
-      = render(partial: 'shared/header')
-      = render(partial: 'shared/alerts')
-      = yield
+    = render(partial: 'shared/header')
+    = render(partial: 'shared/alerts')
+    = yield

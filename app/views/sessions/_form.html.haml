@@ -1,13 +1,13 @@
 = form_for :session, url: session_path do |form|
-  .form-floating.mb-3
+  %div
     = form.text_field :email, type: 'email', placeholder: 'Email',
       class: 'form-control rounded'
     = form.label :email
-  .form-floating.mb-3
+  %div
     = form.password_field :password, placeholder: 'Password',
       class: 'form-control rounded'
     = form.label :password
-  .mb-3
+  %div
     = form.submit class: 'btn btn-primary rounded'
   .other-links
     - if Clearance.configuration.allow_sign_up?

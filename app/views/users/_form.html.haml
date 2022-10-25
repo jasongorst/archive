@@ -1,8 +1,6 @@
-.form-floating.mb-3
-  = form.text_field :email, type: 'email', placeholder: 'Email',
-      class: 'form-control rounded'
+%div
+  = form.text_field :email, type: 'email', placeholder: 'Email'
   = form.label :email
-.form-floating.mb-3
-  = form.password_field :password, placeholder: 'Password',
-      class: 'form-control rounded'
+%div
+  = form.password_field :password, placeholder: 'Password'
   = form.label :password

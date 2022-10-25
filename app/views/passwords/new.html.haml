@@ -2,9 +2,9 @@
   %h1= t(".title")
   %p= t(".description")
   = form_for :password, url: passwords_path do |form|
-    .form-floating.mb-3
+    %div
       = form.text_field :email, type: 'email', placeholder: 'Email',
         class: 'form-control rounded'
       = form.label 'Email'
-    .mb-3
+    %div
       = form.submit class: 'btn btn-primary rounded'

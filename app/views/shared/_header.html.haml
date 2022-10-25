@@ -1,33 +1,25 @@
-.navbar.navbar-expand-md.navbar-dark.bg-primary.mb-3.px-3
-  .container
-    %a.navbar-brand{href: url_for(:root)}
-      %i.fas.fa-archive
-      Archive
-    %button.navbar-toggler{data: {bs: {toggle: 'collapse', target: '#navbarNav'}}}
-      %span.navbar-toggler-icon
-    .collapse.navbar-collapse#navbarNav
-      %ul.navbar-nav.me-auto
-        %li.nav-item{class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
-          %a.nav-link{href: url_for(:root)}
-            Home
+%div
+  %a{href: url_for(:root)}
+    %i.fas.fa-archive
+    Archive
+  %ul
+    %li{class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
+      %a{href: url_for(:root)}
+        Home
 
-        %li.nav-item.dropdown
-          %a.nav-link.dropdown-toggle#navbarDropDownMenuLink{href: '#',
-            class: "#{'active' if current_page?({ controller: '/display', action: :show} )}",
-            data: {bs: {toggle: 'dropdown' }}}
-            Channels
-          .dropdown-menu
-            - channels_with_messages.each do |channel|
-              %a.dropdown-item{class: "#{'active' if current_page?(channel)}",
-                href: url_for(channel)}= "\##{channel.name}"
+    %li
+      %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
+        Channels
+      %ul
+        - channels_with_messages.each do |channel|
+          %li
+            %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
 
-        %li.nav-item{class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
-          %a.nav-link{href: url_for(:search)}
-            Search
+    %li{class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
+      %a{href: url_for(:search)}
+        Search
 
-      %ul.navbar-nav.d-flex
-        %li.nav-item
-          %a{href: 'https://rae.evilpaws.org/', class: 'nav-link py-0 my-2',
-            rel: "nofollow", data: { confirm: 'Ready to leave?' }}
-            rae.evilpaws.org
-            %i.fas.fa-external-link-alt
+  %div
+    %a{href: 'https://rae.evilpaws.org/', rel: "nofollow", data: { confirm: 'Ready to leave?' }}
+      rae.evilpaws.org
+      %i.fas.fa-external-link-alt

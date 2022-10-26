@@ -1,10 +1,10 @@
 #search
-  %h1 Search
+  %h1.text-2xl.pb-3 Search
 
   = render partial: 'form'
 
   - unless @messages.nil?
-    %hr
+    %hr.my-6
     #results
       %small
         - if @messages.count > SearchController::MAX_RESULTS

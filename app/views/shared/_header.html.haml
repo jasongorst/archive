@@ -1,25 +1,54 @@
-%div
-  %a{href: url_for(:root)}
-    %i.fas.fa-archive
-    Archive
-  %ul
-    %li{class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
-      %a{href: url_for(:root)}
-        Home
+.navbar.bg-secondary.text-secondary-content.mb-6
+  .navbar-start
+    .dropdown
+      %label.btn.btn-ghost.lg:hidden{tabindex: "0"}
+        %i.fas.fa-bars
+      %ul.menu.menu-compact.dropdown-content.mt-3.p-2.shadow.bg-secondary.rounded-box.w-52{tabindex: "0"}
+        %li{class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
+          %a{href: url_for(:root)}
+            Home
+        %li{tabindex: "0"}
+          %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
+            Channels
+            %i.fas.fa-caret-right
+          %ul.p-2.bg-secondary
+            - channels_with_messages.each do |channel|
+              %li
+                %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
+        %li{class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
+          %a{href: url_for(:search)}
+            Search
+        %li
+          %a{href: 'https://rae.evilpaws.org/', rel: "nofollow", data: { confirm: 'Ready to leave?' }}
+            %span
+              rae.evilpaws.org
+              %i.fas.fa-external-link-alt
 
-    %li
-      %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
-        Channels
-      %ul
-        - channels_with_messages.each do |channel|
-          %li
-            %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
-
-    %li{class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
-      %a{href: url_for(:search)}
-        Search
-
-  %div
-    %a{href: 'https://rae.evilpaws.org/', rel: "nofollow", data: { confirm: 'Ready to leave?' }}
-      rae.evilpaws.org
-      %i.fas.fa-external-link-alt
+    %div
+      %span.btn.btn-ghost.normal-case.text-xl
+        %a{href: url_for(:root)}
+          %i.fas.fa-archive
+          Archive
+    .hidden.lg:flex
+      %ul.menu.menu-horizontal.p-0
+        %li
+          %a{href: url_for(:root), class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
+            Home
+        %li{tabindex: "0"}
+          %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
+            Channels
+            %i.fas.fa-caret-down
+          %ul.p-2.bg-secondary.z-10
+            - channels_with_messages.each do |channel|
+              %li
+                %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
+        %li
+          %a{href: url_for(:search), class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
+            Search
+  .navbar-end.hidden.lg:flex
+    %ul.menu.menu-horizontal.p-0
+      %li
+        %a{href: 'https://rae.evilpaws.org/', rel: "nofollow", data: { confirm: 'Ready to leave?' }}
+          %span
+            rae.evilpaws.org
+            %i.fas.fa-external-link-alt

@@ -1,6 +1,6 @@
-%div
-  = form.text_field :email, type: 'email', placeholder: 'Email'
-  = form.label :email
-%div
-  = form.password_field :password, placeholder: 'Password'
-  = form.label :password
+.form-control.w-full
+  = form.label :email, class: 'label label-text'
+  = form.text_field :email, type: 'email', placeholder: t("helpers.label.password.email"), class: 'input input-bordered w-full'
+.form-control.w-full
+  = form.label :password, class: 'label label-text'
+  = form.password_field :password, placeholder: t("helpers.label.user.password"), class: 'input input-bordered w-full'

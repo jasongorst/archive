@@ -1,14 +1,14 @@
-%p
-  %div
-    %small= "\##{message.channel.name}" if params[:search][:channel_id].empty?
-  %div
-    %a{href: channel_date_path(message.channel,
+.mb-4.hover:bg-base-200
+  %a{href: channel_date_path(message.channel,
       message.posted_on, page: page_from_index(index_of_message_by_date(message)), anchor: "ts_#{message.ts}")}
-    %strong
-      %span{style: "color: #{message.user.color}"}= message.user.display_name
-    %span= message.posted_at.strftime("%b %-e, %Y at %-l:%M%P")
-  %div!= message.excerpts.text
-  - message.attachments.each do |attachment|
     %div
-      %i.fas.fa-caret-right
-      = link_to attachment.name, attachment.url
+      %small= "\##{message.channel.name}" if params[:search][:channel_id].empty?
+    %div
+      %strong
+        %span{style: "color: #{message.user.color}"}= message.user.display_name
+      %span= message.posted_at.strftime("%b %-e, %Y at %-l:%M%P")
+      %div!= message.excerpts.text
+      - message.attachments.each do |attachment|
+        %div
+          %i.fas.fa-caret-right
+          = link_to attachment.name, attachment.url

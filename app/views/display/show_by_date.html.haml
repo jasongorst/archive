@@ -1,7 +1,7 @@
-%h1= '#' + @channel.name
+%h1.text-2xl= '#' + @channel.name
 = render(partial: 'next_prev_day')
 = paginate @messages
-%h5= long_date_with_year(@date)
+%h5.text-xl.py-5= long_date_with_year(@date)
 = render(partial: 'message', collection: @messages, cached: true)
 = paginate @messages
 = render(partial: 'next_prev_day')

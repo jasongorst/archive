@@ -1,24 +1,28 @@
 = form_with(scope: :search, url: '/search', method: 'get', local: true) do |f|
-  %div
-    = f.search_field(:query, value: params[:search][:query], placeholder: '')
-    = f.label(:query, 'Keywords')
-  %div
-    %div
-      = f.text_field(:after, value: params[:search][:after], placeholder: '')
-      = f.label(:after, 'Between')
-    %i.fas.fa-calendar-alt
-    %div
-      = f.text_field(:before, value: params[:search][:before], placeholder: '')
-      = f.label(:after, 'and')
-    %i.fas.fa-calendar-alt
+  .form-control.w-full
+    = f.label(:query, 'Keywords', class: 'label label-text')
+    = f.search_field(:query, value: params[:search][:query], placeholder: '', class: 'input input-bordered w-full')
+  %div.grid.grid-cols-2.gap-4
+    .form-control
+      = f.label(:after, 'Between', class: 'label label-text')
+      .input-group
+        = f.text_field(:after, value: params[:search][:after], placeholder: '', class: 'input input-bordered w-full')
+        .btn.btn-square
+          %i.fas.fa-calendar-alt
+    .form-control
+      = f.label(:after, 'and', class: 'label label-text')
+      .input-group
+        = f.text_field(:before, value: params[:search][:before], placeholder: '',  class: 'input input-bordered w-full')
+        .btn.btn-square
+          %i.fas.fa-calendar-alt
 
-  %div
+  .form-control.w-full
     - options = [['Any channel', '']] + @channels.map {|channel| [channel.name, channel.id]}
-    = f.select(:channel_id, (options_for_select options, selected: params[:search][:channel_id]))
-    = f.label(:channel_id, 'Channel')
-  %div
+    = f.label(:channel_id, 'Channel', class: 'label label-text')
+    = f.select(:channel_id, (options_for_select options, selected: params[:search][:channel_id]), {}, { class: 'select select-bordered w-full' })
+  .form-control.w-full
     - options = [['Any user', '']] + @users.map {|user| [user.display_name, user.id]}
-    = f.select(:user_id, (options_for_select options, selected: params[:search][:user_id]))
-    = f.label(:user_id, 'User')
+    = f.label(:user_id, 'User', class: 'label label-text')
+    = f.select(:user_id, (options_for_select options, selected: params[:search][:user_id]), {}, { class: 'select select-bordered w-full' })
 
-  = f.submit('Search')
+  = f.submit('Search', class: 'btn w-full mt-6')

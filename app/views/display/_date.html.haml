@@ -1,2 +1,2 @@
-= link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
-  channel_date_path(channel, date), { class: 'nav-link px-0' })
+%li= link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
+     channel_date_path(channel, date))

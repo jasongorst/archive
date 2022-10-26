@@ -1,12 +1,11 @@
 #clearance.password-reset
-  %h1= t(".title")
+  %h1.text-2xl.pb-3= t(".title")
   %p= t(".description")
   = form_for :password_reset,
       url: [@user, :password, token: @user.confirmation_token],
       html: { method: :put } do |form|
-    %div
-      = form.password_field :password, placeholder: 'Password',
-          class: 'form-control rounded'
-      = form.label :password
-    %div
-      = form.submit class: 'btn btn-primary rounded'
+    .form-control.w-full
+      = form.label :password, class: 'label label-text'
+      = form.password_field :password, placeholder: t("helpers.label.user.password"), class: 'input input-bordered w-full'
+    .form-control
+      = form.submit(t("helpers.submit.password_reset.submit"), class: 'btn w-full mt-6')

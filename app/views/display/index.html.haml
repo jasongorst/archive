@@ -1,5 +1,5 @@
-%h1 Channels
+%h1.text-2xl.pb-3 Channels
 
-%nav.nav.flex-column
+%ul.menu
   - channels_with_messages.each do |channel|
-    = link_to("\##{channel.name}", channel, class: 'nav-link px-0')
+    %li= link_to("\##{channel.name}", channel)

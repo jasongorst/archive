@@ -1,6 +1,7 @@
-%div
-  %a.nav-link.px-0{href: "#month-#{year}-#{month}", data: {bs: {toggle: 'collapse'}}}
+%div.collapse
+  %input{type: "checkbox"}
+  %div.collapse-title
     #{Date::MONTHNAMES[month]} #{year}
-  %div.collapse{id: "month-#{year}-#{month}"}
+  %ul.menu.collapse-content
     = render(partial: 'dates_in_month',
       locals: { dates_with_counts: @dates_with_counts, month: month, year: year })

@@ -11,6 +11,8 @@ import {
          faCaretRight,
          faBars,
          faCaretDown,
+         faInfoCircle,
+         faExclamationTriangle
        } from "@fortawesome/free-solid-svg-icons"
 library.add(faArchive)
 library.add(faExternalLinkAlt)
@@ -18,4 +20,6 @@ library.add(faCalendarAlt)
 library.add(faCaretRight)
 library.add(faBars)
 library.add(faCaretDown)
+library.add(faInfoCircle)
+library.add(faExclamationTriangle)
 dom.watch()

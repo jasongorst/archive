@@ -1,6 +1,10 @@
 - if notice
-  %div{role: 'alert'}
-    = notice
+  %div.alert.alert-info.mb-6
+    %span
+      %i.fas.fa-info-circle
+      = notice
 - if alert
-  %div
-    = alert
+  %div.alert.alert-error.mb-6
+    %span
+      %i.fas.fa-exclamation-triangle
+      = alert

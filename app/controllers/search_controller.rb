@@ -22,8 +22,8 @@ class SearchController < ApplicationController
   private
 
   def parse_search_times
-    params[:search][:after] = params[:search][:after].try(:to_date) || oldest_message_date
-    params[:search][:before] = params[:search][:before].try(:to_date) || Date.today
+    params[:search][:start] = params[:search][:start].try(:to_date) || oldest_message_date
+    params[:search][:end] = params[:search][:end].try(:to_date) || Date.today
   end
 
   def query_from_search_params(search)
@@ -37,7 +37,7 @@ class SearchController < ApplicationController
 
   def filters_from_search_params(search)
     # filter search on attributes
-    filters = { posted_on: search[:after]..search[:before] }
+    filters = { posted_on: search[:start]..search[:end] }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 
@@ -68,8 +68,8 @@ class SearchController < ApplicationController
   def search_defaults
     {
       query: nil,
-      after: oldest_message_date,
-      before: Date.today,
+      start: oldest_message_date,
+      end: Date.today,
       channel_id: nil,
       user_id: nil
     }

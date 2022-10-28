@@ -1,18 +1,19 @@
-= form_with(scope: :search, url: '/search', method: 'get', local: true) do |f|
+= form_with(scope: :search, url: '/search', method: 'get', html: { "data-turbo": false }) do |f|
   .form-control.w-full
     = f.label(:query, 'Keywords', class: 'label label-text')
     = f.search_field(:query, value: params[:search][:query], placeholder: '', class: 'input input-bordered w-full')
-  %div.grid.grid-cols-2.gap-4
+
+  .grid.grid-cols-2.gap-4{"date-rangepicker": true, "datepicker-format": "yyyy-mm-dd"}
     .form-control
-      = f.label(:after, 'Between', class: 'label label-text')
+      = f.label(:start, 'Between', class: 'label label-text')
       .input-group
-        = f.text_field(:after, value: params[:search][:after], placeholder: '', class: 'input input-bordered w-full')
+        = f.text_field(:start, value: params[:search][:start], class: 'input input-bordered w-full')
         .btn.btn-square
           %i.fas.fa-calendar-alt
     .form-control
-      = f.label(:after, 'and', class: 'label label-text')
+      = f.label(:end, 'and', class: 'label label-text')
       .input-group
-        = f.text_field(:before, value: params[:search][:before], placeholder: '',  class: 'input input-bordered w-full')
+        = f.text_field(:end, value: params[:search][:end], class: 'input input-bordered w-full')
         .btn.btn-square
           %i.fas.fa-calendar-alt
 
@@ -26,3 +27,4 @@
     = f.select(:user_id, (options_for_select options, selected: params[:search][:user_id]), {}, { class: 'select select-bordered w-full' })
 
   = f.submit('Search', class: 'btn w-full mt-6')
+

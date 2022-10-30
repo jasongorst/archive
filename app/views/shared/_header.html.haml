@@ -1,9 +1,9 @@
-.navbar.bg-secondary.text-secondary-content.mb-6
+.navbar.mb-6.bg-info.info-content
   .navbar-start
     .dropdown
       %label.btn.btn-ghost.lg:hidden{tabindex: "0"}
         %i.fas.fa-bars
-      %ul.menu.menu-compact.dropdown-content.mt-3.p-2.shadow.bg-secondary.rounded-box.w-52{tabindex: "0"}
+      %ul.menu.menu-compact.dropdown-content.mt-3.p-2.shadow.rounded-box.w-52.bg-info{tabindex: "0"}
         %li{class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
           %a{href: url_for(:root)}
             Home
@@ -11,7 +11,7 @@
           %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
             Channels
             %i.fas.fa-caret-right
-          %ul.p-2.bg-secondary
+          %ul.p-2.bg-info
             - channels_with_messages.each do |channel|
               %li
                 %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
@@ -38,7 +38,7 @@
           %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
             Channels
             %i.fas.fa-caret-down
-          %ul.p-2.bg-secondary.z-10
+          %ul.p-2.z-10.bg-info
             - channels_with_messages.each do |channel|
               %li
                 %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"

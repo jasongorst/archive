@@ -10,6 +10,7 @@
     "daisyui": "^2.33.0",
     "esbuild": "^0.15.12",
     "flowbite-datepicker": "^1.2.2",
+    "mrujs": "^0.10.1",
     "postcss": "^8.4.18",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^15.0.0",
@@ -21,7 +22,6 @@
     "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.7",
     "chokidar": "^3.5.3"
   }
 }

@@ -11,4 +11,4 @@
       - message.attachments.each do |attachment|
         %div
           %i.fas.fa-caret-right
-          = link_to attachment.name, attachment.url, class: "link"
+          %span.link= attachment.name

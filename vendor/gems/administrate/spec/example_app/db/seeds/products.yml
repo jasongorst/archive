@@ -1,0 +1,40 @@
+-
+  name: Blokus
+  description: A game of short-lived alliances and geometric backstabbing.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/blokus.jpg
+-
+  name: The Logo Board Game
+  description: A game of logo recognition. That's really all there is to it.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/logo_board_game.jpg
+-
+  name: Ker-Plunk
+  description: Jenga, but more unpredictable.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/kerplunk.jpg
+-
+  name: Frustration!
+  description: I really don't know what this game is about.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/frustration.jpg
+-
+  name: Cranium
+  description: Are you smart enough?
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/cranium.jpg
+-
+  name: Sorry!
+  description: No, really. I'm truly sorry. If I had known how things would turn out, I never would have put you in that situation.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/sorry.jpg
+-
+  name: Candy Land
+  description: Tasty!
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/candyland.jpg
+-
+  name: The Game of Life
+  description: YOPO - You only play once.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/gameoflife.gif
+-
+  name: Mystery Mansion
+  description: If I told you what it was about, it wouldn't be much of a mystery - would it?
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/mysterymansion.jpg
+-
+  name: Monopoly
+  description: A cutthroat game of financial conquest.
+  image_url: https://s3.amazonaws.com/thoughtbot-images/administrate/monopoly.jpg

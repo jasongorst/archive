@@ -1,0 +1,7 @@
+ruby:
+  config_file: .rubocop.yml
+scss:
+  enabled: true
+  config_file: .scss-lint.yml
+stylelint:
+  config_file: .stylelintrc.json

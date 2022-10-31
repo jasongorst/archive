@@ -24,11 +24,8 @@ gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
-# Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
-gem "tailwindcss-rails"
-
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-# gem "cssbundling-rails"
+gem "cssbundling-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
@@ -90,8 +87,8 @@ group :development do
   gem 'capistrano-passenger', require: false
 end
 
-# Use haml for templates
-gem 'haml-rails'
+# Use hamlit for templates
+gem 'hamlit'
 
 # BigDecimal for timestamps
 gem 'bigdecimal'
@@ -110,5 +107,9 @@ gem 'escape_utils', '~> 1.2.1'
 # Ruby cron jobs
 gem 'whenever', '~> 1.0.0', require: false
 
-gem 'administrate'
+gem 'sprockets-sass_embedded'
+gem 'sass-embedded'
+gem 'administrate', path: 'vendor/gems/administrate'
 gem 'clearance'
+
+gem 'tailwindcss-rails'

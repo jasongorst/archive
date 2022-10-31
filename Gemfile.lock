@@ -1,3 +1,15 @@
+PATH
+  remote: vendor/gems/administrate
+  specs:
+    administrate (0.18.0)
+      actionpack (>= 5.0)
+      actionview (>= 5.0)
+      activerecord (>= 5.0)
+      jquery-rails (>= 4.0)
+      kaminari (>= 1.0)
+      selectize-rails (~> 0.6)
+      sprockets-sass_embedded
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -68,14 +80,6 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
-    administrate (0.18.0)
-      actionpack (>= 5.0)
-      actionview (>= 5.0)
-      activerecord (>= 5.0)
-      jquery-rails (>= 4.0)
-      kaminari (>= 1.0)
-      sassc-rails (~> 2.1)
-      selectize-rails (~> 0.6)
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
     argon2 (2.1.1)
@@ -124,6 +128,8 @@ GEM
       railties (>= 5.0)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    cssbundling-rails (1.1.1)
+      railties (>= 6.0.0)
     dalli (3.2.2)
     debug (1.6.2)
       irb (>= 1.3.6)
@@ -152,14 +158,13 @@ GEM
     gli (2.21.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    google-protobuf (3.21.9)
+    google-protobuf (3.21.9-x86_64-darwin)
+    google-protobuf (3.21.9-x86_64-linux)
+    hamlit (3.0.2)
+      temple (>= 0.8.2)
+      thor
       tilt
-    haml-rails (2.1.0)
-      actionpack (>= 5.1)
-      activesupport (>= 5.1)
-      haml (>= 4.0.6)
-      railties (>= 5.1)
     hashie (5.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -263,14 +268,11 @@ GEM
     riddle (2.4.3)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
+    sass-embedded (1.55.0)
+      google-protobuf (~> 3.19)
+      rake (>= 10.0.0)
+    sass-embedded (1.55.0-arm64-darwin)
+      google-protobuf (~> 3.19)
     selectize-rails (0.12.6)
     selenium-webdriver (4.5.0)
       childprocess (>= 0.5, < 5.0)
@@ -291,6 +293,9 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    sprockets-sass_embedded (0.1.0)
+      sass-embedded (>= 1.54.6)
+      sprockets (~> 4.0)
     sshkit (1.21.3)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -344,7 +349,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  administrate
+  administrate!
   bcrypt_pbkdf
   bigdecimal
   bootsnap
@@ -354,22 +359,25 @@ DEPENDENCIES
   capistrano-rbenv
   capybara
   clearance
+  cssbundling-rails
   dalli
   debug
   ed25519
   escape_utils (~> 1.2.1)
   friendly_id (~> 5.4.2)
   gemoji (~> 4.0.0.rc3)
-  haml-rails
+  hamlit
   jbuilder
   jsbundling-rails
   kaminari
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
+  sass-embedded
   selenium-webdriver
   slack-ruby-client (~> 1.1.0)
   sprockets-rails
+  sprockets-sass_embedded
   stimulus-rails
   tailwindcss-rails
   thinking-sphinx (~> 5.1)

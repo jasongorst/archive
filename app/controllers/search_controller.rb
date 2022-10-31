@@ -48,7 +48,7 @@ class SearchController < ApplicationController
     # get message search results with maximum size excerpts (i.e., entire messages)
     messages = Message.search query,
                               with: filters,
-                              order: 'posted_on DESC',
+                              order: 'posted_at DESC',
                               page: params[:page],
                               per_page: RESULTS_PER_PAGE,
                               max_matches: MAX_RESULTS,

@@ -20,3 +20,10 @@
 .bot-attachment-text {
   padding-left: 12px;
 }
+
+mark {
+  background: #fde047;
+  color: #18181b;
+  padding: 0.125em;
+  margin: -0.125em;
+}

@@ -1,6 +1,6 @@
 .mb-4.hover:bg-base-200
-  %a{href: channel_date_path(message.channel,
-      message.posted_on, page: page_from_index(index_of_message_by_date(message)), anchor: "ts_#{message.ts}")}
+  %a{href: channel_date_path(message.channel, message.posted_on,
+    page: page_from_index(index_of_message_by_date(message)), anchor: "ts_#{message.ts}")}
     %div
       %small= "\##{message.channel.name}" if params[:search][:channel_id].empty?
     %div
@@ -11,4 +11,4 @@
       - message.attachments.each do |attachment|
         %div
           %i.fas.fa-caret-right
-          = link_to attachment.name, attachment.url
+          = link_to attachment.name, attachment.url, class: "link"

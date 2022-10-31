@@ -37,7 +37,7 @@ class SearchController < ApplicationController
 
   def filters_from_search_params(search)
     # filter search on attributes
-    filters = { posted_on: search[:start]..search[:end] }
+    filters = { posted_on: search[:start]..(search[:end] + 1) }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 

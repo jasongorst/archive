@@ -3,11 +3,14 @@ require 'slack/slack_new_messages'
 
 begin
   # initialize
-  fetch = SlackNewMessages.new
+  connection = SlackNewMessages.new
 
-  # fetch fetch channels
-  fetch.slack_channels('sandbox')
+  # fetch slack channels
+  channels = connection.fetch_slack_channels
+
+  # filter out all but 'sandbox' channel
+  channels.filter! { |sch| %w[sandbox].include? sch.name }
 
   # fetch messages
-  fetch.slack_messages
+  connection.fetch_slack_messages(channels)
 end

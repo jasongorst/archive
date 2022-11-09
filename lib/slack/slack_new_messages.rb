@@ -14,16 +14,13 @@ class SlackNewMessages
     @sc = SlackClient.new
   end
 
-  def slack_channels(channel_names = nil)
+  def fetch_slack_channels
     # get channel list
-    @slack_channels = @sc.conversations_list(types: 'public_channel',
-                                             exclude_archived: true).channels
-    # only fetch channels with given names, if any
-    @slack_channels.filter! { |sch| channel_names.include? sch.name } if channel_names
+    @sc.conversations_list(types: 'public_channel', exclude_archived: true).channels
   end
 
-  def slack_messages
-    @slack_channels.each do |sch|
+  def fetch_slack_messages(channels)
+    channels.each do |sch|
       @sc.logger.info "Archiving slack channel \##{sch.name}"
       # join slack channel
       @sc.conversations_join(channel: sch.id)

@@ -10,15 +10,16 @@ mrujs.start()
 // fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core"
 import {
-         faArchive,
-         faExternalLinkAlt,
-         faCalendarAlt,
-         faCaretRight,
-         faBars,
-         faCaretDown,
-         faInfoCircle,
-         faExclamationTriangle
-       } from "@fortawesome/free-solid-svg-icons"
+    faArchive,
+    faExternalLinkAlt,
+    faCalendarAlt,
+    faCaretRight,
+    faBars,
+    faCaretDown,
+    faInfoCircle,
+    faExclamationTriangle
+} from "@fortawesome/free-solid-svg-icons"
+
 library.add(faArchive)
 library.add(faExternalLinkAlt)
 library.add(faCalendarAlt)

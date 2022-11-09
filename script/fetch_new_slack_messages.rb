@@ -3,11 +3,11 @@ require 'slack/slack_new_messages'
 
 begin
   # initialize
-  fetch = SlackNewMessages.new
+  connection = SlackNewMessages.new
 
   # fetch fetch channels
-  fetch.slack_channels
+  channels = connection.fetch_slack_channels
 
   # fetch messages
-  fetch.slack_messages
+  connection.fetch_slack_messages(channels)
 end

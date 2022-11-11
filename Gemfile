@@ -111,5 +111,3 @@ gem 'sprockets-sass_embedded'
 gem 'sass-embedded'
 gem 'administrate', path: 'vendor/gems/administrate'
 gem 'clearance'
-
-gem 'tailwindcss-rails'

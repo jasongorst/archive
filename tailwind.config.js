@@ -1,9 +1,10 @@
 module.exports = {
     content: [
-        './app/views/**/*.html.haml',
-        './app/helpers/**/*.rb',
+        './public/*.html',
         './app/assets/stylesheets/**/*.css',
+        './app/helpers/**/*.rb',
         './app/javascript/**/*.js',
+        './app/views/**/*.{erb,haml,html,slim}',
         './node_modules/flowbite-datepicker/**/*.js'
     ],
     plugins: [
@@ -11,7 +12,7 @@ module.exports = {
     ],
     darkMode: 'media',
     daisyui: {
-        darkTheme: "night",
         themes: ["winter", "night"],
+        darkTheme: "night"
     }
 }

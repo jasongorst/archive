@@ -111,3 +111,6 @@ gem 'sprockets-sass_embedded'
 gem 'sass-embedded'
 gem 'administrate', path: 'vendor/gems/administrate'
 gem 'clearance'
+
+gem 'ruby-vips'
+gem 'image_processing', '~> 1.2'

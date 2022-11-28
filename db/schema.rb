@@ -10,8 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
-  create_table "admin_users", charset: "utf8mb4", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_035128) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "admin_users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
@@ -22,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
     t.index ["remember_token"], name: "index_admin_users_on_remember_token"
   end
 
-  create_table "attachments", charset: "utf8mb4", force: :cascade do |t|
+  create_table "attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.bigint "message_id", null: false
@@ -31,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
     t.index ["message_id"], name: "index_attachments_on_message_id"
   end
 
-  create_table "channels", charset: "utf8mb4", force: :cascade do |t|
+  create_table "channels", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "slack_channel"
     t.string "name"
     t.datetime "created_at", null: false
@@ -40,7 +68,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
     t.index ["slack_channel"], name: "index_channels_on_slack_channel"
   end
 
-  create_table "messages", charset: "utf8mb4", force: :cascade do |t|
+  create_table "custom_emojis", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_custom_emojis_on_name"
+  end
+
+  create_table "emoji_aliases", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "alias_for"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_emoji_aliases_on_name"
+  end
+
+  create_table "messages", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.text "text"
     t.decimal "ts", precision: 20, scale: 6
     t.bigint "user_id", null: false
@@ -56,7 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "slack_user"
     t.string "display_name"
     t.datetime "created_at", null: false
@@ -65,6 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_042847) do
     t.index ["slack_user"], name: "index_users_on_slack_user"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "attachments", "messages"
   add_foreign_key "messages", "channels"
   add_foreign_key "messages", "users"

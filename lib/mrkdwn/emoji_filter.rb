@@ -2,7 +2,6 @@ class EmojiFilter
 
   class << self
     def convert(text)
-      # TODO: move alias lists into external JSON files
       add_slack_aliases
       add_custom_emoji
       add_custom_aliases
@@ -41,34 +40,18 @@ class EmojiFilter
     end
 
     def add_custom_emoji
-      custom = %w[simple_smile aplus blackcat boggan bowtie cubimal_chick d10 dino
-                  dusty_stick eshu glitch_crab jollyroger lioness nab ninja nocker piggy pirate
-                  poodle2 pooka possum pride redcap satyr sidhe skunk slack_call slack sluagh
-                  soda squirrel teapot thumbsup_all tinfoil troll tumbleweed viking witch]
-      custom.each do |emoji|
-        Emoji.create(emoji) do |char|
-          # char.image_filename = "/assets/emoji/#{emoji}.png"
-          char.image_filename = ActionController::Base.helpers.image_url("emoji/#{emoji}.png")
+      CustomEmoji.all.each do |emoji|
+        Emoji.create(emoji.name) do |char|
+          char.image_filename = Rails.application.routes.url_helpers.rails_blob_path(emoji.emoji, only_path: true)
         end
       end
     end
 
     def add_custom_aliases
-      aliases = {
-        'black_square' => 'black_large_square',
-        'lovecraft' => 'blackcat',
-        '10' => 'd10',
-        'connor' => 'dog',
-        'nabuni' => 'nab',
-        'emma' => 'possum',
-        'shalimar' => 'skunk',
-        'shipit' => 'squirrel',
-        'white_square' => 'white_large_square'
-      }
-      aliases.each do |new_alias, source|
-        emoji = Emoji.find_by_alias(source)
+      EmojiAlias.all.each do |emoji_alias|
+        emoji = Emoji.find_by_alias(emoji_alias.alias_for)
         Emoji.edit_emoji(emoji) do |char|
-          char.add_alias new_alias
+          char.add_alias emoji_alias.name
         end
       end
     end

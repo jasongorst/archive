@@ -105,8 +105,7 @@ class SlackNewMessages
     m = message.attachments.first
     color = SLACK_COLORS[m.color]
     text = Mrkdwn.convert(m.text)
-    fields = m.fields
-    fields.each do |f|
+    fields = m.fields.each do |f|
       f['value'] = Mrkdwn.convert(f['value'])
     end
 

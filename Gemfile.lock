@@ -168,6 +168,9 @@ GEM
     hashie (5.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     innertube (1.1.0)
     io-console (0.5.11)
     irb (1.4.2)
@@ -204,6 +207,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     middleware (0.1.0)
+    mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.16.3)
     msgpack (1.6.0)
@@ -266,6 +270,8 @@ GEM
       io-console (~> 0.5)
     rexml (3.2.5)
     riddle (2.4.3)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sass-embedded (1.55.0)
@@ -361,12 +367,14 @@ DEPENDENCIES
   friendly_id (~> 5.4.2)
   gemoji (~> 4.0.0.rc3)
   hamlit
+  image_processing (~> 1.2)
   jbuilder
   jsbundling-rails
   kaminari
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
+  ruby-vips
   sass-embedded
   selenium-webdriver
   slack-ruby-client (~> 1.1.0)

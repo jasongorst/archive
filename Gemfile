@@ -87,8 +87,8 @@ group :development do
   gem 'capistrano-passenger', "~> 0.2.1", require: false
 end
 
-# Use hamlit for templates
-gem 'hamlit', "~> 3.0.2"
+# Use haml for templates
+gem 'haml', "~> 6.0.12"
 
 # BigDecimal for timestamps
 gem 'bigdecimal', "~> 3.1.2"

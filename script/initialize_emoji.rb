@@ -27,7 +27,11 @@ begin
   # add custom emoji
   CustomEmoji.all.each do |emoji|
     Emoji.create(emoji.name) do |char|
-      char.image_filename = Rails.application.routes.url_helpers.rails_blob_path(emoji.emoji, only_path: true)
+      char.image_filename = Rails.application.routes.url_helpers
+                                 .rails_blob_path(
+                                   emoji.emoji.variant(resize_to_limit: [nil, 16]).processed,
+                                   only_path: true
+                                 )
     end
   end
 

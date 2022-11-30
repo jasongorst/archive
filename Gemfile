@@ -4,31 +4,31 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.3", ">= 7.0.3.1"
+gem "rails", "~> 7.0.4"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+gem "sprockets-rails", "~> 3.4.2"
 
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
+gem "mysql2", "~> 0.5.4"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 5.6.5"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails"
+gem "jsbundling-rails", "~> 1.0.3"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
+gem "turbo-rails", "~> 1.3.1"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails"
+gem "stimulus-rails", "~> 1.1.0"
 
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails"
+gem "cssbundling-rails", "~> 1.1.1"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+gem "jbuilder", "~> 2.11.5"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -43,7 +43,7 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem "bootsnap", "~> 1.13.0", require: false
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -53,12 +53,12 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", "~> 1.6.2", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
+  gem "web-console", "~> 4.2.0"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -69,48 +69,48 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  gem "capybara", "~> 3.37.1"
+  gem "selenium-webdriver", "~> 4.5.0"
+  gem "webdrivers", "~> 5.2.0"
 end
 
 # use memcached for caching
-gem 'dalli'
+gem 'dalli', "~> 3.2.2"
 
 # Use capistrano for deployment
 group :development do
-  gem 'bcrypt_pbkdf', require: false
-  gem 'ed25519', require: false
-  gem 'capistrano', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-rbenv', require: false
-  gem 'capistrano-passenger', require: false
+  gem 'bcrypt_pbkdf', "~> 1.1.0", require: false
+  gem 'ed25519', "~> 1.3.0", require: false
+  gem 'capistrano', "~> 3.17.1", require: false
+  gem 'capistrano-rails', "~> 1.6.2", require: false
+  gem 'capistrano-rbenv', "~> 2.2.0", require: false
+  gem 'capistrano-passenger', "~> 0.2.1", require: false
 end
 
 # Use hamlit for templates
-gem 'hamlit'
+gem 'hamlit', "~> 3.0.2"
 
 # BigDecimal for timestamps
-gem 'bigdecimal'
+gem 'bigdecimal', "~> 3.1.2"
 # Slack api client
 gem 'slack-ruby-client', '~> 1.1.0'
 # Pagination
-gem 'kaminari'
+gem 'kaminari', "~> 1.2.2"
 # Full-text search middleware for sphinx/manticore
-gem 'thinking-sphinx', '~> 5.1'
+gem 'thinking-sphinx', '~> 5.4.0'
 # Pretty URLs
 gem 'friendly_id', '~> 5.4.2'
 # Emoji support (prerelease)
 gem 'gemoji', '~> 4.0.0.rc3'
 # Fast html escaping/unescaping
-gem 'escape_utils', '~> 1.2.1'
+gem 'escape_utils', '~> 1.2.2'
 # Ruby cron jobs
 gem 'whenever', '~> 1.0.0', require: false
 
-gem 'sprockets-sass_embedded'
-gem 'sass-embedded'
-gem 'administrate', path: 'vendor/gems/administrate'
-gem 'clearance'
+gem 'sprockets-sass_embedded', "~> 0.1.0"
+gem 'sass-embedded', "~> 1.55.0"
+gem 'administrate', "~> 0.18.0", path: 'vendor/gems/administrate'
+gem 'clearance', "~> 2.6.1"
 
-gem 'ruby-vips'
-gem 'image_processing', '~> 1.2'
+gem 'ruby-vips', "~> 2.1.4"
+gem 'image_processing', '~> 1.12.2'

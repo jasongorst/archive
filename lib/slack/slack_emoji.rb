@@ -18,11 +18,27 @@ class SlackEmoji
   def update_custom_emoji
     custom_emoji.each do |name, url|
       @sc.logger.info "#{name}: #{url}"
-      e = CustomEmoji.find_or_initialize_by(name: name)
-      unless e.emoji.attached?
-        extension = File.extname(URI(url).path)
-        e.emoji.attach(io: URI.open(url), filename: name + extension)
-        e.save
+      custom_emoji = CustomEmoji.find_or_initialize_by(name: name) do |e|
+        e.url = url
+      end
+
+      custom_emoji.with_lock do
+        if custom_emoji.url != url
+          @sc.logger.info "URL has changed, deleting attachment"
+          # delete existing attachment if url has changed
+          custom_emoji.emoji.purge
+          # then update url
+          custom_emoji.url = url
+        end
+
+        # if this is a new CustomEmoji (or if we just deleted the attachment), then download the attachment from url
+        unless custom_emoji.emoji.attached?
+          @sc.logger.info "downloading #{url} and attaching"
+          extension = File.extname(URI(url).path)
+          custom_emoji.emoji.attach(io: URI.open(url), filename: name + extension)
+        end
+
+        custom_emoji.save
       end
     end
   end

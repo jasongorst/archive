@@ -1,6 +1,6 @@
 #!/usr/bin/env rails runner
 require 'slack/slack_new_messages'
-require_relative 'fetch_slack_emoji'
+require_relative './fetch_slack_emoji'
 require_relative './initialize_emoji'
 
 begin

@@ -1,17 +1,19 @@
-require 'mrkdwn/line_break_filter'
 require 'mrkdwn/emoji_filter'
-require 'mrkdwn/links_filter'
-require 'mrkdwn/bold_italic_filter'
-require 'mrkdwn/unescape_special'
+require 'mrkdwn/line_break_filter'
+require 'mrkdwn/slack_link_filter'
+require 'mrkdwn/slack_mention_filter'
+require 'mrkdwn/slack_style_filter'
 
-class Mrkdwn
-  class << self
-    def convert(text)
-      text = LinksFilter.convert(text)
-      text = LineBreakFilter.convert(text)
-      text = EmojiFilter.convert(text)
-      text = BoldItalicFilter.convert(text)
-      UnescapeSpecial.convert(text)
-    end
-  end
-end
+context = {
+  :slack_channels => Channel.pluck(:slack_channel, :name).to_h,
+  :slack_users => User.pluck(:slack_user, :display_name).to_h
+}
+
+Mrkdwn = HTML::Pipeline.new [
+                        HTML::Pipeline::PlainTextInputFilter,
+                        LineBreakFilter,
+                        EmojiFilter,
+                        SlackMentionFilter,
+                        SlackLinkFilter,
+                        SlackStyleFilter
+                      ], context

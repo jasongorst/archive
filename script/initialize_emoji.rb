@@ -29,7 +29,7 @@ begin
     Emoji.create(emoji.name) do |char|
       char.image_filename = Rails.application.routes.url_helpers
                                  .rails_blob_path(
-                                   emoji.emoji.variant(resize_to_limit: [nil, 16]).processed,
+                                   emoji.emoji.variant(resize_and_pad: [16, 16, alpha: true]).processed,
                                    only_path: true
                                  )
     end

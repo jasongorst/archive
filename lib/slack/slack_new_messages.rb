@@ -8,7 +8,7 @@ class SlackNewMessages
     '2eb886' => 'good',
     'daa038' => 'warning',
     'a30200' => 'danger'
-  }.freeze
+  }
 
   def initialize
     @sc = SlackClient.new
@@ -80,10 +80,11 @@ class SlackNewMessages
     end
 
     # convert message text to html
-    text = Mrkdwn.convert(message.text)
+    text = Mrkdwn.to_html(message.text)
 
     # save message
     m = channel.messages.create!(text: text,
+                                 verbatim: message.text,
                                  ts: message.ts.to_d,
                                  user_id: user.id)
 
@@ -104,9 +105,9 @@ class SlackNewMessages
     # parse message attachment (assume only one)
     m = message.attachments.first
     color = SLACK_COLORS[m.color]
-    text = Mrkdwn.convert(m.text)
+    text = Mrkdwn.to_html(m.text)
     fields = m.fields.each do |f|
-      f['value'] = Mrkdwn.convert(f['value'])
+      f['value'] = Mrkdwn.to_html(f['value'])
     end
 
     # save message

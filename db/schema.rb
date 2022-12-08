@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_225551) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_014153) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_225551) do
     t.datetime "updated_at", null: false
     t.date "posted_on", null: false
     t.datetime "posted_at", null: false
+    t.text "verbatim"
     t.index ["channel_id"], name: "index_messages_on_channel_id"
     t.index ["posted_at"], name: "index_messages_on_posted_at"
     t.index ["posted_on"], name: "index_messages_on_posted_on"

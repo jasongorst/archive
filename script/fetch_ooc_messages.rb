@@ -11,7 +11,7 @@ begin
   channels = connection.fetch_slack_channels
 
   # filter out all but 'sandbox' channel
-  channels.filter! { |sch| %w[sandbox].include? sch.name }
+  channels.filter! { |sch| %w[ooc].include? sch.name }
 
   # fetch messages
   connection.fetch_slack_messages(channels)

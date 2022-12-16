@@ -3,16 +3,16 @@ class SlackMentionFilter < HTML::Pipeline::Filter
 
   MENTION_PATTERN = /
     &lt;
-    ([@#](?:[a-z0-9][a-z0-9-]*))
+    ([@#!](?:[a-z0-9][a-z0-9-]*))
     &gt;
   /ix
 
   IGNORE_PARENTS = %w(pre code a).to_set
 
   def call
-    doc.search('.//text()').each do |node|
+    doc.search(".//text()").each do |node|
       content = node.to_html
-      next unless (content.include?('@') or content.include?('#'))
+      next unless content.include?("@") or content.include?("#") or content.include?("!")
       next if has_ancestor?(node, IGNORE_PARENTS)
       html = mention_filter(content)
       next if html == content
@@ -26,19 +26,22 @@ class SlackMentionFilter < HTML::Pipeline::Filter
       mention = Regexp.last_match[1]
 
       case mention
-      when /\A#(C.+)\z/ # slack channel
-        if context[:slack_channels].include?(Regexp.last_match[1])
-          "\##{context[:slack_channels][Regexp.last_match[1]]}"
+      when /\A#(C.+)\Z/ # slack channel
+        if context.dig(:slack_channels, Regexp.last_match[1])
+          "<span class=\"channel\">\##{context[:slack_channels][Regexp.last_match[1]]}</span>"
         else
-          mention
+          "<span class=\"channel\">#{mention}</span>"
         end
 
-      when /\A@([UB].+)/ # slack user or bot
-        if context[:slack_users].include?(Regexp.last_match[1])
-          "@#{context[:slack_users][Regexp.last_match[1]]}"
+      when /\A@([UB].+)\Z/ # slack user or bot
+        if context.dig(:slack_users, Regexp.last_match[1])
+          "<span class=\"user\">@#{context[:slack_users][Regexp.last_match[1]]}</span>"
         else
-          mention
+          "<span class=\"user\">#{mention}</span>"
         end
+
+      when /\A!(here|channel|everyone)\Z/ # special mention
+        "<span class=\"mention\">@#{Regexp.last_match[1]}</span>"
 
       else
         match

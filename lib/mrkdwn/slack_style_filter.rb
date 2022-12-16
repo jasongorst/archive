@@ -1,14 +1,19 @@
 class SlackStyleFilter < HTML::Pipeline::Filter
   # based on HTML::Pipeline::MentionFilter
 
-  STYLE_PATTERN = /([*_~])(?=\S)(.+?)(?<=\S)\1/
+  STYLE_PATTERN = /([`*_~])(?=\S)(.+?)(?<=\S)\1/
 
   IGNORE_PARENTS = %w(pre code).to_set
 
   def call
-    doc.search('.//text()').each do |node|
+    doc.search(".//text()").each do |node|
       content = node.to_html
-      next unless (content.include?('*') or content.include?('_') or content.include?('~'))
+      next unless (
+        content.include?("`") or
+        content.include?("*") or
+        content.include?("_") or
+        content.include?("~")
+      )
       next if has_ancestor?(node, IGNORE_PARENTS)
       html = style_filter(content)
       next if html == content
@@ -27,6 +32,8 @@ class SlackStyleFilter < HTML::Pipeline::Filter
         match
       else
         case style
+        when "`"
+          "<code>#{text}</code>"
         when "*"
           "<strong>#{style_filter(text)}</strong>"
         when "_"

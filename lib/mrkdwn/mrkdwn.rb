@@ -1,8 +1,10 @@
-require 'mrkdwn/emoji_filter'
-require 'mrkdwn/line_break_filter'
-require 'mrkdwn/slack_link_filter'
-require 'mrkdwn/slack_mention_filter'
-require 'mrkdwn/slack_style_filter'
+require "mrkdwn/slack_multiline_code_filter"
+require "mrkdwn/line_break_filter"
+require "mrkdwn/emoji_filter"
+require "mrkdwn/slack_mention_filter"
+require "mrkdwn/slack_link_filter"
+require "mrkdwn/slack_style_filter"
+require "mrkdwn/slack_blockquote_filter"
 
 context = {
   :slack_channels => Channel.pluck(:slack_channel, :name).to_h,
@@ -11,9 +13,11 @@ context = {
 
 Mrkdwn = HTML::Pipeline.new [
                         HTML::Pipeline::PlainTextInputFilter,
+                        SlackMultilineCodeFilter,
                         LineBreakFilter,
                         EmojiFilter,
                         SlackMentionFilter,
                         SlackLinkFilter,
-                        SlackStyleFilter
+                        SlackStyleFilter,
+                        SlackBlockquoteFilter
                       ], context

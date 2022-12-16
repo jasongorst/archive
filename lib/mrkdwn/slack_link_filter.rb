@@ -13,7 +13,7 @@ class SlackLinkFilter < HTML::Pipeline::Filter
   IGNORE_PARENTS = %w(pre code a).to_set
 
   def call
-    doc.search('.//text()').each do |node|
+    doc.search(".//text()").each do |node|
       content = node.to_html
       next if has_ancestor?(node, IGNORE_PARENTS)
       html = link_filter(content)
@@ -28,7 +28,7 @@ class SlackLinkFilter < HTML::Pipeline::Filter
       link = Regexp.last_match[1]
       text = Regexp.last_match[2] || link
 
-      "<a href=\"#{link}\">#{text}</a>"
+      "<a class=\"link\" href=\"#{link}\">#{text}</a>"
     end
   end
 end

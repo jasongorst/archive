@@ -1,5 +1,6 @@
 require "mrkdwn/slack_multiline_code_filter"
 require "mrkdwn/line_break_filter"
+require "mrkdwn/slack_code_filter"
 require "mrkdwn/emoji_filter"
 require "mrkdwn/slack_mention_filter"
 require "mrkdwn/slack_link_filter"
@@ -15,6 +16,7 @@ Mrkdwn = HTML::Pipeline.new [
                         HTML::Pipeline::PlainTextInputFilter,
                         SlackMultilineCodeFilter,
                         LineBreakFilter,
+                        SlackCodeFilter,
                         EmojiFilter,
                         SlackMentionFilter,
                         SlackLinkFilter,

@@ -1,5 +1,6 @@
 require 'slack/slack_client'
 require 'slack/slack_user'
+require 'slack/mrkdwn'
 
 class SlackNewMessages
   SLACK_COLORS = {

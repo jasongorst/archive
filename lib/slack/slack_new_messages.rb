@@ -1,9 +1,7 @@
 require 'slack/slack_client'
 require 'slack/slack_user'
-require 'mrkdwn/mrkdwn'
 
 class SlackNewMessages
-  ROLLER_ID = 'B9NN70B0F'.freeze
   SLACK_COLORS = {
     '2eb886' => 'good',
     'daa038' => 'warning',
@@ -55,7 +53,7 @@ class SlackNewMessages
         next if message.ts.to_d == last_ts
 
         # save roller messages
-        if message.key?(:bot_id) && message.bot_id == ROLLER_ID
+        if message.key?(:bot_id) && message.bot_id == User.find_by_display_name("Roller").slack_user
           save_roller_message(message, channel)
           next
         end
@@ -80,7 +78,7 @@ class SlackNewMessages
     end
 
     # convert message text to html
-    text = Mrkdwn.to_html(message.text)
+    text = PIPELINE.to_html(message.text)
 
     # save message
     m = channel.messages.create!(text: text,
@@ -100,14 +98,14 @@ class SlackNewMessages
   end
 
   def save_roller_message(message, channel)
-    user = User.find_by(slack_user: ROLLER_ID)
+    user = User.find_by_display_name("Roller")
 
     # parse message attachment (assume only one)
     m = message.attachments.first
     color = SLACK_COLORS[m.color]
-    text = Mrkdwn.to_html(m.text)
+    text = PIPELINE.to_html(m.text)
     fields = m.fields.each do |f|
-      f['value'] = Mrkdwn.to_html(f['value'])
+      f['value'] = PIPELINE.to_html(f['value'])
     end
 
     # save message

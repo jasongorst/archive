@@ -100,10 +100,6 @@ gem "kaminari", "~> 1.2.2"
 gem "thinking-sphinx", '~> 5.4.0'
 # Pretty URLs
 gem "friendly_id", '~> 5.4.2'
-# Emoji support (prerelease)
-gem "gemoji", '~> 4.0.1'
-# Fast html escaping/unescaping
-gem "escape_utils", '~> 1.2.2'
 # Ruby cron jobs
 gem "whenever", '~> 1.0.0', require: false
 
@@ -115,4 +111,4 @@ gem "clearance", "~> 2.6.1"
 gem "ruby-vips", "~> 2.1.4"
 gem "image_processing", '~> 1.12.2'
 
-gem "html-pipeline", "~> 2.14.3"
+gem "html-pipeline-mrkdwn", "~> 0.1.0"

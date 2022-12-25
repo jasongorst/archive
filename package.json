@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "archive",
   "private": "true",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",

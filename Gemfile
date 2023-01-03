@@ -77,9 +77,6 @@ end
 # use memcached for caching
 gem "dalli", "~> 3.2.3"
 
-# use sidekiq for Active Job queues
-gem "sidekiq", "~> 7.0.2"
-
 # Use capistrano for deployment
 group :development do
   gem "bcrypt_pbkdf", "~> 1.1.0", require: false
@@ -106,17 +103,12 @@ gem "friendly_id", '~> 5.4.2'
 # Ruby cron jobs
 gem "whenever", '~> 1.0.0', require: false
 
-# use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
 gem "sass-embedded", "~> 1.55.0"
 gem "administrate", "~> 0.18.0", path: "vendor/gems/administrate"
-
-# use clearance for authentication
 gem "clearance", "~> 2.6.1"
 
-# use vips for Active Storage variants
 gem "ruby-vips", "~> 2.1.4"
 gem "image_processing", '~> 1.12.2'
 
-# convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1.0"

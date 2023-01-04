@@ -106,7 +106,7 @@ gem "whenever", '~> 1.0.0', require: false
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
 gem "sass-embedded", "~> 1.55.0"
-gem "administrate", "~> 0.18.0", path: "vendor/gems/administrate"
+gem "administrate", github: "jasongorst/administrate"
 
 # use clearance for authentication
 gem "clearance", "~> 2.6.1"

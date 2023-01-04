@@ -1,2 +1,0 @@
-class LineItemPolicy < ApplicationPolicy
-end

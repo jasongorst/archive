@@ -1,2 +1,0 @@
-class CustomerPolicy < ApplicationPolicy
-end

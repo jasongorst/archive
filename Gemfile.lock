@@ -1,5 +1,6 @@
-PATH
-  remote: vendor/gems/administrate
+GIT
+  remote: https://github.com/jasongorst/administrate.git
+  revision: 5b0aa8559ef2be2d65afb5b6fc54c9e6525be511
   specs:
     administrate (0.18.0)
       actionpack (>= 5.0)
@@ -8,7 +9,7 @@ PATH
       jquery-rails (>= 4.0)
       kaminari (>= 1.0)
       selectize-rails (~> 0.6)
-      sprockets-sass_embedded
+      sprockets-sass_embedded (~> 0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -136,7 +137,7 @@ GEM
     ed25519 (1.3.0)
     email_validator (2.2.4)
       activemodel
-    erubi (1.11.0)
+    erubi (1.12.0)
     escape_utils (1.3.0)
     faraday (2.7.1)
       faraday-net_http (>= 2.0, < 3.1)
@@ -157,8 +158,8 @@ GEM
     gli (2.21.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    google-protobuf (3.21.11)
-    google-protobuf (3.21.11-x86_64-linux)
+    google-protobuf (3.21.12)
+    google-protobuf (3.21.12-x86_64-linux)
     haml (6.0.12)
       temple (>= 0.8.2)
       thor
@@ -200,7 +201,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    loofah (2.19.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.8.0)
@@ -239,7 +240,7 @@ GEM
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.6.2)
-    rack (2.2.4)
+    rack (2.2.5)
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (7.0.4)
@@ -259,8 +260,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.3)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.4.4)
+      loofah (~> 2.19, >= 2.19.1)
     railties (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -293,9 +294,9 @@ GEM
       gli
       hashie
       websocket-driver
-    sprockets (4.1.1)
+    sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
+      rack (>= 2.2.4, < 4)
     sprockets-rails (3.4.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
@@ -349,7 +350,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  administrate (~> 0.18.0)!
+  administrate!
   bcrypt_pbkdf (~> 1.1.0)
   bigdecimal (~> 3.1.3)
   bootsnap (~> 1.13.0)

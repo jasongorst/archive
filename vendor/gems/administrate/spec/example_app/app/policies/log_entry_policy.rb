@@ -1,2 +1,0 @@
-class LogEntryPolicy < ApplicationPolicy
-end

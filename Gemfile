@@ -1,31 +1,31 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.3"
+ruby "3.2.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4"
+gem "rails", "~> 7.0.4.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails", "~> 3.4.2"
 
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5.4"
+gem "mysql2", "~> 0.5.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.6.5"
+gem "puma", "~> 6.1.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails", "~> 1.0.3"
+gem "jsbundling-rails", "~> 1.1.1"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", "~> 1.3.2"
+gem "turbo-rails", "~> 1.3.3"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails", "~> 1.1.1"
+gem "stimulus-rails", "~> 1.2.1"
 
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails", "~> 1.1.1"
+gem "cssbundling-rails", "~> 1.1.2"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.11.5"
@@ -43,7 +43,7 @@ gem "jbuilder", "~> 2.11.5"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", "~> 1.13.0", require: false
+gem "bootsnap", "~> 1.16.0", require: false
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -53,12 +53,13 @@ gem "bootsnap", "~> 1.13.0", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", "~> 1.6.3", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", "~> 1.7.1", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console", "~> 4.2.0"
+  gem "foreman", "~> 0.87.2"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -69,43 +70,43 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara", "~> 3.37.1"
-  gem "selenium-webdriver", "~> 4.5.0"
+  gem "capybara", "~> 3.38.0"
+  gem "selenium-webdriver", "~> 4.8.1"
   gem "webdrivers", "~> 5.2.0"
 end
 
 # use memcached for caching
-gem "dalli", "~> 3.2.3"
+gem "dalli", "~> 3.2.4"
 
 # Use capistrano for deployment
 group :development do
   gem "bcrypt_pbkdf", "~> 1.1.0", require: false
   gem "ed25519", "~> 1.3.0", require: false
-  gem "capistrano", "~> 3.17.1", require: false
+  gem "capistrano", "~> 3.17.2", require: false
   gem "capistrano-rails", "~> 1.6.2", require: false
   gem "capistrano-rbenv", "~> 2.2.0", require: false
   gem "capistrano-passenger", "~> 0.2.1", require: false
 end
 
 # Use haml for templates
-gem "haml", "~> 6.0.12"
+gem "haml", "~> 6.1.1"
 
 # BigDecimal for timestamps
 gem "bigdecimal", "~> 3.1.3"
 # Slack api client
-gem "slack-ruby-client", '~> 1.1.0'
+gem "slack-ruby-client", '~> 2.0.0'
 # Pagination
 gem "kaminari", "~> 1.2.2"
 # Full-text search middleware for sphinx/manticore
-gem "thinking-sphinx", '~> 5.4.0'
+gem "thinking-sphinx", '~> 5.5.1'
 # Pretty URLs
-gem "friendly_id", '~> 5.4.2'
+gem "friendly_id", '~> 5.5.0'
 # Ruby cron jobs
 gem "whenever", '~> 1.0.0', require: false
 
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
-gem "sass-embedded", "~> 1.55.0"
+gem "sass-embedded", "~> 1.58.3"
 gem "administrate", github: "jasongorst/administrate"
 
 # use clearance for authentication
@@ -116,4 +117,4 @@ gem "ruby-vips", "~> 2.1.4"
 gem "image_processing", '~> 1.12.2'
 
 # convert slack mrkdwn to html
-gem "html-pipeline-mrkdwn", "~> 0.1.0"
+gem "html-pipeline-mrkdwn", "~> 0.1.7"

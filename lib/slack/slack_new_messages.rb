@@ -20,7 +20,7 @@ class SlackNewMessages
 
   def fetch_slack_messages(channels)
     channels.each do |sch|
-      @sc.logger.info "Archiving slack channel \##{sch.name}"
+      @sc.logger.warn "Archiving slack channel \##{sch.name}"
       # join slack channel
       @sc.conversations_join(channel: sch.id)
       # create or find corresponding archive channel
@@ -45,7 +45,7 @@ class SlackNewMessages
                               oldest: last_ts,
                               inclusive: false) do |response|
       messages = response.messages
-      @sc.logger.info "Saving #{messages.count} messages"
+      @sc.logger.warn "Saving #{messages.count} messages"
 
       # process messages
       messages.each do |message|

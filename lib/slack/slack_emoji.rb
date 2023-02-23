@@ -8,7 +8,7 @@ class SlackEmoji
 
   def update_emoji_aliases
     emoji_aliases.each do |name, alias_for|
-      @sc.logger.info "#{name}: #{alias_for}"
+      @sc.logger.warn "#{name}: #{alias_for}"
       e = EmojiAlias.find_or_initialize_by(name: name)
       e.alias_for = alias_for
       e.save
@@ -17,14 +17,14 @@ class SlackEmoji
 
   def update_custom_emoji
     custom_emoji.each do |name, url|
-      @sc.logger.info "#{name}: #{url}"
+      @sc.logger.warn "#{name}: #{url}"
       custom_emoji = CustomEmoji.find_or_initialize_by(name: name) do |e|
         e.url = url
       end
 
       custom_emoji.with_lock do
         if custom_emoji.url != url
-          @sc.logger.info "URL has changed, deleting attachment"
+          @sc.logger.warn "URL has changed, deleting attachment"
           # delete existing attachment if url has changed
           custom_emoji.emoji.purge
           # then update url
@@ -33,7 +33,7 @@ class SlackEmoji
 
         # if this is a new CustomEmoji (or if we just deleted the attachment), then download the attachment from url
         unless custom_emoji.emoji.attached?
-          @sc.logger.info "downloading #{url} and attaching"
+          @sc.logger.warn "downloading #{url} and attaching"
           extension = File.extname(URI(url).path)
           custom_emoji.emoji.attach(io: URI.open(url), filename: name + extension)
         end

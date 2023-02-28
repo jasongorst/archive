@@ -4,6 +4,9 @@ require_relative './fetch_slack_emoji'
 require_relative './initialize_emoji'
 
 begin
+  # ensure that manticore is running
+  system('rake ts:start')
+
   # initialize
   connection = SlackNewMessages.new
 

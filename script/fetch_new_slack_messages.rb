@@ -30,7 +30,7 @@ begin
   channels = connection.fetch_slack_channels
 
   # in development, filter out all but 'sandbox' channel
-  channels.filter! { |sch| 'ooc'.include? sch.name } if Rails.env = 'development'
+  channels.filter! { |sch| 'ooc'.include? sch.name } if Rails.env == 'development'
 
   # fetch messages
   connection.fetch_slack_messages(channels)

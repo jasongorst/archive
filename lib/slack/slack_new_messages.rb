@@ -13,6 +13,10 @@ class SlackNewMessages
     @sc = SlackClient.new
   end
 
+  def logger
+    @sc.logger
+  end
+
   def fetch_slack_channels
     # get channel list
     @sc.conversations_list(types: 'public_channel', exclude_archived: true).channels

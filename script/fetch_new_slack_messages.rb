@@ -8,22 +8,36 @@ begin
   connection = SlackNewMessages.new
 
   # ensure that searchd is running
+  connection.logger.warn 'Checking searchd status.'
+
   r, w = IO.pipe
   status = system('rake ts:status', out: w)
   w.close
 
-  # TODO: check exit status
+  unless status
+    connection.logger.error 'Unable to check searchd status!'
+    connection.logger.error "\n\t#{r.readlines.join("\t")}"
+    abort 'Unable to check searchd status before fetching slack messages.'
+  end
 
-  unless r.read == "The Sphinx daemon searchd is currently running.\n"
+  if r.read == "The Sphinx daemon searchd is not currently running.\n"
     # start searchd
-    connection.logger.warn 'Starting searchd...'
+    connection.logger.warn 'searchd is not running. Starting searchd.'
+
     r, w = IO.pipe
     status = system('rake ts:start', out: w)
     w.close
 
-    connection.logger.warn r.readlines.join
-
-    # TODO: check exit status
+    if status
+      connection.logger.warn 'searchd started.'
+      connection.logger.warn "\n\t#{r.readlines.join("\t")}"
+    else
+      connection.logger.error 'Error starting searchd!'
+      connection.logger.error "\n\t#{r.readlines.join("\t")}"
+      abort 'Unable to start searchd before fetching slack messages.'
+    end
+  else
+    connection.logger.warn 'searchd is running.'
   end
 
   # fetch channels
@@ -34,4 +48,8 @@ begin
 
   # fetch messages
   connection.fetch_slack_messages(channels)
+
+rescue => err
+  Rails.logger.fatal("Caught exception in fetch_new_slack_messages.rb; exiting")
+  Rails.logger.fatal(err)
 end

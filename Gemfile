@@ -19,7 +19,7 @@ gem "puma", "~> 6.1.0"
 gem "jsbundling-rails", "~> 1.1.1"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", "~> 1.3.3"
+gem "turbo-rails", "~> 1.4.0"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails", "~> 1.2.1"
@@ -59,7 +59,6 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console", "~> 4.2.0"
-  gem "foreman", "~> 0.87.2"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"

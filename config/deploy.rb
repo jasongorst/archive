@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.17.1"
+lock "~> 3.17.2"
 
 set :application, "archive"
 set :repo_url, "git@gitlab.com:jasongorst/archive.git"

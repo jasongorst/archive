@@ -12,7 +12,8 @@ class SearchController < ApplicationController
       parse_search_times
       query = query_from_search_params(params[:search])
       filters = filters_from_search_params(params[:search])
-      @messages = search_with_excerpts(query, filters)
+      order = order_from_search_params(params[:search])
+      @messages = search_with_excerpts(query, filters, order)
     else
       # set defaults for new search form
       params[:search] = search_defaults
@@ -44,12 +45,29 @@ class SearchController < ApplicationController
     filters
   end
 
-  def search_with_excerpts(query, filters)
+  def order_from_search_params(search)
+
+    posted_at_order =
+      if search[:order] == 'newest'
+        'DESC'
+      else
+        'ASC'
+      end
+
+    if search[:sort_by] == 'best'
+      "w DESC, posted_at #{posted_at_order}"
+    else
+      "posted_at #{posted_at_order}, w DESC"
+    end
+  end
+
+  def search_with_excerpts(query, filters, order)
     # get message search results with maximum size excerpts (i.e., entire messages)
     messages = Message.search query,
                               select: '*, weight() as w',
                               with: filters,
-                              order: 'w DESC, posted_at DESC',
+                              # order: 'w DESC, posted_at DESC',
+                              order: order,
                               page: params[:page],
                               per_page: RESULTS_PER_PAGE,
                               max_matches: MAX_RESULTS,
@@ -72,7 +90,9 @@ class SearchController < ApplicationController
       start: oldest_message_date,
       end: Date.today,
       channel_id: nil,
-      user_id: nil
+      user_id: nil,
+      sort_by: 'best',
+      order: 'newest'
     }
   end
 

@@ -31,9 +31,7 @@ class SearchController < ApplicationController
     # escape SphinxQL in query
     query = ThinkingSphinx::Query.escape(search[:query])
     # unescape double quotes to allow phrase searching
-    query.gsub!(/\\"/, '"')
-
-    query
+    query.gsub(/\\"/, '"')
   end
 
   def filters_from_search_params(search)
@@ -46,7 +44,6 @@ class SearchController < ApplicationController
   end
 
   def order_from_search_params(search)
-
     posted_at_order =
       if search[:order] == 'newest'
         'DESC'
@@ -66,7 +63,6 @@ class SearchController < ApplicationController
     messages = Message.search query,
                               select: '*, weight() as w',
                               with: filters,
-                              # order: 'w DESC, posted_at DESC',
                               order: order,
                               page: params[:page],
                               per_page: RESULTS_PER_PAGE,
@@ -78,6 +74,7 @@ class SearchController < ApplicationController
                                 around: 2**16,
                                 force_all_words: true
                               }
+
     # highlight search terms in results using excerpts pane
     messages.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 

@@ -17,6 +17,7 @@ begin
     'woman-running' => 'running_woman',
     'waving_white_flag' => 'white_flag'
   }
+
   ALIASES.each do |new_alias, source|
     emoji = Emoji.find_by_alias(source)
     Emoji.edit_emoji(emoji) do |char|
@@ -43,4 +44,3 @@ begin
     end
   end
 end
-

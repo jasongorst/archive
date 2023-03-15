@@ -7,4 +7,3 @@ begin
   connection.update_emoji_aliases
   connection.update_custom_emoji
 end
-

@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.2.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4.2"
+gem "rails", "~> 7.0.4.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails", "~> 3.4.2"
@@ -13,7 +13,7 @@ gem "sprockets-rails", "~> 3.4.2"
 gem "mysql2", "~> 0.5.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.1.0"
+gem "puma", "~> 6.1.1"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails", "~> 1.1.1"
@@ -91,7 +91,7 @@ end
 gem "haml", "~> 6.1.1"
 
 # BigDecimal for timestamps
-gem "bigdecimal", "~> 3.1.3"
+gem "bigdecimal", "~> 3.1.4"
 # Slack api client
 gem "slack-ruby-client", '~> 2.0.0'
 # Pagination
@@ -105,7 +105,7 @@ gem "whenever", '~> 1.0.0', require: false
 
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
-gem "sass-embedded", "~> 1.58.3"
+gem "sass-embedded", "~> 1.59.3"
 gem "administrate", github: "jasongorst/administrate"
 
 # use clearance for authentication

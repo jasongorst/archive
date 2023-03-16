@@ -107,6 +107,7 @@ gem "whenever", '~> 1.0.0', require: false
 gem "sprockets-sass_embedded", "~> 0.1.0"
 gem "sass-embedded", "~> 1.59.3"
 gem "administrate", github: "jasongorst/administrate"
+gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-field-hex_color_picker"
 
 # use clearance for authentication
 gem "clearance", "~> 2.6.1"

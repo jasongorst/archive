@@ -14,7 +14,7 @@ class UserDashboard < Administrate::BaseDashboard
     display_name: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    color: Field::String,
+    color: Field::HexColorPicker
   }.freeze
 
   # COLLECTION_ATTRIBUTES

@@ -45,16 +45,16 @@ class SearchController < ApplicationController
 
   def order_from_search_params(search)
     posted_at_order =
-      if search[:order] == 'newest'
-        'DESC'
-      else
+      if search[:order] == 'oldest'
         'ASC'
+      else
+        'DESC'
       end
 
-    if search[:sort_by] == 'best'
-      "w DESC, posted_at #{posted_at_order}"
-    else
+    if search[:sort_by] == 'date'
       "posted_at #{posted_at_order}, w DESC"
+    else
+      "w DESC, posted_at #{posted_at_order}"
     end
   end
 

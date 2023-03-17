@@ -10,7 +10,6 @@
     "daisyui": "^2.51.4",
     "esbuild": "^0.15.18",
     "flowbite-datepicker": "^1.2.2",
-    "jquery": "^3.6.4",
     "mrujs": "^0.10.1",
     "postcss": "^8.4.21",
     "postcss-flexbugs-fixes": "^5.0.2",

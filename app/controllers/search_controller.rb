@@ -23,8 +23,17 @@ class SearchController < ApplicationController
   private
 
   def parse_search_times
-    params[:search][:start] = params[:search][:start].try(:to_date) || oldest_message_date
-    params[:search][:end] = params[:search][:end].try(:to_date) || Date.today
+    begin
+      params[:search][:start] = params[:search][:start].to_date
+    rescue Date::Error
+      params[:search][:start] = oldest_message_date
+    end
+
+    begin
+      params[:search][:end] = params[:search][:end].to_date
+    rescue Date::Error
+      params[:search][:end] = Date.today
+    end
   end
 
   def query_from_search_params(search)

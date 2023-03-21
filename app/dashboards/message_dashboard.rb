@@ -8,15 +8,12 @@ class MessageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    channel: Field::BelongsTo,
-    user: Field::BelongsTo,
+    channel: Field::BelongsTo.with_options(searchable: true,
+                                           searchable_fields: ['name']),
+    user: Field::BelongsTo.with_options(searchable: true,
+                                        searchable_fields: ['display_name']),
     attachments: Field::HasMany,
-    id: Field::Number,
-    text: Field::Text,
-    ts: Field::String.with_options(searchable: false),
-    created_at: Field::DateTime,
-    updated_at: Field::DateTime,
-    posted_on: Field::Date,
+    text: Field::Text.with_options(searchable: true),
     posted_at: Field::DateTime.with_options(format: '%F %r'),
   }.freeze
 

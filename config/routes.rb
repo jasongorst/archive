@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :channels
     resources :messages
     resources :attachments
+    resources :admin_users
 
     root to: 'users#index'
   end

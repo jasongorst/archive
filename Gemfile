@@ -65,6 +65,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem "rack-mini-profiler", "~> 3.0.0", require: false
+  gem "html2haml", "~> 2.3.0"
 end
 
 group :test do
@@ -89,6 +92,7 @@ end
 
 # Use haml for templates
 gem "haml", "~> 6.1.1"
+gem "haml-rails", "~> 2.1.0"
 
 # BigDecimal for timestamps
 gem "bigdecimal", "~> 3.1.4"
@@ -118,3 +122,6 @@ gem "image_processing", '~> 1.12.2'
 
 # convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1.7"
+
+# use postmark for outgoing email
+gem "postmark-rails", "~> 0.22.1"

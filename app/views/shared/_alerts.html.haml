@@ -1,10 +1,14 @@
 - if notice
-  %div.alert.alert-info.mb-6
+  %input.alert-toggle#alert-notice{type: 'checkbox', checked: true}
+  .alert.alert-info.mb-6.mx-auto.w-full.relative{class: 'md:w-11/12'}
+    %label.btn.btn-xs.btn-circle.absolute.right-2.top-2{for: 'alert-notice'}
+      %span
+        &times;
     %span
       %i.fas.fa-info-circle
       = notice
 - if alert
-  %div.alert.alert-error.mb-6
+  .alert.alert-open.alert-error.mb-6.mx-auto.w-full.relative{class: 'md:w-11/12'}
     %span
       %i.fas.fa-exclamation-triangle
       = alert

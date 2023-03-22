@@ -45,11 +45,9 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", "~> 1.16.0", require: false
 
-# Use Sass to process CSS
-# gem "sassc-rails"
-
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", '~> 1.12.2'
+gem "ruby-vips", "~> 2.1.4"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -77,9 +75,6 @@ group :test do
   gem "webdrivers", "~> 5.2.0"
 end
 
-# use memcached for caching
-gem "dalli", "~> 3.2.4"
-
 # Use capistrano for deployment
 group :development do
   gem "bcrypt_pbkdf", "~> 1.1.0", require: false
@@ -94,16 +89,24 @@ end
 gem "haml", "~> 6.1.1"
 gem "haml-rails", "~> 2.1.0"
 
+# use memcached for caching
+gem "dalli", "~> 3.2.4"
+
 # BigDecimal for timestamps
 gem "bigdecimal", "~> 3.1.4"
+
 # Slack api client
 gem "slack-ruby-client", '~> 2.0.0'
+
 # Pagination
 gem "kaminari", "~> 1.2.2"
+
 # Full-text search middleware for sphinx/manticore
 gem "thinking-sphinx", '~> 5.5.1'
+
 # Pretty URLs
 gem "friendly_id", '~> 5.5.0'
+
 # Ruby cron jobs
 gem "whenever", '~> 1.0.0', require: false
 
@@ -115,10 +118,6 @@ gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-fiel
 
 # use clearance for authentication
 gem "clearance", "~> 2.6.1"
-
-# use vips for Active Storage variants
-gem "ruby-vips", "~> 2.1.4"
-gem "image_processing", '~> 1.12.2'
 
 # convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1.7"

@@ -13,7 +13,7 @@ gem "sprockets-rails", "~> 3.4.2"
 gem "mysql2", "~> 0.5.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.1.1"
+gem "puma", "~> 6.2.1"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails", "~> 1.1.1"
@@ -70,7 +70,7 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara", "~> 3.38.0"
+  gem "capybara", "~> 3.39.0"
   gem "selenium-webdriver", "~> 4.8.1"
   gem "webdrivers", "~> 5.2.0"
 end
@@ -96,7 +96,7 @@ gem "dalli", "~> 3.2.4"
 gem "bigdecimal", "~> 3.1.4"
 
 # Slack api client
-gem "slack-ruby-client", '~> 2.0.0'
+gem "slack-ruby-client", '~> 2.1.0'
 
 # Pagination
 gem "kaminari", "~> 1.2.2"
@@ -112,7 +112,7 @@ gem "whenever", '~> 1.0.0', require: false
 
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
-gem "sass-embedded", "~> 1.59.3"
+gem "sass-embedded", "~> 1.60.0"
 gem "administrate", github: "jasongorst/administrate"
 gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-field-hex_color_picker"
 
@@ -120,7 +120,7 @@ gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-fiel
 gem "clearance", "~> 2.6.1"
 
 # convert slack mrkdwn to html
-gem "html-pipeline-mrkdwn", "~> 0.1.7"
+gem "html-pipeline-mrkdwn", "~> 0.1.8"
 
 # use postmark for outgoing email
 gem "postmark-rails", "~> 0.22.1"

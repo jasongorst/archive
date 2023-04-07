@@ -51,7 +51,7 @@ gem "ruby-vips", "~> 2.1.4"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", "~> 1.7.1", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", "~> 1.7.2", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
@@ -71,7 +71,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.39.0"
-  gem "selenium-webdriver", "~> 4.8.1"
+  gem "selenium-webdriver", "~> 4.8.6"
   gem "webdrivers", "~> 5.2.0"
 end
 
@@ -112,12 +112,15 @@ gem "whenever", '~> 1.0.0', require: false
 
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
-gem "sass-embedded", "~> 1.60.0"
+gem "sass-embedded", "~> 1.61.0"
 gem "administrate", github: "jasongorst/administrate"
 gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-field-hex_color_picker"
 
 # use clearance for authentication
 gem "clearance", "~> 2.6.1"
+
+# validate passwords for entropy bits
+gem "strong_password", "~> 0.0.10"
 
 # convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1.8"

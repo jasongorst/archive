@@ -8,8 +8,7 @@ class SearchController < ApplicationController
     @channels = Channel.order(name: :asc)
     @users = User.order(display_name: :asc)
 
-    if params.key? :search
-      parse_search_times
+    if params.has_key? :search
       query = query_from_search_params(params[:search])
       filters = filters_from_search_params(params[:search])
       order = order_from_search_params(params[:search])
@@ -22,18 +21,21 @@ class SearchController < ApplicationController
 
   private
 
-  def parse_search_times
+  def parse_dates(start_date, end_date)
+    # parse start/end dates or use defaults
     begin
-      params[:search][:start] = params[:search][:start].to_date
+      start_date = start_date.to_date
     rescue Date::Error
-      params[:search][:start] = oldest_message_date
+      start_date = oldest_message_date
     end
 
     begin
-      params[:search][:end] = params[:search][:end].to_date
+      end_date = end_date.to_date
     rescue Date::Error
-      params[:search][:end] = Date.today
+      end_date = Date.today
     end
+
+    [start_date, end_date]
   end
 
   def query_from_search_params(search)
@@ -45,7 +47,8 @@ class SearchController < ApplicationController
 
   def filters_from_search_params(search)
     # filter search on attributes
-    filters = { posted_on: search[:start]..(search[:end] + 1) }
+    start_date, end_date = parse_dates(search[:start], search[:end])
+    filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
     filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
     filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
 
@@ -53,17 +56,10 @@ class SearchController < ApplicationController
   end
 
   def order_from_search_params(search)
-    posted_at_order =
-      if search[:order] == 'oldest'
-        'ASC'
-      else
-        'DESC'
-      end
-
     if search[:sort_by] == 'date'
-      "posted_at #{posted_at_order}, w DESC"
+      "posted_at #{search[:order]}, w DESC"
     else
-      "w DESC, posted_at #{posted_at_order}"
+      "w DESC"
     end
   end
 
@@ -98,7 +94,7 @@ class SearchController < ApplicationController
       channel_id: nil,
       user_id: nil,
       sort_by: 'best',
-      order: 'newest'
+      order: 'DESC'
     }
   end
 

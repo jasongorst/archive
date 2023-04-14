@@ -1,52 +1,51 @@
-= form_with(scope: :search, url: '/search', method: 'get', html: { "data-turbo": false }) do |f|
+= form_with scope: :search, url: '/search', method: 'get', data: { turbo: false, controller: 'search' } do |f|
   .form-control.w-full
-    = f.label(:query, 'Keywords', class: 'label label-text')
-    = f.search_field(:query, value: params[:search][:query], placeholder: '', class: 'input input-bordered w-full')
+    = f.label :query, 'Keywords', class: 'label label-text'
+    = f.search_field :query, value: params[:search][:query], placeholder: '', class: 'input input-bordered w-full'
     %small
       %em You can search for an exact phrase by putting it "in quotes".
 
   .grid.grid-cols-1.md:grid-cols-2.gap-x-4{"date-rangepicker": true, "datepicker-format": "yyyy-mm-dd"}
     .form-control
-      = f.label(:start, 'Between', class: 'label label-text')
+      = f.label :start, 'Between', class: 'label label-text'
       .input-group
-        = f.text_field(:start, value: params[:search][:start], class: 'input input-bordered w-full')
-        .btn.btn-square
+        = f.text_field :start, value: params[:search][:start], class: 'input input-bordered w-full'
+        %label.btn.btn-square{for: 'search_start'}
           %i.fas.fa-calendar-alt
     .form-control
-      = f.label(:end, 'and', class: 'label label-text')
+      = f.label :end, 'and', class: 'label label-text'
       .input-group
-        = f.text_field(:end, value: params[:search][:end], class: 'input input-bordered w-full')
-        .btn.btn-square
+        = f.text_field :end, value: params[:search][:end], class: 'input input-bordered w-full'
+        %label.btn.btn-square{for: 'search_end'}
           %i.fas.fa-calendar-alt
 
   .form-control.w-full
     - options = [['Any channel', '']] + @channels.map {|channel| [channel.name, channel.id]}
-    = f.label(:channel_id, 'Channel', class: 'label label-text')
-    = f.select(:channel_id, (options_for_select options, selected: params[:search][:channel_id]), {}, { class: 'select select-bordered w-full' })
+    = f.label :channel_id, 'Channel', class: 'label label-text'
+    = f.select :channel_id, options_for_select(options, selected: params[:search][:channel_id]), {}, class: 'select select-bordered w-full'
   .form-control.w-full
     - options = [['Any user', '']] + @users.map {|user| [user.display_name, user.id]}
-    = f.label(:user_id, 'User', class: 'label label-text')
-    = f.select(:user_id, (options_for_select options, selected: params[:search][:user_id]), {}, { class: 'select select-bordered w-full' })
+    = f.label :user_id, 'User', class: 'label label-text'
+    = f.select :user_id, options_for_select(options, selected: params[:search][:user_id]), {}, class: 'select select-bordered w-full'
 
   .grid.grid-cols-1.md:grid-cols-2.gap-x-4
     .form-control
-      = f.label(:sort_by, 'Sort by', class: 'label label-text')
+      = f.label :sort_by, 'Sort by', class: 'label label-text'
       .flex.gap-6
         .flex.gap-2.flex-nowrap
-          = f.radio_button(:sort_by, 'best', class: 'radio', checked: (params[:search][:sort_by] == 'best'))
-          = f.label(:sort_by, 'Best match', value: 'best')
+          = f.radio_button :sort_by, 'best', class: 'radio', checked: (params[:search][:sort_by] == 'best'), data: { action: 'search#update', 'search-target': 'best' }
+          = f.label :sort_by, 'Best match', { value: 'best' }
         .flex.gap-2.flex-nowrap
-          = f.radio_button(:sort_by, 'date', class: 'radio', checked: (params[:search][:sort_by] == 'date'))
-          = f.label(:sort_by, 'Date', value: 'date')
-    .form-control
-      = f.label(:order, 'Order', class: 'label label-text')
+          = f.radio_button :sort_by, 'date', class: 'radio', checked: (params[:search][:sort_by] == 'date'), data: { action: 'search#update', 'search-target': 'date' }
+          = f.label :sort_by, 'Date', { value: 'date' }
+    .form-control#order{data: { 'search-target': 'order' }}
+      = f.label :order, 'Order', class: 'label label-text'
       .flex.gap-6
         .flex.gap-2.flex-nowrap
-          = f.radio_button(:order, 'newest', class: 'radio', checked: (params[:search][:order] == 'newest'))
-          = f.label(:order, 'Newest first', value: 'newest')
+          = f.radio_button :order, 'DESC', class: 'radio', checked: (params[:search][:order] == 'DESC'), data: { 'search-target': 'newest' }
+          = f.label :order, 'Newest first', { value: 'DESC' }
         .flex.gap-2.flex-nowrap
-          = f.radio_button(:order, 'oldest', class: 'radio', checked: (params[:search][:order] == 'oldest'))
-          = f.label(:order, 'Oldest first', value: 'oldest')
+          = f.radio_button :order, 'ASC', class: 'radio', checked: (params[:search][:order] == 'ASC'), data: { 'search-target': 'oldest' }
+          = f.label :order, 'Oldest first', { value: 'ASC' }
 
-  = f.submit('Search', class: 'btn w-full mt-6')
-
+  = f.submit 'Search', class: 'btn w-full mt-6'

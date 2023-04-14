@@ -1,3 +1,7 @@
+[hidden] {
+  display: none !important
+}
+
 .bot-attachment {
   display: flex;
   flex-direction: row;
@@ -31,13 +35,11 @@ mark {
 .alert {
   @apply pointer-events-none hidden;
 }
-
 .alert-open,
 .alert:target,
 .alert-toggle:checked + .alert {
   @apply pointer-events-auto flex;
 }
-
 .alert-toggle {
   @apply fixed h-0 w-0 appearance-none opacity-0;
 }

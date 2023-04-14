@@ -5,7 +5,7 @@ import "@hotwired/turbo-rails"
 window.Turbo = Turbo
 mrujs.start()
 
-// import "./controllers"
+import "./controllers"
 
 // fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core"

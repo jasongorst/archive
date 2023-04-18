@@ -11,7 +11,7 @@
     "esbuild": "^0.15.18",
     "flowbite-datepicker": "^1.2.2",
     "mrujs": "^0.10.1",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.22",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^15.1.0",
     "postcss-nested": "^6.0.1",

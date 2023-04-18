@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.1"
+ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4.3"
@@ -13,7 +13,7 @@ gem "sprockets-rails", "~> 3.4.2"
 gem "mysql2", "~> 0.5.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.2.1"
+gem "puma", "~> 6.2.2"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails", "~> 1.1.1"
@@ -64,7 +64,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem "rack-mini-profiler", "~> 3.0.0", require: false
+  gem "rack-mini-profiler", "~> 3.1.0", require: false
   gem "html2haml", "~> 2.3.0"
 end
 
@@ -112,7 +112,7 @@ gem "whenever", '~> 1.0.0', require: false
 
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1.0"
-gem "sass-embedded", "~> 1.61.0"
+gem "sass-embedded", "~> 1.62.0"
 gem "administrate", github: "jasongorst/administrate"
 gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-field-hex_color_picker"
 

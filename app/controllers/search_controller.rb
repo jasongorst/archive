@@ -21,6 +21,23 @@ class SearchController < ApplicationController
 
   private
 
+  def query_from_search_params(search)
+    # escape SphinxQL in query
+    query = ThinkingSphinx::Query.escape(search[:query])
+    # unescape double quotes to allow phrase searching
+    query.gsub(/\\"/, '"')
+  end
+
+  def filters_from_search_params(search)
+    # filter search on attributes
+    start_date, end_date = parse_dates(search[:start], search[:end])
+    filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
+    filters.merge!({ channel_id: search[:channel_id].to_i }) if search[:channel_id].present?
+    filters.merge!({ user_id: search[:user_id].to_i }) if search[:user_id].present?
+
+    filters
+  end
+
   def parse_dates(start_date, end_date)
     # parse start/end dates or use defaults
     begin
@@ -36,23 +53,6 @@ class SearchController < ApplicationController
     end
 
     [start_date, end_date]
-  end
-
-  def query_from_search_params(search)
-    # escape SphinxQL in query
-    query = ThinkingSphinx::Query.escape(search[:query])
-    # unescape double quotes to allow phrase searching
-    query.gsub(/\\"/, '"')
-  end
-
-  def filters_from_search_params(search)
-    # filter search on attributes
-    start_date, end_date = parse_dates(search[:start], search[:end])
-    filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
-    filters.merge!({ channel_id: search[:channel_id].to_i }) unless search[:channel_id].blank?
-    filters.merge!({ user_id: search[:user_id].to_i }) unless search[:user_id].blank?
-
-    filters
   end
 
   def order_from_search_params(search)

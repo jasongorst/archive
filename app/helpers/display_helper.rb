@@ -50,11 +50,11 @@ module DisplayHelper
   end
 
   def this_month
-    Time.now.month
+    Time.zone.now.month
   end
 
   def this_year
-    Time.now.year
+    Time.zone.now.year
   end
 
   def oldest_message_date(channel)

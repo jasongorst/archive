@@ -11,6 +11,7 @@ class Message < ApplicationRecord
   ThinkingSphinx::Callbacks.append(self, :behaviours => [:real_time])
 
   before_save :set_posted_at_and_posted_on
+  after_save :expire_cache_keys
 
   private
 
@@ -19,5 +20,15 @@ class Message < ApplicationRecord
     # set in config/application.rb, see "config.time_zone ="
     self.posted_at = Time.zone.at(ts)
     self.posted_on = posted_at.to_date
+  end
+
+  def expire_cache_keys
+    Rails.cache.delete_multi(
+      %W[
+        dates_with_counts_in_channel_#{self.channel.id}
+        messages_in_channel_#{self.channel.id}_on_#{self.posted_on}
+        dates_with_messages_in_channel_#{self.channel.id}
+      ]
+    )
   end
 end

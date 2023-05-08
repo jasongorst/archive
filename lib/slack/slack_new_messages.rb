@@ -97,9 +97,6 @@ class SlackNewMessages
         m.attachments.create!(name: f.name, url: f.url_private)
       end
     end
-
-    # expire caches for this channel and date
-    expire_cache_keys(channel, m.posted_on)
   end
 
   def save_roller_message(message, channel)
@@ -127,16 +124,5 @@ class SlackNewMessages
                                           locals: { color: color,
                                                     text: text,
                                                     fields: fields })
-  end
-
-  def expire_cache_keys(channel, date)
-    Rails.cache.delete_multi(
-      %W[
-        dates_with_counts_in_channel_#{channel.id}
-        messages_in_channel_#{channel.id}_on_#{date}
-        dates_with_messages_in_channel_#{channel.id}
-        channels_with_messages
-      ]
-    )
   end
 end

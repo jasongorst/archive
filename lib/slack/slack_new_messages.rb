@@ -1,30 +1,29 @@
-require 'slack/slack_client'
-require 'slack/slack_user'
-require 'slack/mrkdwn'
+require "slack/slack_client"
+require "slack/slack_user"
+require "slack/mrkdwn"
 
 class SlackNewMessages
   SLACK_COLORS = {
-    '2eb886' => 'good',
-    'daa038' => 'warning',
-    'a30200' => 'danger'
+    "2eb886" => "good",
+    "daa038" => "warning",
+    "a30200" => "danger"
   }
+
+  attr_accessor :logger
 
   def initialize
     @sc = SlackClient.new
-  end
-
-  def logger
-    @sc.logger
+    @logger = @sc.logger
   end
 
   def fetch_slack_channels
     # get channel list
-    @sc.conversations_list(types: 'public_channel', exclude_archived: true).channels
+    @sc.conversations_list(types: "public_channel", exclude_archived: true).channels
   end
 
   def fetch_slack_messages(channels)
     channels.each do |sch|
-      @sc.logger.warn "Archiving slack channel \##{sch.name}"
+      @logger.info "Archiving slack channel \##{sch.name}"
       # join slack channel
       @sc.conversations_join(channel: sch.id)
       # create or find corresponding archive channel
@@ -49,7 +48,7 @@ class SlackNewMessages
                               oldest: last_ts,
                               inclusive: false) do |response|
       messages = response.messages
-      @sc.logger.warn "Saving #{messages.count} messages"
+      @logger.info "Saving #{messages.count} messages"
 
       # process messages
       messages.each do |message|
@@ -63,7 +62,7 @@ class SlackNewMessages
           next
         end
         # ignore other bot messages
-        next if message.key?(:subtype) && message.subtype == 'bot_message'
+        next if message.key?(:subtype) && message.subtype == "bot_message"
 
         # ignore messages without a user
         next unless message.key? :user
@@ -107,7 +106,7 @@ class SlackNewMessages
     color = SLACK_COLORS[m.color]
     text = PIPELINE.to_html(m.text)
     fields = m.fields.each do |f|
-      f['value'] = PIPELINE.to_html(f['value'])
+      f["value"] = PIPELINE.to_html(f["value"])
     end
 
     # save message
@@ -120,7 +119,7 @@ class SlackNewMessages
   end
 
   def render_roller_message_text(color, text, fields)
-    ApplicationController.renderer.render(partial: 'roller/message',
+    ApplicationController.renderer.render(partial: "roller/message",
                                           locals: { color: color,
                                                     text: text,
                                                     fields: fields })

@@ -1,21 +1,19 @@
-#!/usr/bin/env rails runner
-
 begin
   # add slack aliases
   ALIASES = {
-    'cheese_wedge' => 'cheese',
-    'drum_with_drumsticks' => 'drum',
-    'face_with_raised_eyebrow' => 'raised_eyebrow',
-    'face_with_rolling_eyes' => 'roll_eyes',
-    'hug' => 'hugs',
-    'hugging_face' => 'hugs',
-    'sleeping_accommodation' => 'sleeping_bed',
-    'thinking_face' => 'thinking',
-    'umbrella_with_rain_drops' => 'umbrella',
-    'wind_blowing_face' => 'wind_face',
-    'woman-lifting-weights' => 'weight_lifting_woman',
-    'woman-running' => 'running_woman',
-    'waving_white_flag' => 'white_flag'
+    "cheese_wedge" => "cheese",
+    "drum_with_drumsticks" => "drum",
+    "face_with_raised_eyebrow" => "raised_eyebrow",
+    "face_with_rolling_eyes" => "roll_eyes",
+    "hug" => "hugs",
+    "hugging_face" => "hugs",
+    "sleeping_accommodation" => "sleeping_bed",
+    "thinking_face" => "thinking",
+    "umbrella_with_rain_drops" => "umbrella",
+    "wind_blowing_face" => "wind_face",
+    "woman-lifting-weights" => "weight_lifting_woman",
+    "woman-running" => "running_woman",
+    "waving_white_flag" => "white_flag"
   }
 
   ALIASES.each do |new_alias, source|

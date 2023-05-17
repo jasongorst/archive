@@ -1,5 +1,4 @@
-#!/usr/bin/env rails runner
-require 'slack/slack_emoji'
+require "slack/slack_emoji"
 
 begin
   connection = SlackEmoji.new

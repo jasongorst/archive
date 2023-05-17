@@ -1,12 +1,12 @@
 import DateRangePicker from "flowbite-datepicker/DateRangePicker"
 
-var getDatepickerOptions = function getDatepickerOptions(datepickerEl) {
-    var buttons = datepickerEl.hasAttribute('datepicker-buttons')
-    var autohide = datepickerEl.hasAttribute('datepicker-autohide')
-    var format = datepickerEl.hasAttribute('datepicker-format')
-    var orientation = datepickerEl.hasAttribute('datepicker-orientation')
-    var title = datepickerEl.hasAttribute('datepicker-title')
-    var options = {}
+const getDatepickerOptions = function getDatepickerOptions(datepickerEl) {
+    const buttons = datepickerEl.hasAttribute('datepicker-buttons')
+    const autohide = datepickerEl.hasAttribute('datepicker-autohide')
+    const format = datepickerEl.hasAttribute('datepicker-format')
+    const orientation = datepickerEl.hasAttribute('datepicker-orientation')
+    const title = datepickerEl.hasAttribute('datepicker-title')
+    const options = {}
 
     if (buttons) {
         options.todayBtn = true

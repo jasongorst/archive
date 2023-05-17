@@ -6,7 +6,7 @@ class SlackClient < Slack::Web::Client
       token: Rails.application.credentials.slack_api_token,
       logger: Logger.new(
         STDOUT,
-        level: if Rails.env.development?
+        level: if Rails.env.development? or ENV["DEBUG"]
                 Logger::INFO
               else
                 Logger::WARN

@@ -1,7 +1,7 @@
 #search
   %h1.text-2xl.pb-3 Search
 
-  = render partial: 'form'
+  = render partial: "form"
 
   - unless @messages.nil?
     %hr.my-6
@@ -9,7 +9,7 @@
       %small
         - if @messages.count > SearchController::MAX_RESULTS
           showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
-        #{pluralize(number_with_delimiter(@messages.count), 'message')} found
+        #{pluralize(number_with_delimiter(@messages.count), "message")} found
       = paginate @messages
-      = render partial: 'message', collection: @messages
+      = render partial: "message", collection: @messages
       = paginate @messages

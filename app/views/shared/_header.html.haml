@@ -1,25 +1,26 @@
-.navbar.mb-6.bg-info.text-info-content
+.navbar.mb-6.bg-neutral.text-neutral-content
   .navbar-start
     .dropdown
       %label.btn.btn-ghost.lg:hidden{tabindex: "0"}
         %i.fas.fa-bars
-      %ul.menu.menu-compact.dropdown-content.mt-3.p-2.shadow.rounded-box.w-52.bg-info{tabindex: "0"}
-        %li{class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
-          %a{href: url_for(:root)}
+      %ul.menu.menu-compact.dropdown-content.mt-3.p-2.shadow.rounded-box.w-52.bg-neutral{tabindex: "0"}
+        %li
+          %a{href: url_for(:root), class: ("active" if current_page?(:root))}
             Home
         %li{tabindex: "0"}
-          %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
+          %a{href: "#", class: ("active" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
             Channels
             %i.fas.fa-caret-right
-          %ul.p-2.bg-info
+          %ul.p-2.bg-neutral
             - channels_with_messages.each do |channel|
               %li
-                %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
-        %li{class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
-          %a{href: url_for(:search)}
+                %a{class: ("active" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
+                  \##{channel.name}
+        %li
+          %a{href: url_for(:search), class: ("active" if current_page?(:search))}
             Search
         %li
-          %a{href: 'https://rae.evilpaws.org/', rel: "nofollow", data: { confirm: 'Ready to leave?' }}
+          %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
             %span
               rae.evilpaws.org
               %i.fas.fa-external-link-alt
@@ -32,23 +33,24 @@
     .hidden.lg:flex
       %ul.menu.menu-horizontal.p-0
         %li
-          %a{href: url_for(:root), class: "#{'active' if current_page?({ controller: '/display', action: :index })}"}
+          %a{href: url_for(:root), class: ("active" if current_page?(:root))}
             Home
         %li{tabindex: "0"}
-          %a{href: '#', class: "#{'active' if current_page?({ controller: '/display', action: :show} )}"}
+          %a{href: "#", class: ("active" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
             Channels
             %i.fas.fa-caret-down
-          %ul.p-2.z-10.bg-info
+          %ul.p-2.z-10.bg-neutral
             - channels_with_messages.each do |channel|
               %li
-                %a{class: "#{'active' if current_page?(channel)}", href: url_for(channel)}= "\##{channel.name}"
+                %a{class: ("active" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
+                  \##{channel.name}
         %li
-          %a{href: url_for(:search), class: "#{'active' if current_page?({ controller: '/search', action: :index })}"}
+          %a{href: url_for(:search), class: ("active" if current_page?(:search))}
             Search
   .navbar-end.hidden.lg:flex
     %ul.menu.menu-horizontal.p-0
       %li
-        %a{href: 'https://rae.evilpaws.org/', rel: "nofollow", data: { confirm: 'Ready to leave?' }}
+        %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
           %span
             rae.evilpaws.org
             %i.fas.fa-external-link-alt

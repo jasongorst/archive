@@ -1,5 +1,8 @@
-%h1.text-2xl.pb-3 Channels
-
 %ul.menu
   - channels_with_messages.each do |channel|
-    %li= link_to("\##{channel.name}", channel)
+    %li
+      - last_message_date = channel.messages.reorder(posted_on: :desc).first.posted_on
+      %a{href: url_for(channel)}
+        \##{channel.name}
+        %span.text-sm
+          #{long_date_with_year(last_message_date)}

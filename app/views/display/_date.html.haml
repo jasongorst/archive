@@ -1,2 +1,5 @@
-%li= link_to("#{long_date(date)} (#{pluralize(count, 'message')})",
-     channel_date_path(channel, date))
+%li
+  %a{href: channel_date_path(channel, date)}
+    #{long_date(date)}
+    %span.text-sm
+      #{pluralize(count, "message")}

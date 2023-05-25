@@ -5,11 +5,16 @@
 
   - unless @messages.nil?
     %hr.my-6
-    #results
-      %small
-        - if @messages.count > SearchController::MAX_RESULTS
-          showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
-        #{pluralize(number_with_delimiter(@messages.count), "message")} found
+
+    .text-sm
+      - if @messages.count > SearchController::MAX_RESULTS
+        showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
+      #{pluralize(number_with_delimiter(@messages.count), "message")} found
+
+    .my-5
       = paginate @messages
-      = render partial: "message", collection: @messages
+
+    = render partial: "message", collection: @messages
+
+    .my-5
       = paginate @messages

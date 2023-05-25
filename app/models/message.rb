@@ -1,6 +1,4 @@
 class Message < ApplicationRecord
-  paginates_per 50
-
   validates :channel_id, :user_id, presence: true
   validates :ts, presence: true, numericality: true
 
@@ -8,10 +6,12 @@ class Message < ApplicationRecord
   belongs_to :user
   has_many :attachments
 
-  ThinkingSphinx::Callbacks.append(self, behaviours: [:real_time])
-
   before_save :set_posted_at_and_posted_on
   after_save :expire_cache_keys
+
+  ThinkingSphinx::Callbacks.append(self, behaviours: [:real_time])
+
+  paginates_per 50
 
   private
 
@@ -25,9 +25,10 @@ class Message < ApplicationRecord
   def expire_cache_keys
     Rails.cache.delete_multi(
       %W[
+        channels_with_times
         dates_with_counts_in_channel_#{self.channel.id}
-        messages_in_channel_#{self.channel.id}_on_#{self.posted_on}
         dates_with_messages_in_channel_#{self.channel.id}
+        messages_in_channel_#{self.channel.id}_on_#{self.posted_on}
       ]
     )
   end

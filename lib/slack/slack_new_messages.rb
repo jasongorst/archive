@@ -110,12 +110,9 @@ class SlackNewMessages
     end
 
     # save message
-    m = channel.messages.create!(text: render_roller_message_text(color, text, fields),
-                                 ts: message.ts.to_d,
-                                 user_id: user.id)
-
-    # expire caches for this channel and date
-    expire_cache_keys(channel, m.posted_on)
+    channel.messages.create!(text: render_roller_message_text(color, text, fields),
+                             ts: message.ts.to_d,
+                             user_id: user.id)
   end
 
   def render_roller_message_text(color, text, fields)

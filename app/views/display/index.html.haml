@@ -1,8 +1,7 @@
 %ul.menu
-  - channels_with_messages.each do |channel|
+  - @channels_with_times.each do |channel, last_message_time|
     %li
-      - last_message_date = channel.messages.reorder(posted_on: :desc).first.posted_on
       %a{href: url_for(channel)}
         \##{channel.name}
         %span.text-sm
-          #{long_date_with_year(last_message_date)}
+          #{time_ago_in_words(last_message_time)} ago

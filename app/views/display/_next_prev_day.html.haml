@@ -1,11 +1,10 @@
-%nav.navbar
-  %div.navbar-start
+%nav.navbar-sm.lg:navbar.flex.py-2.lg:pt-0{class: "!px-0"}
+  .navbar-start.flex
     - p = prev_date(@channel, @date)
     - unless p.nil?
-      = link_to channel_date_path(@channel, p) do
-        &lsaquo;&nbsp;#{long_date(p)}
-  %div.navbar-end
+      = link_to raw("&lsaquo;&nbsp;#{long_date(p)}"), channel_date_path(@channel, p), class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal"
+  .navbar-end.flex.text-sm.lg:text-md
     - n = next_date(@channel, @date)
     - unless n.nil?
-      = link_to channel_date_path(@channel, n) do
-        #{long_date(n)}&nbsp;&rsaquo;
+      = link_to raw("&lsaquo;&nbsp;#{long_date(n)}"), channel_date_path(@channel, n), class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal"
+

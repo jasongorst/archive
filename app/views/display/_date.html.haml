@@ -1,5 +1,8 @@
 %li
   %a{href: channel_date_path(channel, date)}
-    #{long_date(date)}
-    %span.text-sm
+    - if date.year == this_year
+      = long_date(date)
+    - else
+      = long_date_with_year(date)
+    %span.text-xs.lg:text-sm
       #{pluralize(count, "message")}

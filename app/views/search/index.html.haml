@@ -1,20 +1,19 @@
-#search
-  %h1.text-2xl.pb-3 Search
+%h1.text-lg.lg:text-2xl.lg:pb-2
+  Search
 
-  = render partial: "form"
+= render partial: "form"
 
-  - unless @messages.nil?
-    %hr.my-6
-
+- unless @messages.nil?
+  .mt-4.lg:mt-6
     .text-sm
       - if @messages.count > SearchController::MAX_RESULTS
         showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
       #{pluralize(number_with_delimiter(@messages.count), "message")} found
 
-    .my-5
+    .my-3.lg:mt-4
       = paginate @messages
 
     = render partial: "message", collection: @messages
 
-    .my-5
+    .my-3.lg:mt-4
       = paginate @messages

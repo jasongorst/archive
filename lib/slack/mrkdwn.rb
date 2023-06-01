@@ -10,7 +10,5 @@ context = {
   slack_users: User.pluck(:slack_user, :display_name).to_h
 }
 
-PIPELINE = HTML::Pipeline.new [
-                        HTML::Pipeline::PlainTextInputFilter,
-                        HTML::Pipeline::Mrkdwn
-                      ], context
+PIPELINE = HTML::Pipeline.new [HTML::Pipeline::PlainTextInputFilter,
+                               HTML::Pipeline::Mrkdwn], context

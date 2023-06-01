@@ -1,23 +1,25 @@
-.navbar.mb-6.bg-neutral.text-neutral-content
+.navbar.mb-4.lg:mb-6.bg-primary{class: "text-primary-content/80"}
   .navbar-start
-    .dropdown
-      %label.btn.btn-ghost.lg:hidden{tabindex: "0"}
+
+    -# hamburger menu
+    .dropdown.lg:hidden
+      %label.btn.btn-ghost{tabindex: "0"}
         %i.fas.fa-bars
-      %ul.menu.menu-compact.dropdown-content.mt-3.p-2.shadow.rounded-box.w-52.bg-neutral{tabindex: "0"}
+      %ul.menu.dropdown-content.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: "0"}
         %li
-          %a{href: url_for(:root), class: ("active" if current_page?(:root))}
+          %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
             Home
         %li{tabindex: "0"}
-          %a{href: "#", class: ("active" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
-            Channels
-            %i.fas.fa-caret-right
-          %ul.p-2.bg-neutral
-            - channels_with_messages.each do |channel|
-              %li
-                %a{class: ("active" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
-                  \##{channel.name}
+          %details{open: (true if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
+            %summary{class: ("bg-primary-focus" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
+              Channels
+            %ul.p-2
+              - channels_with_messages.each do |channel|
+                %li
+                  %a{class: ("bg-primary-focus" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
+                    \##{channel.name}
         %li
-          %a{href: url_for(:search), class: ("active" if current_page?(:search))}
+          %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
             Search
         %li
           %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
@@ -30,23 +32,26 @@
         %a{href: url_for(:root)}
           %i.fas.fa-archive
           Archive
+
+    -# horizontal menu
     .hidden.lg:flex
       %ul.menu.menu-horizontal.p-0
         %li
-          %a{href: url_for(:root), class: ("active" if current_page?(:root))}
+          %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
             Home
         %li{tabindex: "0"}
-          %a{href: "#", class: ("active" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
-            Channels
-            %i.fas.fa-caret-down
-          %ul.p-2.z-10.bg-neutral
-            - channels_with_messages.each do |channel|
-              %li
-                %a{class: ("active" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
-                  \##{channel.name}
+          %details
+            %summary{class: ("bg-primary-focus" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
+              Channels
+            %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
+              - channels_with_messages.each do |channel|
+                %li
+                  %a{class: ("bg-primary-focus" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
+                    \##{channel.name}
         %li
-          %a{href: url_for(:search), class: ("active" if current_page?(:search))}
+          %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
             Search
+
   .navbar-end.hidden.lg:flex
     %ul.menu.menu-horizontal.p-0
       %li

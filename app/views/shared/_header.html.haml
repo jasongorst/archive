@@ -2,10 +2,10 @@
   .navbar-start
 
     -# hamburger menu
-    .dropdown.lg:hidden
-      %label.btn.btn-ghost{tabindex: "0"}
+    %details.dropdown.lg:hidden
+      %summary.btn.btn-ghost
         %i.fas.fa-bars
-      %ul.menu.dropdown-content.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: "0"}
+      %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10
         %li
           %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
             Home
@@ -21,11 +21,6 @@
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
             Search
-        %li
-          %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
-            %span
-              rae.evilpaws.org
-              %i.fas.fa-external-link-alt
 
     %div
       %span.btn.btn-ghost.normal-case.text-xl
@@ -52,7 +47,7 @@
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
             Search
 
-  .navbar-end.hidden.lg:flex
+  .navbar-end
     %ul.menu.menu-horizontal.p-0
       %li
         %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}

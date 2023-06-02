@@ -13,7 +13,7 @@ gem "sprockets-rails", "~> 3.4"
 gem "mysql2", "~> 0.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.2"
+gem "puma", "~> 6.3"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails", "~> 1.1"

@@ -43,3 +43,9 @@ mark {
 .alert-toggle {
   @apply fixed h-0 w-0 appearance-none opacity-0;
 }
+
+/* hide submenu arrows */
+.menu :where(li > details > summary):after,
+.menu :where(li > .menu-dropdown-toggle):after {
+  @apply !w-0;
+}

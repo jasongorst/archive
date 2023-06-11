@@ -1,8 +1,8 @@
 // Entry point for the build script in your package.json
 import "@hotwired/turbo-rails"
+import "flowbite/dist/datepicker.turbo.js";
 import mrujs from "mrujs"
 import "./controllers"
-import './datepicker'
 
 window.Turbo = Turbo
 mrujs.start()
@@ -10,8 +10,8 @@ mrujs.start()
 // fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core"
 import {
-    faArchive,
     faBars,
+    faBoxArchive,
     faCalendarAlt,
     faCaretDown,
     faCaretRight,
@@ -20,8 +20,8 @@ import {
     faInfoCircle
     } from "@fortawesome/free-solid-svg-icons"
 
-library.add(faArchive)
 library.add(faBars)
+library.add(faBoxArchive)
 library.add(faCalendarAlt)
 library.add(faCaretDown)
 library.add(faCaretRight)

@@ -9,53 +9,47 @@ class SearchController < ApplicationController
     @users = User.order(display_name: :asc)
 
     if params.has_key? :search
-      query = query_from_search_params(params[:search])
-      filters = filters_from_search_params(params[:search])
-      order = order_from_search_params(params[:search])
+      query = query_from_params(params[:search])
+      filters = filters_from_params(params[:search])
+      order = order_from_params(params[:search])
+
       @messages = search_with_excerpts(query, filters, order)
     else
-      # set defaults for new search form
-      params[:search] = search_defaults
+      # set form defaults
+      params[:search] = defaults
     end
   end
 
   private
 
-  def query_from_search_params(search)
+  def query_from_params(search)
     # escape SphinxQL in query
     query = ThinkingSphinx::Query.escape(search[:query])
-    # unescape double quotes to allow phrase searching
+
+    # now unescape double quotes to allow phrase searching
     query.gsub(/\\"/, '"')
   end
 
-  def filters_from_search_params(search)
+  def filters_from_params(search)
+    # parse dates from params with fallback to defaults
+    start_date = parse_date(search[:start]) || default_start_date
+    end_date = parse_date(search[:end]) || default_end_date
+
     # filter search on attributes
-    start_date, end_date = parse_dates(search[:start], search[:end])
     filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
-    filters.merge!({ channel_id: search[:channel_id].to_i }) if search[:channel_id].present?
-    filters.merge!({ user_id: search[:user_id].to_i }) if search[:user_id].present?
+    filters[:channel_id] = search[:channel_id].to_i if search[:channel_id].present?
+    filters[:user_id] = search[:user_id].to_i if search[:user_id].present?
 
     filters
   end
 
-  def parse_dates(start_date, end_date)
-    # parse start/end dates or use defaults
-    begin
-      start_date = start_date.to_date
-    rescue Date::Error
-      start_date = oldest_message_date
-    end
-
-    begin
-      end_date = end_date.to_date
-    rescue Date::Error
-      end_date = Date.today
-    end
-
-    [start_date, end_date]
+  def parse_date(date)
+    date.to_date
+  rescue Date::Error
+    nil
   end
 
-  def order_from_search_params(search)
+  def order_from_params(search)
     if search[:sort_by] == 'date'
       "posted_at #{search[:order]}, w DESC"
     else
@@ -64,7 +58,7 @@ class SearchController < ApplicationController
   end
 
   def search_with_excerpts(query, filters, order)
-    # get message search results with maximum size excerpts (i.e., entire messages)
+    # search messages with really big excerpts (i.e. the entire message)
     messages = Message.search query,
                               select: '*, weight() as w',
                               with: filters,
@@ -86,11 +80,19 @@ class SearchController < ApplicationController
     messages
   end
 
-  def search_defaults
+  def default_start_date
+    oldest_message_date
+  end
+
+  def default_end_date
+    Date.today
+  end
+
+  def defaults
     {
       query: nil,
-      start: oldest_message_date,
-      end: Date.today,
+      start: default_start_date,
+      end: default_end_date,
       channel_id: nil,
       user_id: nil,
       sort_by: 'best',

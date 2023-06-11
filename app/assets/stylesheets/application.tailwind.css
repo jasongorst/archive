@@ -2,4 +2,5 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import 'application';
+@import '@fortawesome/fontawesome-svg-core/styles';
+@import 'custom';

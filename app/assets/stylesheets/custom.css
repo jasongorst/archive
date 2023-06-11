@@ -8,21 +8,26 @@
   flex-wrap: nowrap;
   align-items: stretch;
 }
+
 .bot-attachment-border {
   width: 4px;
   border-radius: 2px;
 }
+
+.bot-attachment-text {
+  padding-left: 12px;
+}
+
 .slack-good {
   background: #2eb886;
 }
+
 .slack-warning {
   background: #daa038;
 }
+
 .slack-danger {
   background: #a30200;
-}
-.bot-attachment-text {
-  padding-left: 12px;
 }
 
 mark {
@@ -35,11 +40,13 @@ mark {
 .alert {
   @apply pointer-events-none hidden;
 }
+
 .alert-open,
 .alert:target,
 .alert-toggle:checked + .alert {
   @apply pointer-events-auto flex;
 }
+
 .alert-toggle {
   @apply fixed h-0 w-0 appearance-none opacity-0;
 }

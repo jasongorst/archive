@@ -9,7 +9,7 @@
     "autoprefixer": "^10.4.14",
     "daisyui": "^3.0.1",
     "esbuild": "^0.16.17",
-    "flowbite-datepicker": "^1.2.2",
+    "flowbite": "^1.6.5",
     "mrujs": "^1.0.0",
     "postcss": "^8.4.24",
     "postcss-flexbugs-fixes": "^5.0.2",

@@ -34,26 +34,26 @@
       .flex.gap-6
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :sort_by, "best", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "best"), data: { action: "search#update", "search-target": "best" }
+            = f.radio_button :sort_by, "best", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "best"), data: { action: "search#update", search_target: "best" }
             %span.label-text.pl-2
               Best match
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :sort_by, "date", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "date"), data: { action: "search#update", "search-target": "date" }
+            = f.radio_button :sort_by, "date", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "date"), data: { action: "search#update", search_target: "date" }
             %span.label-text.pl-2
               Date
 
-    .form-control#order{data: { "search-target": "order" }}
+    .form-control#order{data: { search_target: "order" }}
       = f.label :order, "Order", class: "label label-text"
       .flex.gap-6
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :order, "DESC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "DESC"), data: { "search-target": "newest" }
+            = f.radio_button :order, "DESC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "DESC"), data: { search_target: "newest" }
             %span.label-text.pl-2
               Newest first
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :order, "ASC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "ASC"), data: { "search-target": "oldest" }
+            = f.radio_button :order, "ASC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "ASC"), data: { search_target: "oldest" }
             %span.label-text.pl-2
               Oldest first
 

@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.5'
+gem "rails", "~> 7.0", ">= 7.0.8"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails", "~> 3.4"
@@ -13,10 +13,10 @@ gem "sprockets-rails", "~> 3.4"
 gem "mysql2", "~> 0.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.3"
+gem "puma", "~> 6.4"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails", "~> 1.1"
+gem "jsbundling-rails", "~> 1.2"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails", "~> 1.4"
@@ -25,7 +25,7 @@ gem "turbo-rails", "~> 1.4"
 gem "stimulus-rails", "~> 1.2"
 
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails", "~> 1.1"
+gem "cssbundling-rails", "~> 1.3"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.11"
@@ -51,7 +51,7 @@ gem "ruby-vips", "~> 2.1"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", "~> 1.7", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", "~> 1.8", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
@@ -71,8 +71,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.39"
-  gem "selenium-webdriver", "~> 4.9"
-  gem "webdrivers", "~> 5.2"
+  gem "webdrivers", "~> 5.3"
 end
 
 # Use capistrano for deployment
@@ -86,7 +85,7 @@ group :development do
 end
 
 # Use haml for templates
-gem "haml", "~> 6.1"
+gem "haml", "~> 6.2"
 gem "haml-rails", "~> 2.1"
 
 # use memcached for caching
@@ -96,7 +95,7 @@ gem "dalli", "~> 3.2"
 gem "bigdecimal", "~> 3.1"
 
 # Slack api client
-gem "slack-ruby-client", '~> 2.1'
+gem "slack-ruby-client", '~> 2.2'
 
 # Pagination
 gem "kaminari", "~> 1.2"
@@ -112,7 +111,7 @@ gem "whenever", '~> 1.0', require: false
 
 # use sass-embedded for administrate
 gem "sprockets-sass_embedded", "~> 0.1"
-gem "sass-embedded", "~> 1.62"
+gem "sass-embedded", "~> 1.68"
 gem "administrate", github: "jasongorst/administrate"
 gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-field-hex_color_picker"
 
@@ -120,7 +119,7 @@ gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-fiel
 gem "clearance", "~> 2.6"
 
 # validate passwords for entropy bits
-gem "strong_password", "~> 0.0"
+gem "strong_password", "~> 0.0.10"
 
 # convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1"

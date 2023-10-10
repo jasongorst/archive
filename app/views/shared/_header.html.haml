@@ -2,21 +2,21 @@
   .navbar-start
 
     -# hamburger menu
-    %details.dropdown.lg:hidden
-      %summary.btn.btn-ghost
+    .dropdown.lg:hidden
+      %label.btn.btn-ghost{tabindex: 0}
         %i.fas.fa-bars
-      %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10
+      %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
         %li
           %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
             Home
-        %li{tabindex: "0"}
-          %details{open: (true if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
-            %summary{class: ("bg-primary-focus" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
+        %li
+          %details{open: (true if channel_page?)}
+            %summary{class: ("bg-primary-focus" if channel_page?)}
               Channels
             %ul.p-2
               - channels_with_messages.each do |channel|
                 %li
-                  %a{class: ("bg-primary-focus" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
+                  %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
                     \##{channel.name}
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
@@ -37,12 +37,12 @@
             Home
         %li{tabindex: "0"}
           %details
-            %summary{class: ("bg-primary-focus" if current_page?({ controller: :display, action: :show}) || (params[:date] && current_page?({ controller: :display, action: :by_date})))}
+            %summary{class: ("bg-primary-focus" if channel_page?)}
               Channels
             %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
               - channels_with_messages.each do |channel|
                 %li
-                  %a{class: ("bg-primary-focus" if request.fullpath.start_with?("/#{channel.name}")), href: url_for(channel)}
+                  %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
                     \##{channel.name}
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}

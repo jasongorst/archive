@@ -6,7 +6,8 @@
         \##{message.channel.name}
     %div
       %strong
-        %span{style: "color: #{message.user.color}"}= message.user.display_name
+        %span{style: ("color: #{message.user.color}" if message.user.color.present?)}
+          = message.user.display_name
       %span.text-sm= message.posted_at.strftime("%b %-e, %Y at %-l:%M%P")
       %div!= message.excerpts.text
       - message.attachments.each do |attachment|

@@ -2,7 +2,7 @@
   %div
     %a{id: "ts_#{message.ts}"}
       %strong
-        %span{style: "color: #{message.user.color}"}
+        %span{style: ("color: #{message.user.color}" if message.user.color.present?)}
           = message.user.display_name
       %span.text-sm= message.posted_at.strftime("%-l:%M%P")
       %div!= message.text

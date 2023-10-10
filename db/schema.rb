@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_191050) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_10_211138) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -106,7 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_191050) do
     t.string "display_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "color", default: "inherit"
+    t.string "color"
     t.index ["slack_user"], name: "index_users_on_slack_user"
   end
 

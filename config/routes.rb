@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'display#index'
+
   resources :passwords, controller: 'clearance/passwords', only: [:create, :new]
   resource :session, controller: 'clearance/sessions', only: [:create]
 
@@ -22,11 +24,7 @@ Rails.application.routes.draw do
     root to: 'users#index'
   end
 
-  root 'display#index'
   get 'search', to: 'search#index'
   get '/:channel_id', to: 'display#show', as: :channel
   get '/:channel_id/:date', to: 'display#by_date', as: :channel_date
-
-  get 'display/index'
-  get 'display/show'
 end

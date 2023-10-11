@@ -48,8 +48,9 @@ class SlackEmoji
   end
 
   def emoji_aliases
-    slack_emoji.select { |_, value| value.start_with?("alias:") }
-                     .transform_values { |value| /alias:(.*)/.match(value)[1] }
+    slack_emoji
+      .select { |_, value| value.start_with?("alias:") }
+      .transform_values { |value| /alias:(.*)/.match(value)[1] }
   end
 
   private

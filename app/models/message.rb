@@ -25,6 +25,7 @@ class Message < ApplicationRecord
   def expire_cache_keys
     Rails.cache.delete_multi(
       %W[
+        channels_with_messages
         channels_with_times
         dates_with_counts_in_channel_#{self.channel.id}
         dates_with_messages_in_channel_#{self.channel.id}

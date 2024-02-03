@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1"
+gem "rails", "~> 7.1", ">= 7.1.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails", "~> 3.4"
@@ -19,10 +19,10 @@ gem "puma", "~> 6.4"
 gem "jsbundling-rails", "~> 1.2"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", "~> 1.4"
+gem "turbo-rails", "~> 1.5"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails", "~> 1.2"
+gem "stimulus-rails", "~> 1.3"
 
 # # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails", "~> 1.3"
@@ -43,11 +43,11 @@ gem "jbuilder", "~> 2.11"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", "~> 1.16", require: false
+gem "bootsnap", "~> 1.17", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", '~> 1.12'
-gem "ruby-vips", "~> 2.1"
+gem "ruby-vips", "~> 2.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -78,7 +78,7 @@ end
 group :development do
   gem "bcrypt_pbkdf", "~> 1.1", require: false
   gem "ed25519", "~> 1.3", require: false
-  gem "capistrano", "~> 3.17", require: false
+  gem "capistrano", "~> 3.18", require: false
   gem "capistrano-rails", "~> 1.6", require: false
   gem "capistrano-rbenv", "~> 2.2", require: false
   gem "capistrano-passenger", "~> 0.2", require: false
@@ -119,10 +119,13 @@ gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-fiel
 gem "clearance", "~> 2.6"
 
 # validate passwords for entropy bits
-gem "strong_password", "~> 0.0.10"
+gem "strong_password", "~> 0.0"
 
 # convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1"
 
 # use postmark for outgoing email
 gem "postmark-rails", "~> 0.22"
+
+# vite for javascript
+gem "vite_rails", "~> 3.0.17"

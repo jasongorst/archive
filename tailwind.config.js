@@ -13,6 +13,7 @@ module.exports = {
     darkMode: 'media',
     daisyui: {
         themes: ["winter", "dark"],
-        darkTheme: "dark"
+        darkTheme: "dark",
+        log: false
     }
 }

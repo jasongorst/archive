@@ -1,33 +1,29 @@
 [hidden] {
-  display: none !important
+  @apply !hidden;
 }
 
 .bot-attachment {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: stretch;
+  @apply flex flex-row flex-nowrap items-stretch;
 }
 
 .bot-attachment-border {
-  width: 4px;
-  border-radius: 2px;
+  @apply w-1 rounded-sm;
 }
 
 .bot-attachment-text {
-  padding-left: 12px;
+  @apply pl-3;
 }
 
 .slack-good {
-  background: #2eb886;
+  background-color: #2eb886;
 }
 
 .slack-warning {
-  background: #daa038;
+  background-color: #daa038;
 }
 
 .slack-danger {
-  background: #a30200;
+  background-color: #a30200;
 }
 
 mark {
@@ -55,4 +51,31 @@ mark {
 .menu :where(li > details > summary):after,
 .menu :where(li > .menu-dropdown-toggle):after {
   @apply !w-0;
+}
+
+/* recreate daisyui 3 *-focus colors */
+.bg-primary-focus {
+  background-color: color-mix(
+    in oklab,
+    oklch(var(--p)),
+    black 10%
+  )
+}
+
+/* darker navbar menu hover */
+.navbar {
+  :where(.menu li:not(.menu-title):not(.disabled) > *:not(ul):not(details):not(.menu-title)),
+  :where(.menu li:not(.menu-title):not(.disabled) > details > summary:not(.menu-title)) {
+    @media (hover: hover) {
+      &:not(.active):hover {
+        @apply cursor-pointer outline-none;
+
+        background-color: color-mix(
+          in oklab,
+          oklch(var(--p)),
+          black 5%
+        )
+      }
+    }
+  }
 }

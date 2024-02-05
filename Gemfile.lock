@@ -9,8 +9,8 @@ GIT
       rails (~> 7.0)
 
 GIT
-  remote: https://github.com/jasongorst/administrate.git
-  revision: 788163d316a1812a09b815c81f882c207659e032
+  remote: https://github.com/thoughtbot/administrate.git
+  revision: cc9b13b5ac8f105ac8adc8a698a61e58324f169c
   specs:
     administrate (0.20.1)
       actionpack (>= 6.0, < 8.0)

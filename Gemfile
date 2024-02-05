@@ -109,10 +109,12 @@ gem "friendly_id", '~> 5.5'
 # Ruby cron jobs
 gem "whenever", '~> 1.0', require: false
 
-# use sass-embedded for administrate
+# use administrate for model dashboards
+gem "administrate", github: "thoughtbot/administrate"
+
+# use sass-embedded for administrate-field-hex_color_picker
 gem "sprockets-sass_embedded", "~> 0.1"
 gem "sass-embedded", "~> 1.69"
-gem "administrate", github: "jasongorst/administrate"
 gem "administrate-field-hex_color_picker", github: "jasongorst/administrate-field-hex_color_picker"
 
 # use clearance for authentication

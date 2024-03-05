@@ -1,7 +1,7 @@
 import "@hotwired/turbo-rails"
-import "flowbite/dist/datepicker.turbo.js";
+import "flowbite/dist/datepicker.turbo.js"
 import mrujs from "mrujs"
-import "../controllers"
+import "./controllers"
 
 window.Turbo = Turbo
 mrujs.start()

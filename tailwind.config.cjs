@@ -1,7 +1,7 @@
 module.exports = {
   content: [
     "./public/*.html",
-    "./app/assets/stylesheets/**/*.css",
+    "./app/assets/stylesheets/*.css",
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
     "./app/views/**/*.{erb,haml,html,slim}",
@@ -25,6 +25,6 @@ module.exports = {
         }
       }
     ],
-    log: false
+    logs: false
   }
 }

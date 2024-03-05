@@ -7,7 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "~7.3.0",
-    "@melloware/coloris": "^0.22.0",
+    "@melloware/coloris": "^0.23.0",
     "esbuild": "^0.20.1",
     "flowbite": "~2.3.0",
     "mrujs": "^1.0.0"

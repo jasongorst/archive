@@ -2,4 +2,5 @@
   .flashes
     - flash.each do |key, value|
       - next unless value.respond_to?(:html_safe)
-      %div{:class => "flash flash-#{key}"}= value.html_safe
+      %div{class: "flash flash-#{key}"}
+        = value.html_safe

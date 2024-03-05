@@ -1,0 +1,87 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "@fortawesome/fontawesome-svg-core/styles.css";
+
+[hidden] {
+  @apply !hidden;
+}
+
+.bot-attachment {
+  @apply flex flex-row flex-nowrap items-stretch;
+}
+
+.bot-attachment-border {
+  @apply w-1 rounded-sm;
+}
+
+.bot-attachment-text {
+  @apply pl-3;
+}
+
+.slack-good {
+  background-color: #2eb886;
+}
+
+.slack-warning {
+  background-color: #daa038;
+}
+
+.slack-danger {
+  background-color: #a30200;
+}
+
+mark {
+  background: #fde047;
+  color: #18181b;
+  padding: 0.125em;
+  margin: -0.125em;
+}
+
+.alert {
+  @apply pointer-events-none hidden;
+}
+
+.alert-open,
+.alert:target,
+.alert-toggle:checked + .alert {
+  @apply pointer-events-auto flex;
+}
+
+.alert-toggle {
+  @apply fixed h-0 w-0 appearance-none opacity-0;
+}
+
+/* hide submenu arrows */
+.menu :where(li > details > summary):after,
+.menu :where(li > .menu-dropdown-toggle):after {
+  @apply !w-0;
+}
+
+/* recreate daisyui 3 *-focus colors */
+.bg-primary-focus {
+  background-color: color-mix(
+    in oklab,
+    oklch(var(--p)),
+    black 10%
+  )
+}
+
+/* darker navbar menu hover */
+.navbar {
+  :where(.menu li:not(.menu-title):not(.disabled) > *:not(ul):not(details):not(.menu-title)),
+  :where(.menu li:not(.menu-title):not(.disabled) > details > summary:not(.menu-title)) {
+    @media (hover: hover) {
+      &:not(.active):hover {
+        @apply cursor-pointer outline-none;
+
+        background-color: color-mix(
+          in oklab,
+          oklch(var(--p)),
+          black 5%
+        )
+      }
+    }
+  }
+}

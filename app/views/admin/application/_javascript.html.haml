@@ -1,6 +1,10 @@
 - Administrate::Engine.javascripts.each do |js_path|
-  = javascript_include_tag js_path
+  = javascript_include_tag js_path, "data-turbo-track": "reload", defer: true
+
+= javascript_include_tag "color_picker_field", "data-turbo-track": "reload", defer: true
+
 = yield :javascript
+
 - if Rails.env.test?
   = javascript_tag do
     $.fx.off = true;

@@ -4,13 +4,13 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [ "order", "best", "date", "newest", "oldest" ]
   connect() {
-    if (this.bestTarget.checked == true) {
+    if (this.bestTarget.checked) {
       this.orderTarget.hidden = true
     }
   }
 
   update() {
-    if (this.dateTarget.checked == true) {
+    if (this.dateTarget.checked) {
       this.orderTarget.hidden = false
     } else {
       this.orderTarget.hidden = true

@@ -7,22 +7,22 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "~7.3.0",
-    "flowbite": "~1.8.1",
+    "@melloware/coloris": "^0.22.0",
+    "esbuild": "^0.20.1",
+    "flowbite": "~2.3.0",
     "mrujs": "^1.0.0"
   },
   "scripts": {
-    "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css"
+    "build": "esbuild app/javascript/*.js --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "postcss ./app/assets/stylesheets/*.css --map --dir ./app/assets/builds"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.17",
-    "daisyui": "^4.6.1",
-    "postcss": "^8.4.33",
+    "daisyui": "^4.7.2",
+    "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
-    "postcss-import": "^16.0.0",
-    "postcss-nesting": "^12.0.2",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.0.0",
-    "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-ruby": "^5.0.0"
+    "postcss-import": "^16.0.1",
+    "postcss-nesting": "^12.0.4",
+    "tailwindcss": "^3.4.1"
   }
 }

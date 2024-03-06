@@ -208,10 +208,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@melloware/coloris@^0.23.0":
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/@melloware/coloris/-/coloris-0.23.0.tgz#b9f44ed473968e416e4bfb437a8a4b3bc0dffc55"
-  integrity sha512-VGIjI9+IQwg6BHjIE10yl0K2ARYz5bsjn6BgFEs1y1ErPAQymgdoxwVcSVL4Ai5t9OVs8xaCB7JKHqFu2N96Ow==
+"@melloware/coloris@^0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@melloware/coloris/-/coloris-0.22.0.tgz#917fc64a38d951f10dd707996d305fdf166c5fc3"
+  integrity sha512-i06nJM0xQrgOkLFUi8d+8mrJjvFgPrU/nTM9vtRGip/T6yHUFIrNV7QgCyps3dBkKVRP/CeJzAeAIvJBSTSbFQ==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -449,9 +449,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.668:
-  version "1.4.692"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.692.tgz#82139d20585a4b2318a02066af7593a3e6bec993"
-  integrity sha512-d5rZRka9n2Y3MkWRN74IoAsxR0HK3yaAt7T50e3iT9VZmCCQDT3geXUO5ZRMhDToa1pkCeQXuNo+0g+NfDOVPA==
+  version "1.4.693"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.693.tgz#001bb5dcb57ba404366ec39e1957d11886fc8a93"
+  integrity sha512-/if4Ueg0GUQlhCrW2ZlXwDAm40ipuKo+OgeHInlL8sbjt+hzISxZK949fZeJaVsheamrzANXvw1zQTvbxTvSHw==
 
 emoji-regex@^8.0.0:
   version "8.0.0"

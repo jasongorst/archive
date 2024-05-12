@@ -2,7 +2,7 @@
 lock "~> 3.18.1"
 
 set :application, "archive"
-set :repo_url, "git@gitlab.com:jasongorst/archive.git"
+set :repo_url, "git@github.com:jasongorst/archive.git"
 
 # Default branch is :master
 set :branch, `git rev-parse --abbrev-ref HEAD`.chomp

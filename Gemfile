@@ -28,7 +28,7 @@ gem "stimulus-rails", "~> 1.3"
 gem "cssbundling-rails", "~> 1.4"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder", "~> 2.11"
+gem "jbuilder", "~> 2.12"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -113,7 +113,7 @@ gem "whenever", '~> 1.0', require: false
 gem "administrate", github: "thoughtbot/administrate"
 
 # use clearance for authentication
-gem "clearance", "~> 2.6"
+gem "clearance", "~> 2.7"
 
 # validate passwords for entropy bits
 gem "strong_password", "~> 0.0"

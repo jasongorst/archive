@@ -3,12 +3,12 @@
   "private": "true",
   "type": "module",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
-    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "~7.3.0",
-    "@melloware/coloris": "^0.23.0",
-    "esbuild": "^0.20.1",
+    "@melloware/coloris": "^0.24.0",
+    "esbuild": "^0.21.1",
     "flowbite": "~2.3.0",
     "mrujs": "^1.0.0"
   },
@@ -17,12 +17,12 @@
     "build:css": "postcss ./app/assets/stylesheets/*.css --map --dir ./app/assets/builds"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.17",
-    "daisyui": "^4.7.2",
-    "postcss": "^8.4.35",
+    "autoprefixer": "^10.4.19",
+    "daisyui": "^4.11.1",
+    "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
-    "postcss-import": "^16.0.1",
-    "postcss-nesting": "^12.0.4",
-    "tailwindcss": "^3.4.1"
+    "postcss-import": "^16.1.0",
+    "postcss-nesting": "^12.1.3",
+    "tailwindcss": "^3.4.3"
   }
 }

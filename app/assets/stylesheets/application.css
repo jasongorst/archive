@@ -32,6 +32,10 @@
   background-color: #a30200;
 }
 
+.slack-none {
+  background-color: #35373b;
+}
+
 mark {
   background: #fde047;
   color: #18181b;

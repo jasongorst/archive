@@ -4,9 +4,9 @@ require "slack/mrkdwn"
 
 class SlackNewMessages
   SLACK_COLORS = {
-    "2eb886" => "good",
-    "daa038" => "warning",
-    "a30200" => "danger"
+    "#2eb886" => "good",
+    "#daa038" => "warning",
+    "#a30200" => "danger"
   }
 
   attr_accessor :logger
@@ -57,7 +57,7 @@ class SlackNewMessages
         next if message.ts.to_d == last_ts
 
         # save roller messages
-        if message.key?(:bot_id) && message.bot_id == User.find_by_display_name("Roller").slack_user
+        if message.key?(:bot_id) && message.bot_id == User.find_by_display_name("RollerBot 2").slack_user
           save_roller_message(message, channel)
           next
         end
@@ -99,20 +99,48 @@ class SlackNewMessages
   end
 
   def save_roller_message(message, channel)
-    user = User.find_by_display_name("Roller")
+    rollerbot = User.find_by_display_name("RollerBot 2")
 
     # parse message attachment (assume only one)
-    m = message.attachments.first
-    color = SLACK_COLORS[m.color]
-    text = PIPELINE.to_html(m.text)
-    fields = m.fields.each do |f|
-      f["value"] = PIPELINE.to_html(f["value"])
+    attachment = message.attachments.first
+    color = SLACK_COLORS[attachment.color] || "none"
+
+    block = attachment.blocks.first
+    text = PIPELINE.to_html(block.text.text)
+
+    fields = if block.fields.count == 1
+               # /coin
+               block.fields[0].text.split("\n")
+             elsif block.fields.count == 4
+               # /dice or /roll (no extra rolls)
+                [
+                  block.fields[0].text,
+                  block.fields[2].text,
+                  block.fields[1].text,
+                  block.fields[3].text
+                ]
+             elsif block.fields.count == 7
+               # /roll (with extra rolls)
+               [
+                 block.fields[0].text,
+                 block.fields[2].text,
+                 block.fields[1].text,
+                 block.fields[3].text,
+                 block.fields[4].text,
+                 block.fields[6].text
+               ]
+             else
+               # ?
+             end
+
+    fields = fields.map do |field|
+      PIPELINE.to_html(field)
     end
 
     # save message
     channel.messages.create!(text: render_roller_message_text(color, text, fields),
                              ts: message.ts.to_d,
-                             user_id: user.id)
+                             user_id: rollerbot.id)
   end
 
   def render_roller_message_text(color, text, fields)

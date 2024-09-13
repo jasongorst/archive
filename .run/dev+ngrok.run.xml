@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="dev+ngrok" type="CompoundRunConfigurationType">
+    <toRun name="dev" type="ShConfigurationType" />
+    <toRun name="ngrok" type="ShConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>

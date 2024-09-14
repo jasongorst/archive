@@ -1,0 +1,24 @@
+%details#user-menu-dropdown.dropdown.dropdown-bottom.dropdown-end
+  %summary.swap{class: ("swap-active" if signed_in?)}
+    %span
+      %i.fas.fa-circle-user.swap-on
+    %span
+      %i.far.fa-circle-user.swap-off
+
+  %ul.dropdown-content.menu.mt-3.p-2.shadow.bg-primary.rounded-box.z-10.whitespace-nowrap
+    -if signed_in?
+      %li.menu-title{class: "text-primary-content/75"}
+        = current_account.email
+
+      -if current_account.admin?
+        %li
+          %a.whitespace-nowrap{href: admin_root_path}
+            Dashboard
+
+      %li
+        = button_to("Sign Out", sign_out_path, { method: :delete, form_class: "p-0 flex", class: "block w-full select-none px-4 py-2 text-left", data: { confirm: "Are you sure?" } })
+
+    - else
+      %li
+        %a.whitespace-nowrap{href: sign_in_path}
+          Sign In

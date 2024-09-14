@@ -1,5 +1,5 @@
 module Admin
-  class AdminUsersController < Admin::ApplicationController
+  class AccountsController < Admin::ApplicationController
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
@@ -8,14 +8,6 @@ module Admin
     #   send_foo_updated_email(requested_resource)
     # end
 
-    def destroy
-      if AdminUser.count == 1
-        flash[:error] = "Can't delete the last Admin User!"
-        redirect_to({ action: :index })
-      else
-        super
-      end
-    end
     # Override this method to specify custom lookup behavior.
     # This will be used to set the resource for the `show`, `edit`, and `update`
     # actions.
@@ -50,6 +42,27 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def update
+      if requested_resource == current_user && !resource_params[:admin]
+        flash[:error] = "You probably shouldn't remove your own admin status."
+        redirect_to({ action: :index })
+      else
+        super
+      end
+    end
+
+    def destroy
+      if requested_resource == current_user
+        flash[:error] = "Please don't delete your own account."
+        redirect_to({ action: :index })
+      elsif Account.count == 1
+        flash[:error] = "Please don't delete the only account."
+        redirect_to({ action: :index })
+      else
+        super
+      end
+    end
 
     def default_sorting_attribute
       :email

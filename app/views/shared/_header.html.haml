@@ -2,25 +2,37 @@
   .navbar-start
 
     -# hamburger menu
-    .dropdown.lg:hidden
-      %label.btn.btn-ghost{tabindex: 0}
-        %i.fas.fa-bars
-      %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
-        %li
-          %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
-            Home
-        %li
-          %details{open: (true if channel_page?)}
-            %summary{class: ("bg-primary-focus" if channel_page?)}
-              Channels
-            %ul.p-2
-              - channels_with_messages.each do |channel|
-                %li
-                  %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
-                    \##{channel.name}
-        %li
-          %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
-            Search
+    - if signed_in?
+      .dropdown.lg:hidden
+        %label.btn.btn-ghost{tabindex: 0}
+          %i.fas.fa-bars
+        %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
+          %li
+            %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
+              Home
+          %li
+            %details{open: (true if channel_page?)}
+              %summary{class: ("bg-primary-focus" if channel_page?)}
+                Channels
+              %ul.p-2
+                - channels_with_messages.each do |channel|
+                  %li
+                    %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
+                      \##{channel.name}
+          %li
+            %details{open: (true if private_channel_page?)}
+              %summary{class: ("bg-primary-focus" if private_channel_page?)}
+                DMs
+              %ul.p-2
+                - current_account.user.private_channels.with_messages.each do |private_channel|
+                  %li
+                    %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if private_channel.id == current_private_channel), href: url_for(private_channel)}
+                      #{private_channel.other_users_as_sentence(current_account.user)}
+                      %span.text-xs
+                        (#{time_ago(private_channel.time_of_latest_message)})
+          %li
+            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
+              Search
 
     %div
       %span.btn.btn-ghost.normal-case.text-xl
@@ -30,23 +42,35 @@
           Archive
 
     -# horizontal menu
-    .hidden.lg:flex
-      %ul.menu.menu-horizontal.p-0
-        %li
-          %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
-            Home
-        %li{tabindex: "0"}
-          %details
-            %summary{class: ("bg-primary-focus" if channel_page?)}
-              Channels
-            %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
-              - channels_with_messages.each do |channel|
-                %li
-                  %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
-                    \##{channel.name}
-        %li
-          %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
-            Search
+    - if signed_in?
+      .hidden.lg:flex
+        %ul.menu.menu-horizontal.p-0
+          %li
+            %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
+              Home
+          %li{tabindex: "0"}
+            %details
+              %summary{class: ("bg-primary-focus" if channel_page?)}
+                Channels
+              %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
+                - channels_with_messages.each do |channel|
+                  %li
+                    %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
+                      \##{channel.name}
+          %li{tabindex: "0"}
+            %details
+              %summary{class: ("bg-primary-focus" if private_channel_page?)}
+                DMs
+              %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
+                - current_account.user.private_channels.with_messages.each do |private_channel|
+                  %li
+                    %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if private_channel.id == current_private_channel.to_i), href: url_for(private_channel)}
+                      #{private_channel.other_users_as_sentence(current_account.user)}
+                      %span.text-xs
+                        (#{time_ago(private_channel.time_of_latest_message)})
+          %li
+            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
+              Search
 
   .navbar-end
     %ul.menu.menu-horizontal.p-0
@@ -55,3 +79,5 @@
           %span
             rae.evilpaws.org
             %i.fas.fa-external-link-alt
+      - if signed_in?
+        %li= render(partial: 'shared/user_menu')

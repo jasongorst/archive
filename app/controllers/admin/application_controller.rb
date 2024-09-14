@@ -7,10 +7,11 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     include Clearance::Controller
-    before_action :authenticate_admin
+    before_action :require_login
+    before_action :authorize_admin
 
-    def authenticate_admin
-      require_login
+    def authorize_admin
+      redirect_back_or_to(root_path, alert: "Only admins can access Dashboards.") unless current_user&.admin?
     end
 
     # Override this value to specify the number of elements to display at a time

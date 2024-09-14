@@ -2,5 +2,8 @@
 
 require_relative "config/environment"
 
+BotServer::App.instance.prepare!
+BotServer::Service.start!
+
 run Rails.application
 Rails.application.load_server

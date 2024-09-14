@@ -1,3 +1,3 @@
 class Attachment < ApplicationRecord
-  belongs_to :message
+  belongs_to :attachable, polymorphic: true
 end

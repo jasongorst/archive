@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class AdminUserDashboard < Administrate::BaseDashboard
+class AccountDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,8 +8,10 @@ class AdminUserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    email: Field::Email,
-    password: Field::String.with_options(searchable: false)
+    id: Field::Number,
+    email: Field::String,
+    password: Field::String.with_options(searchable: false),
+    admin: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -19,12 +21,14 @@ class AdminUserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     email
+    admin
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     email
+    admin
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -33,6 +37,7 @@ class AdminUserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     email
     password
+    admin
   ].freeze
 
   # COLLECTION_FILTERS
@@ -47,10 +52,10 @@ class AdminUserDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how admin users are displayed
+  # Overwrite this method to customize how accounts are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(admin_user)
-    admin_user.email
+  def display_resource(account)
+    account.email
   end
 end

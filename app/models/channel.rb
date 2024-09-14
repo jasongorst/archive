@@ -6,4 +6,6 @@ class Channel < ApplicationRecord
   validates :name, :slack_channel, uniqueness: true
 
   has_many :messages, -> { order(posted_at: :asc) }
+
+  scope :with_messages, -> { where.associated(:messages).distinct.order(name: :asc) }
 end

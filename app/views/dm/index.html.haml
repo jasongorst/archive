@@ -1,0 +1,7 @@
+%ul.menu.lg:menu-lg.pl-0.pt-0
+  - @private_channels.each do |private_channel|
+    %li
+      %a.px-4{href: url_for(private_channel)}
+        #{private_channel.other_users_as_sentence(current_account.user)}
+        %span.text-xs.lg:text-sm
+          #{time_ago_in_words(private_channel.time_of_latest_message)} ago

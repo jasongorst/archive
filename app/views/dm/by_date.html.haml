@@ -1,0 +1,14 @@
+%h1.text-lg.lg:text-2xl.lg:pb-2
+  %a{href: url_for(@private_channel)}
+    #{@private_channel.other_users_as_sentence(current_account.user)}
+
+= render(partial: "next_prev_day")
+= paginate @private_messages
+
+%h5.text-lg.lg:text-xl.py-3.lg:py-6= long_date_with_year(@date)
+
+.pb-2.lg:pb-0
+  = render(partial: "message", collection: @private_messages, cached: true)
+
+= paginate @private_messages
+= render(partial: "next_prev_day")

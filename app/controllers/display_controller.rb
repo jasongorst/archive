@@ -1,5 +1,4 @@
 class DisplayController < ApplicationController
-
   layout 'main'
 
   def index

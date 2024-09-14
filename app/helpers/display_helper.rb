@@ -33,6 +33,14 @@ module DisplayHelper
     "#{long_date(date)}, #{date.year}"
   end
 
+  def short_date(date)
+    "#{date.strftime('%b %e')}"
+  end
+
+  def short_date_with_year(date)
+    "#{date.strftime('%b %e, %Y')}"
+  end
+
   def month_contained_in?(month, year, dates_with_counts)
     not dates_in_month(month, year, dates_with_counts).empty?
   end
@@ -60,6 +68,14 @@ module DisplayHelper
   def oldest_message_date(channel)
     Rails.cache.fetch("oldest_message_date_in_channel_#{channel.id}") do
       channel.messages.minimum(:posted_on)
+    end
+  end
+
+  def time_ago(time)
+    if time.nil?
+      "never"
+    else
+      "#{time_ago_in_words(time)} ago"
     end
   end
 end

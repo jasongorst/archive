@@ -14,10 +14,12 @@ import {
     faCalendarAlt,
     faCaretDown,
     faCaretRight,
+    faCircleUser as fasCircleUser,
     faExclamationTriangle,
     faExternalLinkAlt,
     faInfoCircle
     } from "@fortawesome/free-solid-svg-icons"
+import { faCircleUser as farCircleUser } from "@fortawesome/free-regular-svg-icons"
 
 library.add(faBars)
 library.add(faBoxArchive)
@@ -27,4 +29,6 @@ library.add(faCaretRight)
 library.add(faExclamationTriangle)
 library.add(faExternalLinkAlt)
 library.add(faInfoCircle)
+library.add(farCircleUser)
+library.add(fasCircleUser)
 dom.watch()

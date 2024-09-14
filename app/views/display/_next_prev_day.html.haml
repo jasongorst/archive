@@ -6,5 +6,5 @@
   .navbar-end.flex.text-sm.lg:text-md
     - n = next_date(@channel, @date)
     - unless n.nil?
-      = link_to raw("&lsaquo;&nbsp;#{long_date(n)}"), channel_date_path(@channel, n), class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal"
+      = link_to raw("#{long_date(n)}&nbsp;&rsaquo;"), channel_date_path(@channel, n), class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal"
 

@@ -7,7 +7,7 @@ class SlackNewMessages
     "#2eb886" => "good",
     "#daa038" => "warning",
     "#a30200" => "danger"
-  }
+  }.freeze
 
   attr_accessor :logger
 
@@ -88,7 +88,8 @@ class SlackNewMessages
     m = channel.messages.create!(text: text,
                                  verbatim: message.text,
                                  ts: message.ts.to_d,
-                                 user_id: user.id)
+                                 user_id: user.id
+    )
 
     # save attachments
     if message.key?(:files)

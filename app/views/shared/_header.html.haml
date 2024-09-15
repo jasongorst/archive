@@ -20,19 +20,23 @@
                     %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
                       \##{channel.name}
           %li
+            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
+              Search
+          %li
             %details{open: (true if private_channel_page?)}
               %summary{class: ("bg-primary-focus" if private_channel_page?)}
                 DMs
               %ul.p-2
+                %li
+                  %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if current_page?(:private_channel_search)), href: url_for(:private_channel_search)}
+                    Search DMs
                 - current_account.user.private_channels.with_messages.each do |private_channel|
                   %li
                     %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if private_channel.id == current_private_channel), href: url_for(private_channel)}
                       #{private_channel.other_users_as_sentence(current_account.user)}
                       %span.text-xs
                         (#{time_ago(private_channel.time_of_latest_message)})
-          %li
-            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
-              Search
+
 
     %div
       %span.btn.btn-ghost.normal-case.text-xl
@@ -57,20 +61,23 @@
                   %li
                     %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
                       \##{channel.name}
+          %li
+            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
+              Search
           %li{tabindex: "0"}
             %details
               %summary{class: ("bg-primary-focus" if private_channel_page?)}
                 DMs
               %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
+                %li
+                  %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if current_page?(:private_channel_search)), href: url_for(:private_channel_search)}
+                    Search DMs
                 - current_account.user.private_channels.with_messages.each do |private_channel|
                   %li
                     %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if private_channel.id == current_private_channel.to_i), href: url_for(private_channel)}
                       #{private_channel.other_users_as_sentence(current_account.user)}
                       %span.text-xs
                         (#{time_ago(private_channel.time_of_latest_message)})
-          %li
-            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
-              Search
 
   .navbar-end
     %ul.menu.menu-horizontal.p-0

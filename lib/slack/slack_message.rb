@@ -4,12 +4,19 @@ require "slack/slack_bot"
 require "slack/slack_user"
 
 class SlackMessage
-  ROLLER_DISPLAY_NAME = "RollerBot 2".freeze
+  ROLLER_V2_DISPLAY_NAME = "RollerBot 2".freeze
+  ROLLER_DISPLAY_NAME = "Roller".freeze
 
-  SLACK_COLORS = {
+  ROLLER_V2_COLORS = {
     "#2eb886" => "good",
     "#daa038" => "warning",
     "#a30200" => "danger"
+  }.freeze
+
+  ROLLER_COLORS = {
+    "2eb886" => "good",
+    "daa038" => "warning",
+    "a30200" => "danger"
   }.freeze
 
   attr_reader :message,
@@ -23,6 +30,9 @@ class SlackMessage
     @message = message
 
     if @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
+      @message.bot_id == User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
+      parse_roller_v2_message!
+    elsif @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
       @message.bot_id == User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user
       parse_roller_message!
     else
@@ -56,12 +66,12 @@ class SlackMessage
     end
   end
 
-  def parse_roller_message!
-    @user = User.find_by_display_name(ROLLER_DISPLAY_NAME)
+  def parse_roller_v2_message!
+    @user = User.find_by_display_name(ROLLER_V2_DISPLAY_NAME)
 
     # parse message attachment (assume only one)
     attachment = @message.attachments.first
-    color = SLACK_COLORS[attachment.color] || "none"
+    color = ROLLER_V2_COLORS[attachment.color] || "none"
 
     block = attachment.blocks.first
     text = PIPELINE.to_html(block.text.text)
@@ -95,8 +105,30 @@ class SlackMessage
       PIPELINE.to_html(field)
     end
 
+    @text = render_roller_v2_message_text(color, text, fields)
+    @ts = @message.ts.to_d
+  end
+
+  def parse_roller_message!
+    @user = User.find_by_display_name(ROLLER_DISPLAY_NAME)
+
+    # parse message attachment (assume only one)
+    m = @message.attachments.first
+    color = ROLLER_COLORS[m.color]
+    text = PIPELINE.to_html(m.text)
+    fields = m.fields.each do |f|
+      f["value"] = PIPELINE.to_html(f["value"])
+    end
+
     @text = render_roller_message_text(color, text, fields)
     @ts = @message.ts.to_d
+  end
+
+  def render_roller_v2_message_text(color, text, fields)
+    ApplicationController.renderer.render(partial: "roller_v2/message",
+                                          locals: { color: color,
+                                                    text: text,
+                                                    fields: fields })
   end
 
   def render_roller_message_text(color, text, fields)

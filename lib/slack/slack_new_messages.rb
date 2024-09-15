@@ -3,10 +3,16 @@ require "slack/slack_user"
 require "slack/mrkdwn"
 
 class SlackNewMessages
-  SLACK_COLORS = {
+  ROLLER_V2_COLORS = {
     "#2eb886" => "good",
     "#daa038" => "warning",
     "#a30200" => "danger"
+  }.freeze
+
+  ROLLER_COLORS = {
+    "2eb886" => "good",
+    "daa038" => "warning",
+    "a30200" => "danger"
   }.freeze
 
   attr_accessor :logger
@@ -56,11 +62,18 @@ class SlackNewMessages
         # check the ts against the last message saved
         next if message.ts.to_d == last_ts
 
-        # save roller messages
+        # save roller-v2 messages
         if message.key?(:bot_id) && message.bot_id == User.find_by_display_name("RollerBot 2").slack_user
+          save_roller_v2_message(message, channel)
+          next
+        end
+
+        # save roller messages
+        if message.key?(:bot_id) && message.bot_id == User.find_by_display_name("Roller").slack_user
           save_roller_message(message, channel)
           next
         end
+
         # ignore other bot messages
         next if message.key?(:subtype) && message.subtype == "bot_message"
 
@@ -99,12 +112,12 @@ class SlackNewMessages
     end
   end
 
-  def save_roller_message(message, channel)
+  def save_roller_v2_message(message, channel)
     rollerbot = User.find_by_display_name("RollerBot 2")
 
     # parse message attachment (assume only one)
     attachment = message.attachments.first
-    color = SLACK_COLORS[attachment.color] || "none"
+    color = ROLLER_V2_COLORS[attachment.color] || "none"
 
     block = attachment.blocks.first
     text = PIPELINE.to_html(block.text.text)
@@ -139,9 +152,33 @@ class SlackNewMessages
     end
 
     # save message
-    channel.messages.create!(text: render_roller_message_text(color, text, fields),
+    channel.messages.create!(text: render_roller_v2_message_text(color, text, fields),
                              ts: message.ts.to_d,
                              user_id: rollerbot.id)
+  end
+
+  def save_roller_message(message, channel)
+    user = User.find_by_display_name("Roller")
+
+    # parse message attachment (assume only one)
+    m = message.attachments.first
+    color = ROLLER_COLORS[m.color]
+    text = PIPELINE.to_html(m.text)
+    fields = m.fields.each do |f|
+      f["value"] = PIPELINE.to_html(f["value"])
+    end
+
+    # save message
+    channel.messages.create!(text: render_roller_message_text(color, text, fields),
+                             ts: message.ts.to_d,
+                             user_id: user.id)
+  end
+
+  def render_roller_v2_message_text(color, text, fields)
+    ApplicationController.renderer.render(partial: "roller_v2/message",
+                                          locals: { color: color,
+                                                    text: text,
+                                                    fields: fields })
   end
 
   def render_roller_message_text(color, text, fields)

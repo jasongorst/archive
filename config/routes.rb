@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  constraints Clearance::Constraints::SignedOut.new do
+    root to: "clearance/sessions#new", as: :signed_out_root
+  end
+
+  constraints Clearance::Constraints::SignedIn.new do
+    root to: "display#index", as: :root
+  end
+
   mount BotServer::Api::Endpoints::AuthEndpoint, at: "/oauth"
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -18,45 +26,37 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints Clearance::Constraints::SignedOut.new do
-    root to: "clearance/sessions#new", as: :root
+  resources :accounts, controller: "clearance/users", only: Clearance.configuration.user_actions do
+    resource :password,
+             controller: "clearance/passwords",
+             only: [:edit, :update]
   end
 
-  constraints Clearance::Constraints::SignedIn.new do
-    root to: "display#index", as: :signed_in_root
+  match "/sign_out", to: "clearance/sessions#destroy", via: [:get, :delete], as: "sign_out"
 
-    resources :accounts, controller: "clearance/users", only: Clearance.configuration.user_actions do
-      resource :password,
-               controller: "clearance/passwords",
-               only: [:edit, :update]
-    end
+  namespace :admin do
+    resources :users
+    resources :channels
+    resources :messages
+    resources :attachments
+    resources :accounts
 
-    match "/sign_out", to: "clearance/sessions#destroy", via: [:get, :delete], as: "sign_out"
-
-    namespace :admin do
-      resources :users
-      resources :channels
-      resources :messages
-      resources :attachments
-      resources :accounts
-
-      root to: "users#index"
-    end
-
-    get "bot_users/index"
-    get "users/index"
-    get "teams/index"
-    get "teams/show"
-
-    scope "/dm" do
-      get "/", to: "dm#index"
-      get ":private_channel_id", to: "dm#show", as: :private_channel
-      get ":private_channel_id/:date", to: "dm#by_date", as: :private_channel_date
-      get "search", to: "dm#search", as: :private_channel_search
-    end
-
-    get "search", to: "search#index"
-    get ":channel_id", to: "display#show", as: :channel
-    get ":channel_id/:date", to: "display#by_date", as: :channel_date
+    root to: "users#index"
   end
+
+  get "bot_users/index"
+  get "users/index"
+  get "teams/index"
+  get "teams/show"
+
+  scope "/dm" do
+    get "/", to: "dm#index"
+    get "search", to: "private_search#index", as: :private_channel_search
+    get ":private_channel_id", to: "dm#show", as: :private_channel
+    get ":private_channel_id/:date", to: "dm#by_date", as: :private_channel_date
+  end
+
+  get "search", to: "search#index"
+  get ":channel_id", to: "display#show", as: :channel
+  get ":channel_id/:date", to: "display#by_date", as: :channel_date
 end

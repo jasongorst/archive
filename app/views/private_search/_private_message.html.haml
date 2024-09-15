@@ -1,0 +1,17 @@
+.mb-2.lg:mb-4.hover:bg-base-200
+  %a{href: private_channel_date_path(private_message.private_channel, private_message.posted_on,
+    page: page_from_private_message_index(index_of_private_message_by_date(private_message)), anchor: "ts_#{private_message.ts}")}
+    %div.text-sm
+      - if params[:search][:private_channel_id].empty?
+        #{private_message.private_channel.other_users_as_sentence(current_account.user)}
+    %div
+      %strong
+        %span{style: ("color: #{private_message.user.color}" if private_message.user.color.present?)}
+          = private_message.user.display_name
+      %span.text-sm= private_message.posted_at.strftime("%b %-e, %Y at %-l:%M%P")
+      %div!= private_message.excerpts.text
+      - private_message.attachments.each do |attachment|
+        - if attachment.name && attachment.url
+          %div
+            %i.fas.fa-caret-right
+            %span.link= attachment.name

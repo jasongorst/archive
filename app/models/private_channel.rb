@@ -17,6 +17,14 @@ class PrivateChannel < ApplicationRecord
     private_messages.minimum(:posted_on)
   end
 
+  def time_of_latest_message_in_words
+    if time_of_latest_message.nil?
+      "never"
+    else
+      "#{time_ago_in_words(time_of_latest_message)} ago"
+    end
+  end
+
   def other_users_as_sentence(current_user)
     if users.count == 1 && users.first == current_user
       "myself"

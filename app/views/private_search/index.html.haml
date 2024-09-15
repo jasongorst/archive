@@ -1,0 +1,19 @@
+%h1.text-lg.lg:text-2xl.lg:pb-2
+  DM Search
+
+= render partial: "form"
+
+- unless @private_messages.nil?
+  .mt-4.lg:mt-6
+    .text-sm
+      - if @private_messages.count > PrivateSearchController::MAX_RESULTS
+        showing #{number_with_delimiter(PrivateSearchController::MAX_RESULTS)} of
+      #{pluralize(number_with_delimiter(@private_messages.count), "DM")} found
+
+    .my-3.lg:mt-4
+      = paginate @private_messages
+
+    = render partial: "private_message", collection: @private_messages
+
+    .my-3.lg:mt-4
+      = paginate @private_messages

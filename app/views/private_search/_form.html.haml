@@ -1,0 +1,60 @@
+= form_with scope: :search, url: "/dm/search", method: "get", data: { turbo: false, controller: "search" } do |f|
+  .form-control.w-full
+    = f.label :query, "Keywords", class: "label label-text"
+    = f.search_field :query, value: params[:search][:query], placeholder: "", class: "input input-bordered input-sm lg:input-md w-full"
+    %small
+      %em You can search for an exact phrase by putting it in quotes, "like this".
+
+  .grid.grid-cols-1.md:grid-cols-2.gap-x-4{"date-rangepicker": true, "datepicker-format": "yyyy-mm-dd"}
+    .form-control
+      = f.label :start, "Between", class: "label label-text"
+      .join
+        = f.text_field :start, value: params[:search][:start], class: "input input-bordered input-sm lg:input-md join-item w-full"
+        %label.btn.btn-square.btn-sm.lg:btn-md.join-item{for: "search_start"}
+          %i.fas.fa-calendar-alt
+    .form-control
+      = f.label :end, "and", class: "label label-text"
+      .join
+        = f.text_field :end, value: params[:search][:end], class: "input input-bordered input-sm lg:input-md join-item w-full"
+        %label.btn.btn-square.btn-sm.lg:btn-md.join-item{for: "search_end"}
+          %i.fas.fa-calendar-alt
+
+  .form-control.w-full
+    - options = [["Any DM", ""]] + @private_channels.map {|private_channel| [private_channel.other_users_as_sentence(current_account.user), private_channel.id]}
+    = f.label :private_channel_id, "DM", class: "label label-text"
+    = f.select :private_channel_id, options_for_select(options, selected: params[:search][:private_channel_id]), {}, class: "select select-bordered select-sm lg:select-md w-full"
+  .form-control.w-full
+    - options = [["Any user", ""]] + @users.map {|user| [user.display_name, user.id]}
+    = f.label :user_id, "User", class: "label label-text"
+    = f.select :user_id, options_for_select(options, selected: params[:search][:user_id]), {}, class: "select select-bordered select-sm lg:select-md w-full"
+
+  .grid.grid-cols-1.md:grid-cols-2.gap-x-4
+    .form-control
+      = f.label :sort_by, "Sort by", class: "label label-text"
+      .flex.gap-6
+        .flex.gap-2.flex-nowrap.form-control
+          %label.label.cursor-pointer
+            = f.radio_button :sort_by, "best", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "best"), data: { action: "search#update", search_target: "best" }
+            %span.label-text.pl-2
+              Best match
+        .flex.gap-2.flex-nowrap.form-control
+          %label.label.cursor-pointer
+            = f.radio_button :sort_by, "date", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "date"), data: { action: "search#update", search_target: "date" }
+            %span.label-text.pl-2
+              Date
+
+    .form-control#order{data: { search_target: "order" }}
+      = f.label :order, "Order", class: "label label-text"
+      .flex.gap-6
+        .flex.gap-2.flex-nowrap.form-control
+          %label.label.cursor-pointer
+            = f.radio_button :order, "DESC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "DESC"), data: { search_target: "newest" }
+            %span.label-text.pl-2
+              Newest first
+        .flex.gap-2.flex-nowrap.form-control
+          %label.label.cursor-pointer
+            = f.radio_button :order, "ASC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "ASC"), data: { search_target: "oldest" }
+            %span.label-text.pl-2
+              Oldest first
+
+  = f.submit "Search DMs", class: "btn btn-sm lg:btn-md w-full mt-3 lg:mt-4"

@@ -1,0 +1,31 @@
+.card.bg-base-200.shadow-2xl.prose.mx-auto
+  .card-title.px-8.pt-12
+    %h1.text-2xl.lg:text-3xl.font-semibold.m-0
+      Some first-time sign-in stuff
+
+  .card-body
+    %p.mt-0.text-md.lg:text-lg.font-normal
+      Ok, you're signed in.
+    %p.mt-0.text-md.lg:text-lg.font-normal
+      Now I just need you to do a couple of things:
+    %ol.m-0
+      %li.mt-0.text-md.lg:text-lg.font-normal{class: "mb-[2em]"}
+        %h2.mt-0.mb-2.lg:mb-3.text-lg.lg:text-xl.font-semibold
+          First, change your password.
+        %p.mt-0.text-md.lg:text-lg.font-normal
+          You should get an email with a password reset link in a second or two.
+          If you'd like the email resent, click the link below or the one on the
+          sign-in page that says "Forgot password?".
+        %p.mt-0.text-md.lg:text-lg.font-normal
+          %a.link{href: new_password_path}
+            Resend that password reset email.
+
+      %li.m-0.text-md.lg:text-lg.font-normal
+        %h2.mt-0.mb-2.lg:mb-3.text-lg.lg:text-xl.font-semibold
+          Authorize the Archivist bot.
+        %p.mt-0.text-md.lg:text-lg.font-normal
+          Click the button and tell Slack that it's ok for the Archivist bot to
+          read your DMs.
+        %a.slack-button{href: @oauth_url}
+          != image_tag("slack.svg", size: "20x20", style: "height:20px;width:20px;margin-right:12px")
+          Add to Slack

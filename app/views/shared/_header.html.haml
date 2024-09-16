@@ -1,6 +1,5 @@
 .navbar.mb-4.lg:mb-6.bg-primary.text-primary-content
-  .navbar-start
-
+  .grow.justify-start
     -# hamburger menu
     - if signed_in?
       .dropdown.lg:hidden
@@ -8,35 +7,26 @@
           %i.fas.fa-bars
         %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
           %li
-            %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
-              Home
-          %li
             %details{open: (true if channel_page?)}
               %summary{class: ("bg-primary-focus" if channel_page?)}
                 Channels
               %ul.p-2
                 - channels_with_messages.each do |channel|
                   %li
-                    %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
+                    %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
                       \##{channel.name}
+
           %li
             %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
               Search
-          %li
-            %details{open: (true if private_channel_page?)}
-              %summary{class: ("bg-primary-focus" if private_channel_page?)}
-                DMs
-              %ul.p-2
-                %li
-                  %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if current_page?(:private_channel_search)), href: url_for(:private_channel_search)}
-                    Search DMs
-                - current_account.user.private_channels.with_messages.each do |private_channel|
-                  %li
-                    %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if private_channel.id == current_private_channel), href: url_for(private_channel)}
-                      #{private_channel.other_users_as_sentence(current_account.user)}
-                      %span.text-xs
-                        (#{time_ago(private_channel.time_of_latest_message)})
 
+          %li
+            %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
+              DMs
+
+          %li
+            %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
+              Search DMs
 
     %div
       %span.btn.btn-ghost.normal-case.text-xl
@@ -49,9 +39,6 @@
     - if signed_in?
       .hidden.lg:flex
         %ul.menu.menu-horizontal.p-0
-          %li
-            %a{href: url_for(:root), class: ("bg-primary-focus" if current_page?(:root))}
-              Home
           %li{tabindex: "0"}
             %details
               %summary{class: ("bg-primary-focus" if channel_page?)}
@@ -59,27 +46,22 @@
               %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
                 - channels_with_messages.each do |channel|
                   %li
-                    %a{class: ("bg-primary-focus" if channel.name == current_channel), href: url_for(channel)}
+                    %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
                       \##{channel.name}
+
           %li
             %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
               Search
-          %li{tabindex: "0"}
-            %details
-              %summary{class: ("bg-primary-focus" if private_channel_page?)}
-                DMs
-              %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
-                %li
-                  %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if current_page?(:private_channel_search)), href: url_for(:private_channel_search)}
-                    Search DMs
-                - current_account.user.private_channels.with_messages.each do |private_channel|
-                  %li
-                    %a.whitespace-nowrap.inline{class: ("bg-primary-focus" if private_channel.id == current_private_channel.to_i), href: url_for(private_channel)}
-                      #{private_channel.other_users_as_sentence(current_account.user)}
-                      %span.text-xs
-                        (#{time_ago(private_channel.time_of_latest_message)})
 
-  .navbar-end
+          %li
+            %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
+              DMs
+
+          %li
+            %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
+              Search DMs
+
+  .grow.justify-end
     %ul.menu.menu-horizontal.p-0
       %li
         %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}

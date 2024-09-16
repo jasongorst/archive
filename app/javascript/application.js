@@ -1,5 +1,6 @@
 import "@hotwired/turbo-rails"
-import "flowbite/dist/datepicker.turbo.js"
+import "flowbite/dist/flowbite.turbo.js"
+
 import mrujs from "mrujs"
 import "./controllers"
 

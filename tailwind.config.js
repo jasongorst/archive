@@ -1,4 +1,9 @@
-module.exports = {
+import daisyui from "daisyui"
+import themes from "daisyui/src/theming/themes"
+import tailwindTypography from "@tailwindcss/typography"
+import flowbite from "flowbite/plugin"
+
+export default {
   content: [
     "./public/*.html",
     "./app/assets/stylesheets/*.css",
@@ -8,15 +13,16 @@ module.exports = {
     "./node_modules/flowbite/**/*.js"
   ],
   plugins: [
-    require("daisyui")
+    daisyui,
+    tailwindTypography
   ],
-  darkMode: "media",
   daisyui: {
     themes: [
+      // first theme is the default (for light mode)
       "winter",
       {
         dark: {
-          ...require("daisyui/src/theming/themes")["dark"],
+          ...themes["dark"],
           primary: "#661AE6",
           "primary-content": "#ffffff",
           secondary: "#D926AA",
@@ -25,6 +31,8 @@ module.exports = {
         }
       }
     ],
+    darkMode: "media",
+    darkTheme: "dark",
     logs: false
   }
 }

@@ -64,7 +64,7 @@ module BotServer
             client_id: Rails.application.credentials.slack_client_id,
             client_secret: Rails.application.credentials.slack_client_secret,
             code: params[:code],
-            redirect_uri: "https://exactly-mint-chamois.ngrok-free.app/oauth"
+            redirect_uri: BotServer::REDIRECT_URI
           }
 
           rc = client.send(SlackRubyBotServer.config.oauth_access_method, options)

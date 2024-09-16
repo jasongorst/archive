@@ -8,6 +8,15 @@
   @apply !hidden;
 }
 
+/* add to slack button */
+.slack-button {
+  @apply inline-flex bg-white h-12 w-[14.75rem] items-center justify-center;
+  @apply border border-solid border-[#dddddd] rounded;
+  @apply text-black font-[Lato,sans-serif] text-base font-semibold no-underline;
+  @apply dark:bg-[#4a154B] dark:text-white dark:border-0;
+}
+
+/* slack legacy attachment appearance */
 .bot-attachment {
   @apply flex flex-row flex-nowrap items-stretch;
 }
@@ -20,31 +29,35 @@
   @apply pl-3;
 }
 
+/* slack legacy attachment border colors */
 .slack-good {
-  background-color: #2eb886;
+  @apply bg-[#2eb886];
 }
 
 .slack-warning {
-  background-color: #daa038;
+  @apply bg-[#daa038];
 }
 
 .slack-danger {
-  background-color: #a30200;
+  @apply bg-[#a30200];
 }
 
 .slack-none {
-  background-color: #35373b;
+  @apply bg-[#35373b];
 }
 
+/* for manticoresearch excerpts */
 mark {
-  background: #fde047;
-  color: #18181b;
-  padding: 0.125em;
-  margin: -0.125em;
+  @apply bg-[#fde047] text-[#18181b] p-[0.125em] -m-[0.125em];
 }
 
+/* flash alert and notice styles */
 .alert {
   @apply pointer-events-none hidden;
+}
+
+.alert-toggle {
+  @apply fixed h-0 w-0 appearance-none opacity-0;
 }
 
 .alert-open,
@@ -53,17 +66,13 @@ mark {
   @apply pointer-events-auto flex;
 }
 
-.alert-toggle {
-  @apply fixed h-0 w-0 appearance-none opacity-0;
-}
-
-/* hide submenu arrows */
+/* hide daisyui submenu arrows */
 .menu :where(li > details > summary):after,
 .menu :where(li > .menu-dropdown-toggle):after {
   @apply !w-0;
 }
 
-/* recreate daisyui 3 *-focus colors */
+/* recreate daisyui v3 *-focus colors */
 .bg-primary-focus {
   background-color: color-mix(
     in oklab,

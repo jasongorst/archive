@@ -32,7 +32,7 @@ module BotServer
       #noinspection RubyResolve
       class AuthEndpoint < Grape::API
         desc 'Handle Slack OAuth requests.'
-        format :json
+        format "json"
 
         helpers do
           def logger
@@ -83,7 +83,7 @@ module BotServer
             team = Team.find_by_token(access_token) || Team.find_by_team_id(team_id)
 
             if team
-              team.ping_if_active!
+              # team.ping_if_active!
 
               team.update!(
                 oauth_version: oauth_version,
@@ -96,6 +96,7 @@ module BotServer
               # raise "Team #{team.name} is already registered." if team.active?
 
               team.activate!(access_token)
+              logger.info "Bot access token updated for Team: #{team.team_id}"
             else
               team = Team.create!(
                 token: access_token,
@@ -109,7 +110,7 @@ module BotServer
               )
             end
 
-            logger.info "Bot access token received. Team: #{team}"
+            logger.info "Bot access token created for Team: #{team.team_id}"
             redirect_params = { team: team.team_id }
           end
 
@@ -123,22 +124,29 @@ module BotServer
             bot_user = BotUser.find_by_slack_user(user_id)
 
             if bot_user
+              # existing BotUser
               bot_user.update!(
                 user_oauth_scope: user_oauth_scope,
                 user_access_token: user_access_token,
                 active: true,
                 team: team
               )
-            else
-              team_client = Slack::Web::Client.new(token: team.token)
-              user = team_client.users_info(user: user_id).user
 
-              display_name = if user.profile.display_name.present?
-                               user.profile.display_name
-                             elsif user.profile.real_name.present?
-                               user.profile.real_name
+              logger.info "User access token updated for User: #{bot_user.slack_user}"
+            else
+              # new BotUser
+              user = User.find_by_slack_user(user_id)
+              account = Account.find_by_user_id(user.id) if user
+
+              team_client = Slack::Web::Client.new(token: team.token)
+              slack_user = team_client.users_info(user: user_id).user
+
+              display_name = if slack_user.profile.display_name.present?
+                               slack_user.profile.display_name
+                             elsif slack_user.profile.real_name.present?
+                               slack_user.profile.real_name
                              else
-                               "Unknown User"
+                               "Unknown User <#{user_id}>"
                              end
 
               bot_user = BotUser.create!(
@@ -147,12 +155,19 @@ module BotServer
                 user_access_token: user_access_token,
                 user_oauth_scope: user_oauth_scope,
                 active: true,
-                team: team
+                team: team,
+                account: account
               )
+
+              logger.info "User access token created for BotUser: #{bot_user.slack_user}"
+
+              if bot_user.account_id
+                logger.info "BotUser #{bot_user.display_name} linked to Account #{account&.email} owned by User #{user.display_name}"
+                redirect_params[:account] = account
+              end
             end
 
-            logger.info "User access token received. User: #{bot_user}"
-            redirect_params[:user] = bot_user.slack_user
+            redirect_params[:user] = bot_user
           end
 
           redirect Rails.application.routes.url_helpers.url_for(only_path: true, controller: :auth, action: :confirm, params: redirect_params)

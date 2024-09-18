@@ -1,5 +1,8 @@
 class SessionsController < Clearance::SessionsController
   def first_sign_in
+    current_account.encrypted_password = ""
+    current_account.forgot_password!
+
     @oauth_url = URI::HTTPS.build(
       host: "slack.com",
       path: case SlackRubyBotServer::Config.oauth_version

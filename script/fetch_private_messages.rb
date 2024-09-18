@@ -60,6 +60,8 @@ begin
           User.find_or_create_by(slack_user: member) do |user|
             slack_user = SlackUser.new(member)
             user.display_name = slack_user.display_name
+            user.is_bot = slack_user.is_bot
+            user.deleted = slack_user.deleted
           end
         end
 
@@ -70,8 +72,6 @@ begin
 
           messages.each do |message|
             slack_message = SlackMessage.new(message)
-
-            private_channel.users << slack_message.user unless private_channel.users.include?(slack_message.user)
 
             private_message = private_channel.private_messages.create!(
               user: slack_message.user,

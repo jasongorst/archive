@@ -47,16 +47,20 @@ class SlackMessage
               User.find_or_create_by!(slack_user: @message.bot_id) do |u|
                 bot = SlackBot.new(@message.bot_id)
                 u.display_name = bot.display_name
+                u.is_bot = bot.is_bot
+                u.deleted = bot.deleted
               end
             else
               User.find_or_create_by!(slack_user: @message.user) do |u|
                 user = SlackUser.new(@message.user)
                 u.display_name = user.display_name
+                u.is_bot = user.is_bot
+                u.deleted = user.deleted
               end
             end
 
     @text = PIPELINE.to_html(@message.text)
-    @verbatim = @message.text
+    @verbatim = @message.to_json
     @ts = @message.ts.to_d
 
     if @message.has_key?(:files)

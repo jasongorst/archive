@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_12_031800) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_17_003510) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
@@ -184,6 +184,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_12_031800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "color"
+    t.boolean "is_bot", default: false, null: false
+    t.boolean "deleted", default: false, null: false
     t.index ["slack_user"], name: "index_users_on_slack_user"
   end
 

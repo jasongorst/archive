@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 
   def index
     @channels = Channel.order(name: :asc)
-    @users = User.order(display_name: :asc)
+    @users = User.where(is_bot: false, deleted: false).order(display_name: :asc)
 
     if params.has_key? :search
       query = query_from_params(params[:search])

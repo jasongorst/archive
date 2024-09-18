@@ -6,7 +6,7 @@ class PrivateSearchController < ApplicationController
 
   def index
     @private_channels = current_account.user.private_channels.with_messages
-    @users = User.order(display_name: :asc)
+    @users = User.where(is_bot: false, deleted: false).order(display_name: :asc)
 
     if params.has_key? :search
       query = query_from_params(params[:search])

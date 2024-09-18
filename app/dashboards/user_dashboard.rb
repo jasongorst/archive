@@ -14,7 +14,9 @@ class UserDashboard < Administrate::BaseDashboard
     display_name: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    color: ColorPickerField
+    color: ColorPickerField,
+    is_bot: Field::Boolean,
+    deleted: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,6 +29,8 @@ class UserDashboard < Administrate::BaseDashboard
     color
     slack_user
     messages
+    is_bot
+    deleted
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

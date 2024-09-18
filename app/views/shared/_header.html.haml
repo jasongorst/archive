@@ -1,5 +1,6 @@
 .navbar.mb-4.lg:mb-6.bg-primary.text-primary-content
   .grow.justify-start
+
     -# hamburger menu
     - if signed_in?
       .dropdown.lg:hidden
@@ -20,13 +21,14 @@
             %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
               Search
 
-          %li
-            %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
-              DMs
+          - if current_account&.user
+            %li
+              %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
+                DMs
 
-          %li
-            %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
-              Search DMs
+            %li
+              %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
+                Search DMs
 
     %div
       %span.btn.btn-ghost.normal-case.text-xl
@@ -53,13 +55,14 @@
             %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
               Search
 
-          %li
-            %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
-              DMs
+          - if current_account&.user
+            %li
+              %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
+                DMs
 
-          %li
-            %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
-              Search DMs
+            %li
+              %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
+                Search DMs
 
   .grow.justify-end
     %ul.menu.menu-horizontal.p-0
@@ -68,5 +71,6 @@
           %span
             rae.evilpaws.org
             %i.fas.fa-external-link-alt
+
       - if signed_in?
         %li= render(partial: 'shared/user_menu')

@@ -9,6 +9,7 @@ SlackRubyBotServer.configure do |config|
     chat:write
     emoji:read
     files:read
+    users.profile:read
     users:read
   ]
 

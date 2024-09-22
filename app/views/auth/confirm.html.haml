@@ -5,15 +5,22 @@
 
   .card-body.pt-3.lg:pt-4
     %p.mt-0.mb-1.lg:mb-2mb-2.text-md.lg:text-lg.font-normal
-      Archivist can now read your DMs.
+      ArchivistDM can now read DMs belonging to |
 
-    %p.mt-0.mb-1.lg:mb-2.text-md.lg:text-lg.font-normal
-      And the account
+      %span.font-semibold.text-accent<>
+        = @bot_user.display_name
 
-      %span.font-semibold.text-accent
-        = @bot_user.account.email
+      , and the account |
 
-      can now read your DMs here on archive.evilpaws.org.
+      %span.font-semibold.text-accent<>
+        = @account.email
 
-    %p.mt-0.mb-1.lg:mb-2.text-md.lg:text-lg.font-normal
-      Hopefully that&rsquo;s you.
+      \ can now read those DMs here.
+
+    - if current_account == @account && current_account&.user&.slack_user == @bot_user.slack_user
+      %p.mt-0.mb-1.lg:mb-2.text-md.lg:text-lg.font-normal
+        It looks like that&rsquo;s you, so we're good.
+
+    - else
+      %p.mt-0.mb-1.lg:mb-2.text-md.lg:text-lg.font-normal
+        But that&rsquo;s not you, so I think something went wrong.

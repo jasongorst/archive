@@ -36,7 +36,7 @@ module BotServer
 
         helpers do
           def logger
-            AuthEndpoint.logger
+            Rails.logger
           end
         end
 
@@ -161,13 +161,13 @@ module BotServer
 
               logger.info "User access token created for BotUser: #{bot_user.slack_user}"
 
-              if bot_user.account_id
-                logger.info "BotUser #{bot_user.display_name} linked to Account #{account&.email} owned by User #{user.display_name}"
-                redirect_params[:account] = account
+              if account
+                logger.info "BotUser #{bot_user.display_name} linked to Account #{account.email} owned by User #{user.display_name}"
+                redirect_params[:account] = account.id
               end
             end
 
-            redirect_params[:user] = bot_user
+            redirect_params[:user] = bot_user.slack_user
           end
 
           redirect Rails.application.routes.url_helpers.url_for(only_path: true, controller: :auth, action: :confirm, params: redirect_params)

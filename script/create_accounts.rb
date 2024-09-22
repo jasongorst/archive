@@ -27,11 +27,11 @@ Account.create!([
                     admin: false,
                     user: User.find_by_display_name("robinrahne")
                   },
-                  {
-                    # rae
-                    email: "",
-                    password: "huntress.headwind.lock.lighten",
-                    admin: true,
-                    user: User.find_by_display_name("rae")
-                  }
+                  # {
+                  #   # rae
+                  #   email: "rae@evilpaws.org",
+                  #   password: "huntress.headwind.lock.lighten",
+                  #   admin: true,
+                  #   user: User.find_by_display_name("rae")
+                  # }
                 ])

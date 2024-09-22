@@ -1,8 +1,19 @@
 class SessionsController < Clearance::SessionsController
   def first_sign_in
+    redirect_back_or_to :signed_out_root_path unless signed_in?
+    redirect_back_or_to :root_path if current_account.has_signed_in?
+
+    # set has_signed_in?
+    current_account.has_signed_in = true
+
+    # reset account password
     current_account.encrypted_password = ""
     current_account.forgot_password!
 
+    # send password reset email
+    ClearanceMailer.change_password(current_account).deliver_now
+
+    # build url for Add to Slack button
     @oauth_url = URI::HTTPS.build(
       host: "slack.com",
       path: case SlackRubyBotServer::Config.oauth_version
@@ -23,7 +34,7 @@ class SessionsController < Clearance::SessionsController
   end
 
   def url_after_create
-    if current_account.user
+    if current_account.has_signed_in?
       "/"
     else
       "/first_sign_in"

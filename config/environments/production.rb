@@ -60,7 +60,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  config.active_job.queue_name_prefix = "archive_production"
+  config.active_job.queue_name_prefix = "archivedm_production"
 
   config.action_mailer.perform_caching = false
 
@@ -92,5 +92,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # set default url options
-  config.action_mailer.default_url_options = { host: 'archive.evilpaws.org' }
+  config.action_mailer.default_url_options = { host: 'archivedm.evilpaws.org' }
 end

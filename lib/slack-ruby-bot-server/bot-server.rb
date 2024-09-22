@@ -14,5 +14,5 @@ module BotServer
     mpim:read
   ].freeze
 
-  REDIRECT_URL = "https://exactly-mint-chamois.ngrok-free.app/oauth".freeze
+  REDIRECT_URL = "https://archivedm.evilpaws.org/oauth".freeze
 end

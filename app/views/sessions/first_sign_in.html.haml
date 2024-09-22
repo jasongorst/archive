@@ -1,6 +1,6 @@
 .card.bg-base-200.shadow-2xl.prose.mx-auto
   .card-title.px-8.pt-12
-    %h1.m-0.text-2xl.lg:text-3xl.font-semibold.m-0.text-primary
+    %h1.m-0.text-2xl.lg:text-3xl.font-semibold.m-0.text-accent
       Some first-time sign-in stuff&hellip;
 
   .card-body.pt-3.lg:pt-4
@@ -28,5 +28,5 @@
           read your DMs.
         .mt-2.lg:mt-3
           %a.slack-button{href: @oauth_url}
-            != image_tag("slack.svg", size: "20x20", style: "height:20px;width:20px;margin-right:12px")
+            != image_tag("slack.svg", size: "20x20", class: "h-5 w-5 mr-3")
             Add to Slack

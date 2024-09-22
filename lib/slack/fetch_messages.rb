@@ -18,7 +18,7 @@ module Slack
       slack_channels.each do |slack_channel|
         @logger.info "Archiving channel \##{slack_channel.name}"
 
-        channel = Channel.find_or_create_by!(slack_channel: slack_channel.id) do |c|
+        channel = ::Channel.find_or_create_by!(slack_channel: slack_channel.id) do |c|
           c.name = slack_channel.name
         end
 
@@ -29,20 +29,20 @@ module Slack
 
     private
 
-    def archive_messages(slack_channel, last_ts)
+    def archive_messages(channel, last_ts)
       @client.conversations_history(
-        channel: slack_channel.slack_channel,
+        channel: channel.slack_channel,
         oldest: last_ts,
         inclusive: false
       ) do |response|
 
         messages = response.messages
-        @logger.info "Archiving #{messages.count} messages from \##{slack_channel.name}"
+        @logger.info "Archiving #{messages.count} messages from \##{channel.name}"
 
         messages.each do |m|
           slack_message = Slack::Message.new(m)
 
-          message = slack_channel.messages.create!(
+          message = channel.messages.create!(
             user: slack_message.user,
             text: slack_message.text,
             ts: slack_message.ts,

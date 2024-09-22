@@ -1,3 +1,4 @@
+require "slack/fetch_messages"
 require "slack/client"
 require "slack/user"
 require "slack/message"
@@ -10,49 +11,51 @@ module Slack
 
     def initialize(bot_user)
       @bot_user = bot_user
-      @user_client = Slack::Client.new(token: bot_user.user_access_token)
-      super
+      @user_client = Slack::Client.new(bot_user.user_access_token)
+      super()
     end
 
     def fetch_channels
-      @user_client.conversations_list(types: CONVERSATION_TYPES).channel
+      @user_client.conversations_list(types: CONVERSATION_TYPES).channels
     end
 
     def fetch_messages(slack_channels)
       slack_channels.each do |slack_channel|
-        puts "Archiving private channel #{slack_channel.id} for #{@bot_user.display_name}"
+        @logger.info "Archiving private channel #{slack_channel.id} for #{@bot_user.display_name}"
 
-        private_channel = PrivateChannel.find_or_create_by(slack_channel: slack_channel.id) do |c|
+        private_channel = ::PrivateChannel.find_or_create_by(slack_channel: slack_channel.id) do |c|
           c.channel_created_at = Time.at(slack_channel.created)
         end
 
         members = @user_client.conversations_members(channel: slack_channel.id).members
 
-        private_channel.users = members.map do |member|
-          User.find_or_create_by(slack_user: member) do |user|
-            slack_user = Slack::User.new(member)
-            user.display_name = slack_user.display_name
-            user.is_bot = slack_user.is_bot
-            user.deleted = slack_user.deleted
+        if members.present?
+          private_channel.users = members.map do |member|
+            ::User.find_or_create_by(slack_user: member) do |user|
+              slack_user = Slack::User.new(member)
+              user.display_name = slack_user.display_name
+              user.is_bot = slack_user.is_bot
+              user.deleted = slack_user.deleted
+            end
           end
-
-          last_ts = private_channel&.private_messages&.last&.ts || 0
-          archive_messages(private_channel, last_ts)
         end
+
+        last_ts = private_channel&.private_messages&.last&.ts || 0
+        archive_messages(private_channel, last_ts)
       end
     end
 
     private
 
-    def archive_messages(slack_channel, last_ts)
+    def archive_messages(private_channel, last_ts)
       @user_client.conversations_history(
-        channel: slack_channel.id,
+        channel: private_channel.slack_channel,
         oldest: last_ts,
         inclusive: false
       ) do |response|
 
         messages = response.messages
-        @logger.info "Archiving #{messages.count} private messages in #{slack_channel.id} for #{@bot_user.display_name}"
+        @logger.info "Archiving #{messages.count} private messages in #{private_channel.slack_channel} for #{@bot_user.display_name}"
 
         messages.each do |m|
           slack_message = Slack::Message.new(m)

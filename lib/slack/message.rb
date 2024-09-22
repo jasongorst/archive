@@ -30,28 +30,31 @@ module Slack
       @message = message
 
       if @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
-        @message.bot_id == User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
+        @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
         parse_roller_v2_message!
       elsif @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
-        @message.bot_id == User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user
+        @message.bot_id == ::User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user
         parse_roller_message!
       else
         parse_message!
       end
+
+      @verbatim = @message.to_json
+      @ts = @message.ts.to_d
     end
 
     private
 
     def parse_message!
       @user = if @message.has_key?(:subtype) && @message.subtype == "bot_message"
-                User.find_or_create_by!(slack_user: @message.bot_id) do |u|
+                ::User.find_or_create_by!(slack_user: @message.bot_id) do |u|
                   bot = Slack::Bot.new(@message.bot_id)
                   u.display_name = bot.display_name
                   u.is_bot = bot.is_bot
                   u.deleted = bot.deleted
                 end
               else
-                User.find_or_create_by!(slack_user: @message.user) do |u|
+                ::User.find_or_create_by!(slack_user: @message.user) do |u|
                   user = Slack::User.new(@message.user)
                   u.display_name = user.display_name
                   u.is_bot = user.is_bot
@@ -60,8 +63,6 @@ module Slack
               end
 
       @text = Slack::Mrkdwn.to_html(@message.text)
-      @verbatim = @message.to_json
-      @ts = @message.ts.to_d
 
       if @message.has_key?(:files)
         @attachments = @message.files.map do |file|
@@ -71,7 +72,7 @@ module Slack
     end
 
     def parse_roller_v2_message!
-      @user = User.find_by_display_name(ROLLER_V2_DISPLAY_NAME)
+      @user = ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME)
 
       # parse message attachment (assume only one)
       attachment = @message.attachments.first
@@ -80,10 +81,11 @@ module Slack
       block = attachment.blocks.first
       text = Slack::Mrkdwn.to_html(block.text.text)
 
-      fields = if block.fields.count == 1
+      fields = case block.fields.count
+               when 1
                  # /coin
                  block.fields[0].text.split("\n")
-               elsif block.fields.count == 4
+               when 4
                  # /dice or /roll (no extra rolls)
                  [
                    block.fields[0].text,
@@ -91,7 +93,7 @@ module Slack
                    block.fields[1].text,
                    block.fields[3].text
                  ]
-               elsif block.fields.count == 7
+               when 7
                  # /roll (with extra rolls)
                  [
                    block.fields[0].text,
@@ -110,11 +112,10 @@ module Slack
       end
 
       @text = render_roller_v2_message_text(color, text, fields)
-      @ts = @message.ts.to_d
     end
 
     def parse_roller_message!
-      @user = User.find_by_display_name(ROLLER_DISPLAY_NAME)
+      @user = ::User.find_by_display_name(ROLLER_DISPLAY_NAME)
 
       # parse message attachment (assume only one)
       m = @message.attachments.first
@@ -125,7 +126,6 @@ module Slack
       end
 
       @text = render_roller_message_text(color, text, fields)
-      @ts = @message.ts.to_d
     end
 
     def render_roller_v2_message_text(color, text, fields)

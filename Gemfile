@@ -101,7 +101,7 @@ gem "slack-ruby-client", '~> 2.4.0'
 gem "kaminari", "~> 1.2.2"
 
 # Full-text search middleware for sphinx/manticore
-gem "thinking-sphinx", '~> 5.6.0'
+gem "thinking-sphinx", github: "jasongorst/thinking-sphinx"
 
 # Pretty URLs
 gem "friendly_id", '~> 5.5.1'
@@ -128,7 +128,5 @@ gem "postmark-rails", "~> 0.22.1"
 gem "slack-ruby-bot-server", "~> 2.1.1"
 gem "slack-ruby-bot-server-events", "~> 0.3.2"
 gem "rack", "~> 2.2.9", "< 3.0"
-gem "otr-activerecord", "~> 2.2.0"
+# gem "otr-activerecord", "~> 2.2.0"
 gem "pagy_cursor", "~> 0.6.1"
-
-gem "awesome_print", "~> 1.9"

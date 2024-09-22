@@ -1,7 +1,7 @@
 require "slack/fetch_private_messages"
 require_relative "./initialize_emoji"
 
-begin
+# begin
   # ensure that searchd is running
   Rails.logger.info "Checking searchd status."
 
@@ -36,7 +36,7 @@ begin
   end
 
   bot_users = if Rails.env.development?
-                BotUser.find_by_display_name("rae")
+                [BotUser.find_by_display_name("rae")]
               else
                 Team.find_by_name("Firnost & Friends").bot_users
               end
@@ -47,7 +47,7 @@ begin
     connection.fetch_messages(channels)
   end
 
-rescue => err
-  Rails.logger.error("Caught exception in script/fetch_new_private_messages.rb; exiting")
-  Rails.logger.error(err)
-end
+# rescue => err
+#   Rails.logger.error("Caught exception in script/fetch_new_private_messages.rb; exiting")
+#   Rails.logger.error(err)
+# end

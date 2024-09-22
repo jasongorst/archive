@@ -2,7 +2,7 @@ require "slack/fetch_messages"
 require_relative "./fetch_slack_emoji"
 require_relative "./initialize_emoji"
 
-begin
+# begin
   # ensure that searchd is running
   Rails.logger.info "Checking searchd status."
 
@@ -44,7 +44,7 @@ begin
 
   connection.fetch_messages(channels)
 
-rescue => err
-  Rails.logger.error("Caught exception in script/fetch_new_messages.rb; exiting")
-  Rails.logger.error(err)
-end
+# rescue => err
+#   Rails.logger.error("Caught exception in script/fetch_new_messages.rb; exiting")
+#   Rails.logger.error(err)
+# end

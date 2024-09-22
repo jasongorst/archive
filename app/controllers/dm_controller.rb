@@ -7,7 +7,6 @@ class DmController < ApplicationController
 
   def show
     @private_channel = PrivateChannel.find(params[:private_channel_id])
-    @dates_with_counts = @private_channel.private_messages.reorder(posted_on: :desc).group(:posted_on).count
   end
 
   def by_date

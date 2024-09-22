@@ -12,7 +12,7 @@
               %summary{class: ("bg-primary-focus" if channel_page?)}
                 Channels
               %ul.p-2
-                - channels_with_messages.each do |channel|
+                - Channel.with_messages.each do |channel|
                   %li
                     %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
                       \##{channel.name}
@@ -46,7 +46,7 @@
               %summary{class: ("bg-primary-focus" if channel_page?)}
                 Channels
               %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
-                - channels_with_messages.each do |channel|
+                - Channel.with_messages.each do |channel|
                   %li
                     %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
                       \##{channel.name}

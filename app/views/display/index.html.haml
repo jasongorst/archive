@@ -1,7 +1,7 @@
 %ul.menu.lg:menu-lg.pl-0.pt-0
-  - @channels_with_times.each do |channel, last_message_time|
+  - @channels.each do |channel|
     %li
       %a.px-4{href: url_for(channel)}
         \##{channel.name}
         %span.text-xs.lg:text-sm
-          #{time_ago_in_words(last_message_time)} ago
+          = time_ago(channel.time_of_latest_message)

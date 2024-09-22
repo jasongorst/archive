@@ -1,2 +1,2 @@
-- dates_in_month(month, year, @dates_with_counts).each do |date, count|
+- dates_in_month(month, year, @private_channel.message_dates_with_counts).each do |date, count|
   = render(partial: "date", locals: { private_channel: @private_channel, date: date, count: count })

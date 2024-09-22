@@ -1,6 +1,6 @@
 .collapse
   %input.h-10.min-h-0{type: "radio", name: "months-accordion",
-    checked: (year == @dates_with_counts.first[0].year && month == @dates_with_counts.first[0].month ? true : false)}
+    checked: (year == @private_channel.message_dates_with_counts.first[0].year && month == @private_channel.message_dates_with_counts.first[0].month)}
   .collapse-title.px-0.py-2.h-10.min-h-0.menu.menu-sm.lg:menu-md
     = Date::MONTHNAMES[month]
     - if year != this_year
@@ -8,4 +8,4 @@
   .collapse-content.px-0{class: "!pb-0"}
     %ul.menu.menu-sm.lg:menu-md.py-0.pb-2.px-0
       = render(partial: "dates_in_month",
-        locals: { dates_with_counts: @dates_with_counts, month: month, year: year })
+        locals: { private_channel: @private_channel, month: month, year: year })

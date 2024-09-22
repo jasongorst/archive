@@ -1,6 +1,6 @@
 .mb-2.lg:mb-4.hover:bg-base-200
   %a{href: channel_date_path(message.channel, message.posted_on,
-    page: page_from_index(index_of_message_by_date(message)), anchor: "ts_#{message.ts}")}
+    page: message.page_by_date, anchor: "ts_#{message.ts}")}
     %div.text-sm
       - if params[:search][:channel_id].empty?
         \##{message.channel.name}

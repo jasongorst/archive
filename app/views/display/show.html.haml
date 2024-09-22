@@ -1,8 +1,8 @@
 %h1.text-lg.lg:text-2xl.pb-2.lg:pb-3
   \##{@channel.name}
 
-- this_year.downto(oldest_message_date(@channel).year).each do |year|
-  - if year_contained_in?(year, @dates_with_counts)
+- this_year.downto(@channel.date_of_oldest_message.year).each do |year|
+  - if year_contained_in?(year, @channel.message_dates_with_counts)
     - 12.downto(1).each do |month|
-      - if month_contained_in?(month, year, @dates_with_counts)
-        = render(partial: "month", locals: { dates_with_counts: @dates_with_counts, month: month, year: year })
+      - if month_contained_in?(month, year, @channel.message_dates_with_counts)
+        = render(partial: "month", locals: { channel: @channel, month: month, year: year })

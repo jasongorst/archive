@@ -17,6 +17,16 @@ class PrivateMessage < ApplicationRecord
     private_channel.users.pluck(:id)
   end
 
+  def index_by_date
+    private_channel
+      .private_messages_posted_on(self.posted_on).pluck(:posted_at)
+      .bsearch_index { |time| time >= posted_at } + 1
+  end
+
+  def page_by_date(per_page = self.class.default_per_page)
+    (index_by_date.to_f / per_page).ceil
+  end
+
   private
 
   def set_posted_at_and_posted_on

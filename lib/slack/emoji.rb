@@ -11,7 +11,7 @@ module Slack
     def update_emoji_aliases
       emoji_aliases.each do |name, alias_for|
         @logger.info "#{name}: #{alias_for}"
-        e = EmojiAlias.find_or_initialize_by(name: name)
+        e = ::EmojiAlias.find_or_initialize_by(name: name)
         e.alias_for = alias_for
         e.save
       end
@@ -20,7 +20,7 @@ module Slack
     def update_custom_emoji
       custom_emoji.each do |name, url|
         @logger.info "#{name}: #{url}"
-        custom_emoji = CustomEmoji.find_or_initialize_by(name: name) do |e|
+        custom_emoji = ::CustomEmoji.find_or_initialize_by(name: name) do |e|
           e.url = url
         end
 

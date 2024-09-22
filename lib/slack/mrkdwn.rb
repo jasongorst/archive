@@ -10,8 +10,8 @@ module Slack
                                                  alt: "#{emoji.name}",
                                                  class: "emoji",
                                                  size: "16") },
-      slack_channels: Channel.pluck(:slack_channel, :name).to_h,
-      slack_users: User.pluck(:slack_user, :display_name).to_h
+      slack_channels: ::Channel.pluck(:slack_channel, :name).to_h,
+      slack_users: ::User.pluck(:slack_user, :display_name).to_h
     }
 
     PIPELINE = HTML::Pipeline.new [HTML::Pipeline::PlainTextInputFilter,

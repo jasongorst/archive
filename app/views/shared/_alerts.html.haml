@@ -1,15 +1,13 @@
 - if notice
-  %input.alert-toggle#alert-notice{type: 'checkbox', checked: true}
-  .alert.alert-info.mb-6.mx-auto.w-full.relative{class: 'md:w-11/12'}
-    %label.btn.btn-xs.btn-circle.absolute.right-2.top-2{for: 'alert-notice'}
-      %span
-        &times;
-    %span
+  .alert.border-2.border-info.text-start.justify-items-start.pr-8.grid.grid-flow-col.gap-8.mb-6{class: "grid-cols-[1rem,_auto]"}
+    .text-info
       %i.fas.fa-info-circle
+    %div{class: "-indent-4"}
       = notice
 
 - if alert
-  .alert.alert-open.alert-error.mb-6.mx-auto.w-full.relative{class: 'md:w-11/12'}
-    %span
+  .alert.border-2.border-error.text-start.justify-items-start.pr-8.grid.grid-flow-col.gap-8.mb-6{class: "grid-cols-[1rem,_auto]"}
+    .text-error
       %i.fas.fa-exclamation-triangle
+    %div{class: "-indent-4"}
       = alert

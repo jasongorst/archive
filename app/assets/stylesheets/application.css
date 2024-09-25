@@ -10,8 +10,8 @@
 
 /* add to slack button */
 .slack-button {
-  @apply inline-flex bg-white h-12 w-[14.75rem] items-center justify-center;
-  @apply border border-solid border-[#dddddd] rounded;
+  @apply btn;
+  @apply bg-white border border-solid border-[#dddddd] rounded;
   @apply text-black font-[Lato,sans-serif] text-base font-semibold no-underline;
   @apply dark:bg-[#4a154B] dark:text-white dark:border-0;
 }
@@ -46,24 +46,9 @@
   @apply bg-[#35373b];
 }
 
-/* for manticoresearch excerpts */
+/* for search excerpts */
 mark {
   @apply bg-[#fde047] text-[#18181b] p-[0.125em] -m-[0.125em];
-}
-
-/* flash alert and notice styles */
-.alert {
-  @apply pointer-events-none hidden;
-}
-
-.alert-toggle {
-  @apply fixed h-0 w-0 appearance-none opacity-0;
-}
-
-.alert-open,
-.alert:target,
-.alert-toggle:checked + .alert {
-  @apply pointer-events-auto flex;
 }
 
 /* hide daisyui submenu arrows */

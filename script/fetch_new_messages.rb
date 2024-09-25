@@ -2,7 +2,17 @@ require "slack/fetch_messages"
 require_relative "./fetch_slack_emoji"
 require_relative "./initialize_emoji"
 
-# begin
+begin
+  # tee logger to stdout
+  stdout_logger = Logger.new(STDOUT)
+  Rails.logger.broadcast_to(stdout_logger)
+
+  # save logger level
+  logger_level = Rails.logger.level
+
+  # set logger level to INFO
+  Rails.logger.level = Logger::INFO
+
   # ensure that searchd is running
   Rails.logger.info "Checking searchd status."
 
@@ -48,3 +58,11 @@ require_relative "./initialize_emoji"
 #   Rails.logger.error("Caught exception in script/fetch_new_messages.rb; exiting")
 #   Rails.logger.error(err)
 # end
+
+ensure
+  # restore logger level
+  Rails.logger.level = logger_level
+
+  # stop logging to stdout
+  Rails.logger.stop_broadcasting_to(stdout_logger)
+end

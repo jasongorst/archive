@@ -1,0 +1,7 @@
+.alert.w-fit.m-auto.mb-6.flex.flex-row.gap-4
+  %div
+    %a.slack-button{href: oauth_url}
+      != image_tag("slack.svg", size: "20x20", class: "h-5 w-5 mr-3")
+      Add to Slack
+  %div
+    Click the button to let the bot read your Slack DMs.

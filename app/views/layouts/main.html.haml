@@ -1,11 +1,15 @@
 !!!
 %html
   %head
-    = render(partial: 'shared/head')
+    = render(partial: "shared/head")
 
   %body
     .w-full.mx-auto.lg:container
-      = render(partial: 'shared/header')
-      = render(partial: 'shared/alerts')
+      = render(partial: "shared/header")
+      = render(partial: "shared/alerts")
+
+      - if signed_in? && current_account.user.blank?
+        = render(partial: "shared/bot_auth")
+
       .px-2
         = yield

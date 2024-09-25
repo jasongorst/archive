@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class AttachmentDashboard < Administrate::BaseDashboard
+class PrivateChannelDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,9 +9,10 @@ class AttachmentDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    attachable: Field::Polymorphic,
-    name: Field::String,
-    url: Field::String,
+    channel_created_at: Field::DateTime,
+    private_messages: Field::HasMany,
+    slack_channel: Field::String,
+    users: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -23,18 +24,19 @@ class AttachmentDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    attachable
-    name
-    url
+    channel_created_at
+    private_messages
+    slack_channel
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    attachable
-    name
-    url
+    channel_created_at
+    private_messages
+    slack_channel
+    users
     created_at
     updated_at
   ].freeze
@@ -43,9 +45,10 @@ class AttachmentDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    attachable
-    name
-    url
+    channel_created_at
+    private_messages
+    slack_channel
+    users
   ].freeze
 
   # COLLECTION_FILTERS
@@ -60,10 +63,10 @@ class AttachmentDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how attachments are displayed
+  # Overwrite this method to customize how private channels are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(attachment)
-  #   "Attachment ##{attachment.id}"
+  # def display_resource(private_channel)
+  #   "PrivateChannel ##{private_channel.id}"
   # end
 end

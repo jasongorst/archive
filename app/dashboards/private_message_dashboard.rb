@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class AttachmentDashboard < Administrate::BaseDashboard
+class PrivateMessageDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,9 +9,14 @@ class AttachmentDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    attachable: Field::Polymorphic,
-    name: Field::String,
-    url: Field::String,
+    attachments: Field::HasMany,
+    posted_at: Field::DateTime,
+    posted_on: Field::Date,
+    private_channel: Field::BelongsTo,
+    text: Field::Text,
+    ts: Field::String.with_options(searchable: false),
+    user: Field::BelongsTo,
+    verbatim: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -23,18 +28,23 @@ class AttachmentDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    attachable
-    name
-    url
+    attachments
+    posted_at
+    posted_on
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    attachable
-    name
-    url
+    attachments
+    posted_at
+    posted_on
+    private_channel
+    text
+    ts
+    user
+    verbatim
     created_at
     updated_at
   ].freeze
@@ -43,9 +53,14 @@ class AttachmentDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    attachable
-    name
-    url
+    attachments
+    posted_at
+    posted_on
+    private_channel
+    text
+    ts
+    user
+    verbatim
   ].freeze
 
   # COLLECTION_FILTERS
@@ -60,10 +75,10 @@ class AttachmentDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how attachments are displayed
+  # Overwrite this method to customize how private messages are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(attachment)
-  #   "Attachment ##{attachment.id}"
+  # def display_resource(private_message)
+  #   "PrivateMessage ##{private_message.id}"
   # end
 end

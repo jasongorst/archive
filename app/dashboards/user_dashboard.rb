@@ -8,15 +8,18 @@ class UserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    messages: Field::HasMany,
     id: Field::Number,
     slack_user: Field::String,
     display_name: Field::String,
-    created_at: Field::DateTime,
-    updated_at: Field::DateTime,
     color: ColorPickerField,
     is_bot: Field::Boolean,
-    deleted: Field::Boolean
+    deleted: Field::Boolean,
+    account: Field::HasOne,
+    messages: Field::HasMany,
+    private_channels: Field::HasMany,
+    private_messages: Field::HasMany,
+    created_at: Field::DateTime,
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -28,7 +31,7 @@ class UserDashboard < Administrate::BaseDashboard
     display_name
     color
     slack_user
-    messages
+    account
     is_bot
     deleted
   ].freeze
@@ -39,7 +42,12 @@ class UserDashboard < Administrate::BaseDashboard
     display_name
     color
     slack_user
+    account
+    is_bot
+    deleted
     messages
+    private_channels
+    private_messages
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -49,6 +57,9 @@ class UserDashboard < Administrate::BaseDashboard
     display_name
     color
     slack_user
+    account
+    is_bot
+    deleted
   ].freeze
 
   # COLLECTION_FILTERS

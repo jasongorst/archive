@@ -12,6 +12,11 @@ class AccountDashboard < Administrate::BaseDashboard
     email: Field::String,
     password: Field::String.with_options(searchable: false),
     admin: Field::Boolean,
+    has_signed_in: Field::Boolean,
+    user: Field::BelongsTo,
+    bot_user: Field::HasOne,
+    created_at: Field::DateTime,
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -22,6 +27,8 @@ class AccountDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     email
     admin
+    user
+    bot_user
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -29,6 +36,9 @@ class AccountDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     email
     admin
+    has_signed_in
+    user
+    bot_user
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -38,6 +48,9 @@ class AccountDashboard < Administrate::BaseDashboard
     email
     password
     admin
+    has_signed_in
+    user
+    bot_user
   ].freeze
 
   # COLLECTION_FILTERS

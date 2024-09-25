@@ -1,5 +1,7 @@
 class PrivateSearchController < ApplicationController
-  layout 'main'
+  layout "main"
+  before_action :require_login
+  before_action :require_user
 
   RESULTS_PER_PAGE = 20
   MAX_RESULTS = 10_000

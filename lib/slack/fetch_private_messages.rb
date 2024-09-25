@@ -20,6 +20,8 @@ module Slack
     end
 
     def fetch_messages(slack_channels)
+      @logger.info "Archiving #{slack_channels.count} private channels for #{@bot_user.display_name}"
+
       slack_channels.each do |slack_channel|
         @logger.info "Archiving private channel #{slack_channel.id} for #{@bot_user.display_name}"
 

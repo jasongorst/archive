@@ -6,9 +6,20 @@ class PrivateSearchController < ApplicationController
   RESULTS_PER_PAGE = 20
   MAX_RESULTS = 10_000
 
+  ROLLER_V2_DISPLAY_NAME = "RollerBot 2".freeze
+  ROLLER_DISPLAY_NAME = "Roller".freeze
+
   def index
     @private_channels = current_account.user.private_channels.with_messages
-    @users = User.where(is_bot: false, deleted: false).order(display_name: :asc)
+
+    roller_user_ids = [
+      User.find_by_display_name(ROLLER_DISPLAY_NAME).id,
+      User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).id
+    ]
+
+    @users = User.where(is_bot: false, deleted: false)
+                 .or(User.where(id: roller_user_ids))
+                 .order(display_name: :asc)
 
     if params.has_key? :search
       query = query_from_params(params[:search])

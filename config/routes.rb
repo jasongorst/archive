@@ -36,13 +36,17 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root to: "users#index"
+    root to: "accounts#index"
 
+    resources :accounts
     resources :users
+    resources :teams
+    resources :bot_users
     resources :channels
     resources :messages
+    resources :private_channels
+    resources :private_messages
     resources :attachments
-    resources :accounts
   end
 
   scope "/dm" do

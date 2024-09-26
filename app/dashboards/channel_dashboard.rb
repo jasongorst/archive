@@ -8,10 +8,10 @@ class ChannelDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    messages: Field::HasMany,
     id: Field::Number,
-    slack_channel: Field::String,
     name: Field::String,
+    slack_channel: Field::String,
+    messages: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -32,7 +32,6 @@ class ChannelDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     name
     slack_channel
-    messages
   ].freeze
 
   # FORM_ATTRIBUTES

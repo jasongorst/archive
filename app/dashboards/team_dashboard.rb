@@ -9,19 +9,19 @@ class TeamDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    activated_user_access_token: Field::String,
-    activated_user_id: Field::String,
-    active: Field::Boolean,
-    bot_user_id: Field::String,
-    bot_users: Field::HasMany,
-    domain: Field::String,
     name: Field::String,
+    team_id: Field::String,
+    domain: Field::String,
+    token: Field::String,
     oauth_scope: Field::String,
     oauth_version: Field::String,
-    team_id: Field::String,
-    token: Field::String,
+    bot_user_id: Field::String,
+    activated_user_id: Field::String,
+    activated_user_access_token: Field::String,
+    active: Field::Boolean,
+    bot_users: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -30,46 +30,42 @@ class TeamDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    id
-    activated_user_access_token
-    activated_user_id
+    name
+    team_id
     active
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    id
-    activated_user_access_token
-    activated_user_id
-    active
-    bot_user_id
-    bot_users
-    domain
     name
+    team_id
+    domain
+    token
     oauth_scope
     oauth_version
-    team_id
-    token
-    created_at
-    updated_at
+    bot_user_id
+    activated_user_id
+    activated_user_access_token
+    active
+    bot_users
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    activated_user_access_token
-    activated_user_id
-    active
-    bot_user_id
-    bot_users
-    domain
     name
+    team_id
+    domain
+    token
     oauth_scope
     oauth_version
-    team_id
-    token
+    bot_user_id
+    activated_user_id
+    activated_user_access_token
+    active
+    bot_users
   ].freeze
 
   # COLLECTION_FILTERS
@@ -87,7 +83,7 @@ class TeamDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how teams are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(team)
-  #   "Team ##{team.id}"
-  # end
+  def display_resource(team)
+    team.name
+  end
 end

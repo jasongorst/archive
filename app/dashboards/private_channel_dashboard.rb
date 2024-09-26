@@ -9,10 +9,10 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    channel_created_at: Field::DateTime,
-    private_messages: Field::HasMany,
     slack_channel: Field::String,
+    channel_created_at: Field::DateTime,
     users: Field::HasMany,
+    private_messages: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -23,32 +23,27 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    id
+    slack_channel
+    users
     channel_created_at
     private_messages
-    slack_channel
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    id
-    channel_created_at
-    private_messages
     slack_channel
     users
-    created_at
-    updated_at
+    channel_created_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    channel_created_at
-    private_messages
     slack_channel
     users
+    channel_created_at
   ].freeze
 
   # COLLECTION_FILTERS
@@ -66,7 +61,7 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how private channels are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(private_channel)
-  #   "PrivateChannel ##{private_channel.id}"
-  # end
+  def display_resource(private_channel)
+    "Private Channel ##{private_channel.id}"
+  end
 end

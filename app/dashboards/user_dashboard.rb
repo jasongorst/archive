@@ -45,9 +45,6 @@ class UserDashboard < Administrate::BaseDashboard
     account
     is_bot
     deleted
-    messages
-    private_channels
-    private_messages
   ].freeze
 
   # FORM_ATTRIBUTES

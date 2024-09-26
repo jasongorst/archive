@@ -9,13 +9,13 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    attachments: Field::HasMany,
-    posted_at: Field::DateTime,
-    posted_on: Field::Date,
     private_channel: Field::BelongsTo,
+    user: Field::BelongsTo,
+    attachments: Field::HasMany,
     text: Field::Text,
     ts: Field::String.with_options(searchable: false),
-    user: Field::BelongsTo,
+    posted_at: Field::DateTime,
+    posted_on: Field::Date,
     verbatim: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -27,39 +27,34 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    id
-    attachments
+    private_channel
+    user
+    text
     posted_at
-    posted_on
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    id
+    private_channel
+    user
+    text
     attachments
+    ts
     posted_at
     posted_on
-    private_channel
-    text
-    ts
-    user
     verbatim
-    created_at
-    updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    attachments
-    posted_at
-    posted_on
     private_channel
-    text
-    ts
     user
+    text
+    attachments
+    ts
     verbatim
   ].freeze
 
@@ -78,7 +73,7 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how private messages are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(private_message)
-  #   "PrivateMessage ##{private_message.id}"
-  # end
+  def display_resource(private_message)
+    "Private Message ##{private_message.id}"
+  end
 end

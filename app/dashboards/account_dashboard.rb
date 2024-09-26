@@ -27,6 +27,7 @@ class AccountDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     email
     admin
+    has_signed_in
     user
     bot_user
   ].freeze

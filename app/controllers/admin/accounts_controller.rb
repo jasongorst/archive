@@ -44,8 +44,8 @@ module Admin
     # for more information
 
     def update
-      if requested_resource == current_user && !resource_params[:admin]
-        flash[:error] = "You probably shouldn't remove your own admin status."
+      if requested_resource == current_account && !resource_params[:admin]
+        flash[:error] = "You probably shouldn't change your own admin status."
         redirect_to({ action: :index })
       else
         super
@@ -53,7 +53,7 @@ module Admin
     end
 
     def destroy
-      if requested_resource == current_user
+      if requested_resource == current_account
         flash[:error] = "Please don't delete your own account."
         redirect_to({ action: :index })
       elsif Account.count == 1

@@ -8,13 +8,23 @@ class MessageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    channel: Field::BelongsTo.with_options(searchable: true,
-                                           searchable_fields: ['name']),
-    user: Field::BelongsTo.with_options(searchable: true,
-                                        searchable_fields: ['display_name']),
+    id: Field::Number,
+    channel: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ['name']
+    ),
+    user: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ['display_name']
+    ),
     attachments: Field::HasMany,
     text: Field::Text.with_options(searchable: true),
+    ts: Field::String.with_options(searchable: false),
+    posted_on: Field::Date,
     posted_at: Field::DateTime.with_options(format: '%F %r'),
+    verbatim: Field::Text,
+    created_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -26,7 +36,6 @@ class MessageDashboard < Administrate::BaseDashboard
     channel
     user
     text
-    attachments
     posted_at
   ].freeze
 
@@ -37,7 +46,10 @@ class MessageDashboard < Administrate::BaseDashboard
     user
     text
     attachments
+    ts
+    posted_on
     posted_at
+    verbatim
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -46,8 +58,10 @@ class MessageDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     channel
     user
-    attachments
     text
+    attachments
+    ts
+    verbatim
   ].freeze
 
   # COLLECTION_FILTERS

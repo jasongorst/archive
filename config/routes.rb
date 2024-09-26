@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
   constraints Clearance::Constraints::SignedOut.new do
-    root to: "sessions#new", as: :signed_out_root
+    root to: "clearance/sessions#new", as: :signed_out_root
   end
 
   constraints Clearance::Constraints::SignedIn.new do
     root to: "display#index", as: :root
   end
 
-  mount BotServer::Api::Endpoints::AuthEndpoint, at: "/oauth"
+  mount BotServer::Api::Endpoints::AuthEndpoint, at: "/oauth", as: :auth_endpoint
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
 
-  resource :session, controller: "sessions", only: [:create]
-  get "sign_in", to: "sessions#new", as: "sign_in"
-  match "sign_out", to: "sessions#destroy", via: [:get, :delete], as: "sign_out"
-  get "first_sign_in", to: "sessions#first_sign_in", as: "first_sign_in"
+  resource :session, controller: "clearance/sessions", only: [:create]
+  get "sign_in", to: "clearance/sessions#new", as: "sign_in"
+  match "sign_out", to: "clearance/sessions#destroy", via: [:get, :delete], as: "sign_out"
 
   if Clearance.configuration.allow_sign_up?
     get "/sign_up", to: "clearance/users#new", as: "sign_up"
@@ -50,8 +49,8 @@ Rails.application.routes.draw do
   end
 
   scope "/dm" do
-    root to: "dm#index", as: :dm_root
-    get "search", to: "private_search#index", as: :private_channel_search
+    root to: "dm#index", as: :dms
+    get "search", to: "private_search#index", as: :search_dms
     get ":private_channel_id", to: "dm#show", as: :private_channel
     get ":private_channel_id/:date", to: "dm#by_date", as: :private_channel_date
   end

@@ -7,16 +7,13 @@ module Slack
     ROLLER_V2_DISPLAY_NAME = "RollerBot 2".freeze
     ROLLER_DISPLAY_NAME = "Roller".freeze
 
-    ROLLER_V2_COLORS = {
-      "#2eb886" => "good",
-      "#daa038" => "warning",
-      "#a30200" => "danger"
-    }.freeze
-
     ROLLER_COLORS = {
       "2eb886" => "good",
+      "#2eb886" => "good",
       "daa038" => "warning",
-      "a30200" => "danger"
+      "#daa038" => "warning",
+      "a30200" => "danger",
+      "#a30200" => "danger"
     }.freeze
 
     attr_reader :message,
@@ -76,7 +73,7 @@ module Slack
 
       # parse message attachment (assume only one)
       attachment = @message.attachments.first
-      color = ROLLER_V2_COLORS[attachment.color] || "none"
+      color = ROLLER_COLORS[attachment.color] || "none"
 
       block = attachment.blocks.first
       text = Slack::Mrkdwn.to_html(block.text.text)

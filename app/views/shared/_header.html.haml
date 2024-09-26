@@ -23,11 +23,11 @@
 
           - if current_account&.user
             %li
-              %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
+              %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
                 DMs
 
             %li
-              %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
+              %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
                 Search DMs
 
     %div
@@ -57,11 +57,11 @@
 
           - if current_account&.user
             %li
-              %a{href: url_for(:dm_root), class: ("bg-primary-focus" if current_page?(:dm_root))}
+              %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
                 DMs
 
             %li
-              %a.whitespace-nowrap{href: url_for(:private_channel_search), class: ("bg-primary-focus" if current_page?(:private_channel_search))}
+              %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
                 Search DMs
 
   .grow.justify-end

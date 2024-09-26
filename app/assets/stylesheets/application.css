@@ -10,10 +10,11 @@
 
 /* add to slack button */
 .slack-button {
-  @apply btn;
+  @apply btn gap-x-3 flex-nowrap whitespace-nowrap;
   @apply bg-white border border-solid border-[#dddddd] rounded;
   @apply text-black font-[Lato,sans-serif] text-base font-semibold no-underline;
   @apply dark:bg-[#4a154B] dark:text-white dark:border-0;
+  @apply btn-sm lg:btn-md text-sm lg:text-base;
 }
 
 /* slack legacy attachment appearance */

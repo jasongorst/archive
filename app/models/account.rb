@@ -2,7 +2,14 @@ class Account < ApplicationRecord
   include Clearance::User
 
   validates :email, presence: true, uniqueness: true, format: URI::MailTo::EMAIL_REGEXP
-  validates :password, password_strength: true, on: [:create, :update]
+
+  validates :password,
+            not_pwned: {
+              threshold: 3,
+              message: "has been pwned at least %{count} times",
+              on_error: :invalid
+            },
+            on: [:create, :update]
 
   belongs_to :user, optional: true
   has_one :bot_user, dependent: :nullify

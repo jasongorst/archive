@@ -115,8 +115,8 @@ gem "administrate", github: "thoughtbot/administrate"
 # use clearance for authentication
 gem "clearance", "~> 2.8.0"
 
-# validate passwords for entropy bits
-gem "strong_password", "~> 0.0.10"
+# check passwords against haveibeenpwned.com
+gem "pwned", "~> 2.4.1"
 
 # convert slack mrkdwn to html
 gem "html-pipeline-mrkdwn", "~> 0.1.8"

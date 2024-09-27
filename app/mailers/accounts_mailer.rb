@@ -1,6 +1,6 @@
-class PasswordsMailer < ApplicationMailer
-  def reset_password
-    @account = params[:account]
+class AccountsMailer < ApplicationMailer
+  def reset_password(account)
+    @account = account
     @url = url_for([@account, :password, action: :edit, token: @account.confirmation_token])
 
     mail(

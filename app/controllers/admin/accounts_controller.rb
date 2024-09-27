@@ -71,5 +71,12 @@ module Admin
     def default_sorting_direction
       :asc
     end
+
+    private
+
+    def resource_params
+      resource_params = super
+      resource_params.compact_blank
+    end
   end
 end

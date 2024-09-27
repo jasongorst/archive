@@ -13,4 +13,12 @@ class Account < ApplicationRecord
 
   belongs_to :user, optional: true
   has_one :bot_user, dependent: :nullify
+
+  def reset_password!
+    generate_confirmation_token
+    self.encrypted_password = "*"
+    save validate: false
+
+    AccountsMailer.reset_password(self).deliver_later
+  end
 end

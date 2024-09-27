@@ -19,16 +19,18 @@
 
 # Learn more: http://github.com/javan/whenever
 
-# override default rake job to remove --silent switch
 # job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task --silent :output"
+
+# override default rake job to remove --silent switch
 job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
 
-set :output, 'log/cron.log'
+set :output, "log/cron.log"
 
-every 1.day, at: '3:00 am' do
-  runner 'script/fetch_new_slack_messages.rb'
+every 1.day, at: "3:00 am" do
+  runner "script/fetch_new_messages.rb"
+  runner "script/fetch_new_private_messages.rb"
 end
 
-every '@reboot' do
-  rake 'ts:start'
+every "@reboot" do
+  rake "ts:start"
 end

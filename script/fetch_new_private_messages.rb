@@ -45,25 +45,11 @@ begin
     Rails.logger.info "searchd is running."
   end
 
-  # bot_users = if Rails.env.development?
-  #               [BotUser.find_by_display_name("rae")]
-  #             else
-  #               Team.find_by_name("Firnost & Friends").bot_users
-  #             end
-
-  bot_users = Team.find_by_name("Firnost & Friends").bot_users
-
-  bot_users.each do |bot_user|
+  Team.find_by_name("Firnost & Friends").bot_users.each do |bot_user|
     connection = Slack::FetchPrivateMessages.new(bot_user)
     channels = connection.fetch_channels
     connection.fetch_messages(channels)
   end
-
-# rescue => err
-#   Rails.logger.error("Caught exception in script/fetch_new_private_messages.rb; exiting")
-#   Rails.logger.error(err)
-# end
-
 ensure
   # restore logger level
   Rails.logger.level = logger_level

@@ -53,12 +53,6 @@ begin
   channels.filter! { |channel| "ooc".include? channel.name } if Rails.env.development?
 
   connection.fetch_messages(channels)
-
-# rescue => err
-#   Rails.logger.error("Caught exception in script/fetch_new_messages.rb; exiting")
-#   Rails.logger.error(err)
-# end
-
 ensure
   # restore logger level
   Rails.logger.level = logger_level

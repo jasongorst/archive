@@ -5,22 +5,9 @@
 
   .card-body.pt-3.lg:pt-4
     %p.mt-0.mb-1.lg:mb-2mb-2.text-md.lg:text-lg.font-normal
-      ArchivistDM can now read DMs belonging to |
+      ArchivistDM can now read Slack DMs belonging to |
 
       %span.font-semibold.text-accent<>
         = @bot_user.display_name
 
-      , and the account |
-
-      %span.font-semibold.text-accent<>
-        = @account.email
-
-      \ can now read those DMs here.
-
-    - if current_account == @account && current_account&.user&.slack_user == @bot_user.slack_user
-      %p.mt-0.mb-1.lg:mb-2.text-md.lg:text-lg.font-normal
-        It looks like that&rsquo;s you, so we're good.
-
-    - else
-      %p.mt-0.mb-1.lg:mb-2.text-md.lg:text-lg.font-normal
-        But that&rsquo;s not you, so I think something went wrong.
+      , and you will be able to read those DMs here.

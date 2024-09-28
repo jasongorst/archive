@@ -38,6 +38,14 @@ module BotServer
           def logger
             Rails.logger
           end
+
+          def signed_in?
+            env[:clearance].signed_in?
+          end
+
+          def current_account
+            env[:clearance].current_user
+          end
         end
 
         params do
@@ -57,8 +65,8 @@ module BotServer
 
           client = Slack::Web::Client.new
 
-          raise 'Missing slack_client_id or slack_client_secret.' unless Rails.application.credentials.slack_client_id &&
-            Rails.application.credentials.slack_client_secret
+          raise 'Missing slack_client_id or slack_client_secret.' unless
+            Rails.application.credentials.slack_client_id && Rails.application.credentials.slack_client_secret
 
           options = {
             client_id: Rails.application.credentials.slack_client_id,
@@ -74,6 +82,8 @@ module BotServer
           team_id = rc.team&.id
           team_name = rc.team&.name
 
+          redirect_params = {}
+
           # bot token
           if rc.has_key?(:access_token)
             access_token = rc.access_token
@@ -83,64 +93,75 @@ module BotServer
             team = Team.find_by_token(access_token) || Team.find_by_team_id(team_id)
 
             if team
-              # team.ping_if_active!
-
               team.update!(
-                oauth_version: oauth_version,
-                oauth_scope: oauth_scope,
-                activated_user_id: user_id,
-                activated_user_access_token: access_token,
-                bot_user_id: bot_user_id
-              )
-
-              # raise "Team #{team.name} is already registered." if team.active?
-
-              team.activate!(access_token)
-              logger.info "Bot access token updated for Team: #{team.team_id}"
-            else
-              team = Team.create!(
                 token: access_token,
                 oauth_version: oauth_version,
                 oauth_scope: oauth_scope,
-                team_id: team_id,
-                name: team_name,
                 activated_user_id: user_id,
                 activated_user_access_token: access_token,
                 bot_user_id: bot_user_id
               )
+
+              team.activate!(access_token)
+              logger.info "Access token updated for Team #{team.name}"
+            else
+              team = Team.create!(
+                team_id: team_id,
+                name: team_name,
+                token: access_token,
+                oauth_version: oauth_version,
+                oauth_scope: oauth_scope,
+                activated_user_id: user_id,
+                activated_user_access_token: access_token,
+                bot_user_id: bot_user_id
+              )
+
+              logger.info "Team created #{team.name}"
             end
 
-            logger.info "Bot access token created for Team: #{team.team_id}"
-            redirect_params = { team: team.team_id }
+            redirect_params[:team] = team_id
           end
 
           # user token
           if rc.has_key?(:authed_user) && rc.authed_user.has_key?(:access_token)
+            raise "not signed in" unless signed_in?
+
+            # ensure current_account.user has matching slack_user
+            raise "mismatched slack user ids" unless current_account.user.slack_user == user_id
+
             team ||= Team.find_by_team_id(team_id)
 
             user_oauth_scope = rc.authed_user&.scope
             user_access_token = rc.authed_user&.access_token
-
             bot_user = BotUser.find_by_slack_user(user_id)
 
             if bot_user
               # existing BotUser
+              if current_account.bot_user_id?
+                # ensure existing bot_user matches
+                raise "existing BotUser doesn't match Account" unless current_account.bot_user == bot_user
+              else
+                # link current_account to this bot_user
+                current_account.update!(bot_user: bot_user)
+                logger.info "Account #{current_account.email} linked to BotUser #{bot_user.display_name}"
+              end
+
               bot_user.update!(
                 user_oauth_scope: user_oauth_scope,
                 user_access_token: user_access_token,
-                active: true,
-                team: team
+                active: true
               )
 
-              logger.info "User access token updated for User: #{bot_user.slack_user}"
+              logger.info "User access token updated for BotUser #{bot_user.display_name}"
             else
               # new BotUser
-              user = User.find_by_slack_user(user_id)
-              account = Account.find_by_user_id(user.id) if user
+              raise "pre-existing BotUser for current Account" if current_account.bot_user_id?
 
+              # get slack user info
               team_client = Slack::Web::Client.new(token: team.token)
               slack_user = team_client.users_info(user: user_id).user
 
+              # set display_name from profile or default
               display_name = if slack_user.profile.display_name.present?
                                slack_user.profile.display_name
                              elsif slack_user.profile.real_name.present?
@@ -155,19 +176,16 @@ module BotServer
                 user_access_token: user_access_token,
                 user_oauth_scope: user_oauth_scope,
                 active: true,
-                team: team,
-                account: account
+                team: team
               )
 
-              logger.info "User access token created for BotUser: #{bot_user.slack_user}"
+              logger.info "BotUser created for #{display_name}"
 
-              if account
-                logger.info "BotUser #{bot_user.display_name} linked to Account #{account.email} owned by User #{user.display_name}"
-                redirect_params[:account] = account.id
-              end
+              current_account.update!(bot_user: bot_user)
+              logger.info "Account #{account.email} linked to BotUser #{bot_user.display_name}"
             end
 
-            redirect_params[:user] = bot_user.slack_user
+            redirect_params[:user] = user_id
           end
 
           redirect Rails.application.routes.url_helpers.url_for(only_path: true, controller: :auth, action: :confirm, params: redirect_params)

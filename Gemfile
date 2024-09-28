@@ -130,3 +130,6 @@ gem "slack-ruby-bot-server-events", "~> 0.3.2"
 gem "rack", "~> 2.2.9", "< 3.0"
 # gem "otr-activerecord", "~> 2.2.0"
 gem "pagy_cursor", "~> 0.6.1"
+
+# solid_queue to back ActiveJobs
+gem "solid_queue", "~> 1.0.0"

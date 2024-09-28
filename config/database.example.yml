@@ -48,7 +48,12 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: archivedm_production
-  username: <%= ENV['ARCHIVEDM_DATABASE_USER'] %>
-  password: <%= ENV['ARCHIVEDM_DATABASE_PASSWORD'] %>
+  primary: &primary_production
+    <<: *default
+    database: archivedm_production
+    username: <%= ENV['ARCHIVEDM_DATABASE_USER'] %>
+    password: <%= ENV['ARCHIVEDM_DATABASE_PASSWORD'] %>
+  queue:
+    <<: *primary_production
+    database: archivedm_production_queue
+    migrations_paths: db/queue_migrate

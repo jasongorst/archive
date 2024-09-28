@@ -4,5 +4,5 @@ class User < ApplicationRecord
   has_many :messages, -> { order(posted_at: :asc) }
   has_many :private_messages, -> { order(posted_at: :asc) }
   has_and_belongs_to_many :private_channels
-  has_one :account, required: false
+  has_one :account, required: false, dependent: :nullify
 end

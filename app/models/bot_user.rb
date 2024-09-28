@@ -2,7 +2,7 @@ class BotUser < ApplicationRecord
   validates :slack_user, presence: true, uniqueness: true
 
   belongs_to :team
-  belongs_to :account, optional: true
+  has_one :account, required: false, dependent: :nullify
 
   scope :active, -> { where(active: true) }
 

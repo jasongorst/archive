@@ -2,8 +2,8 @@ class PrivateChannel < ApplicationRecord
   validates :slack_channel, presence: true
   validates :slack_channel, uniqueness: true
 
-  has_and_belongs_to_many :users
-  has_many :private_messages, -> { order(posted_at: :asc) }
+  has_and_belongs_to_many :users, dependent: :destroy
+  has_many :private_messages, -> { order(posted_at: :asc) }, dependent: :destroy
 
   default_scope { order(channel_created_at: :desc) }
 

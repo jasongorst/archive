@@ -182,7 +182,7 @@ module BotServer
               logger.info "BotUser created for #{display_name}"
 
               current_account.update!(bot_user: bot_user)
-              logger.info "Account #{account.email} linked to BotUser #{bot_user.display_name}"
+              logger.info "Account #{current_account.email} linked to BotUser #{bot_user.display_name}"
             end
 
             redirect_params[:user] = user_id

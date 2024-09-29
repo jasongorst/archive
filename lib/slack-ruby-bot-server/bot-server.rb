@@ -1,7 +1,6 @@
 require_relative 'bot-server/service'
 require_relative 'bot-server/api'
 require_relative 'bot-server/app'
-# require_relative 'bot-server/oauth'
 
 module BotServer
   USER_OAUTH_SCOPE = %w[
@@ -13,6 +12,4 @@ module BotServer
     mpim:history
     mpim:read
   ].freeze
-
-  REDIRECT_URL = "https://archivedm.evilpaws.org/oauth".freeze
 end

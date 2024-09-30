@@ -7,8 +7,6 @@ Rails.application.routes.draw do
     root to: "display#index", as: :root
   end
 
-  mount BotServer::Api::Endpoints::AuthEndpoint, at: "/oauth", as: :auth_endpoint
-
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
 
   resource :session, controller: "clearance/sessions", only: [:create]
@@ -25,9 +23,8 @@ Rails.application.routes.draw do
              only: [:edit, :update]
   end
 
-  scope "/auth" do
-    get "/", to: "auth#confirm"
-    get "confirm", to: "auth#confirm", as: :auth_confirm
+  scope "/oauth" do
+    get "/", to: "oauth#index", as: :oauth_root
 
     resources :teams, only: [:index, :show] do
       resources :users, controller: :bot_users, only: [:index]

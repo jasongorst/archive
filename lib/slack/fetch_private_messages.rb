@@ -42,7 +42,7 @@ module Slack
           end
         end
 
-        last_ts = private_channel&.private_messages&.last&.ts || 0
+        last_ts = private_channel&.private_messages&.last&.ts
         archive_messages(private_channel, last_ts)
       end
     end
@@ -52,7 +52,7 @@ module Slack
     def archive_messages(private_channel, last_ts)
       @user_client.conversations_history(
         channel: private_channel.slack_channel,
-        oldest: last_ts,
+        oldest: (sprintf("%.6f", last_ts) if last_ts),
         inclusive: false
       ) do |response|
 

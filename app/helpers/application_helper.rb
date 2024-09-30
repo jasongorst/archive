@@ -34,7 +34,7 @@ module ApplicationHelper
         scope: SlackRubyBotServer::Config.oauth_scope&.join(","),
         user_scope: BotServer::USER_OAUTH_SCOPE.join(","),
         client_id: Rails.application.credentials.slack_client_id,
-        redirect_url: BotServer::REDIRECT_URL
+        redirect_url: Rails.application.routes.url_helpers.oauth_root
       }.to_query
     )
   end

@@ -12,7 +12,7 @@ class Account < ApplicationRecord
             on: [:create, :update]
 
   belongs_to :user, optional: true
-  has_one :bot_user, dependent: :nullify
+  belongs_to :bot_user, optional: true
 
   def reset_password!
     generate_confirmation_token

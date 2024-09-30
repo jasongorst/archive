@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_27_022846) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_28_042829) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_022846) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "bot_user_id"
+    t.index ["bot_user_id"], name: "index_accounts_on_bot_user_id"
     t.index ["confirmation_token"], name: "index_accounts_on_confirmation_token", unique: true
     t.index ["email"], name: "index_accounts_on_email"
     t.index ["remember_token"], name: "index_accounts_on_remember_token", unique: true
@@ -71,10 +73,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_022846) do
     t.string "user_oauth_scope"
     t.boolean "active", default: false
     t.bigint "team_id", null: false
-    t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_bot_users_on_account_id"
     t.index ["slack_user"], name: "index_bot_users_on_slack_user", unique: true
     t.index ["team_id"], name: "index_bot_users_on_team_id"
   end

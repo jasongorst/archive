@@ -106,9 +106,6 @@ gem "thinking-sphinx", github: "jasongorst/thinking-sphinx"
 # Pretty URLs
 gem "friendly_id", '~> 5.5.1'
 
-# Ruby cron jobs
-gem "whenever", '~> 1.0.0', require: false
-
 # use administrate for model dashboards
 gem "administrate", github: "thoughtbot/administrate"
 

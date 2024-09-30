@@ -71,5 +71,13 @@ Rails.application.configure do
   # set default url options
   config.action_mailer.default_url_options = { host: 'localhost', port: 15000 }
 
+  # Use a real queuing backend for Active Job (and separate queues per environment).
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.active_job.queue_name_prefix = "archive_development"
+
   config.hosts << "exactly-mint-chamois.ngrok-free.app"
 end

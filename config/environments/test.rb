@@ -59,6 +59,14 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
+  # Use a real queuing backend for Active Job (and separate queues per environment).
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.active_job.queue_name_prefix = "archive_test"
+
   # set default url options
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end

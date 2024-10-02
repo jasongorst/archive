@@ -26,11 +26,6 @@ job_type :rake, "cd :path && :environment_variable=:environment bundle exec rake
 
 set :output, "log/cron.log"
 
-every 1.day, at: "3:00 am" do
-  runner "script/fetch_new_messages.rb"
-  runner "script/fetch_new_private_messages.rb"
-end
-
 every "@reboot" do
   rake "ts:start"
 end

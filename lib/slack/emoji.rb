@@ -26,7 +26,7 @@ module Slack
 
         custom_emoji.with_lock do
           if custom_emoji.url != url
-            @logger.info "URL has changed, deleting attachment"
+            @logger.info "CustomEmoji #{name}: URL has changed, deleting attachment"
             # delete existing attachment if url has changed
             custom_emoji.emoji.purge
             # then update url
@@ -35,7 +35,7 @@ module Slack
 
           # if this is a new CustomEmoji (or if we just deleted the attachment), then download the attachment from url
           unless custom_emoji.emoji.attached?
-            @logger.info "downloading #{url} and attaching"
+            @logger.info "CustomEmoji #{name}: downloading #{url} and attaching"
             extension = File.extname(URI(url).path)
             custom_emoji.emoji.attach(io: URI.open(url), filename: name + extension)
           end

@@ -6,8 +6,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    unless current_account.user
-      deny_access("Your account isn't linked to a Slack user, or you haven't authorized the bot yet.")
-    end
+    deny_access("Your account isn't linked to a Slack user.") unless current_account&.user
+  end
+
+  def authorize_admin
+    redirect_back_or_to(root_path, alert: "Only admins can access that content.") unless current_user&.admin?
   end
 end

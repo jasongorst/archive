@@ -68,8 +68,18 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  # set default url options
+  # set default url options for Action Mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 15000 }
+
+  # Use a real queuing backend for Active Job (and separate queues per environment).
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.active_job.queue_name_prefix = "archive_development"
 
   config.hosts << "exactly-mint-chamois.ngrok-free.app"
 end
+
+Archive::Application.default_url_options = { host: "exactly-mint-chamois.ngrok-free.app", protocol: "https" }

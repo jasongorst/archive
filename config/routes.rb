@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
-  constraints Clearance::Constraints::SignedOut.new do
-    root to: "clearance/sessions#new", as: :signed_out_root
-  end
-
-  constraints Clearance::Constraints::SignedIn.new do
-    root to: "display#index", as: :root
-  end
-
-  mount BotServer::Api::Endpoints::AuthEndpoint, at: "/oauth", as: :auth_endpoint
+  root to: "display#index", as: :root
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
 
@@ -16,7 +8,7 @@ Rails.application.routes.draw do
   match "sign_out", to: "clearance/sessions#destroy", via: [:get, :delete], as: "sign_out"
 
   if Clearance.configuration.allow_sign_up?
-    get "/sign_up", to: "clearance/users#new", as: "sign_up"
+    get "sign_up", to: "clearance/users#new", as: "sign_up"
   end
 
   resources :accounts, controller: "clearance/users", only: Clearance.configuration.user_actions do
@@ -25,14 +17,9 @@ Rails.application.routes.draw do
              only: [:edit, :update]
   end
 
-  scope "/auth" do
-    get "/", to: "auth#confirm"
-    get "confirm", to: "auth#confirm", as: :auth_confirm
+  get "oauth", to: "oauth#index", as: :oauth
 
-    resources :teams, only: [:index, :show] do
-      resources :users, controller: :bot_users, only: [:index]
-    end
-  end
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 
   namespace :admin do
     root to: "accounts#index"

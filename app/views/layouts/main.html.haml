@@ -8,8 +8,9 @@
       = render(partial: "shared/header")
       = render(partial: "shared/alerts")
 
-      - if signed_in? && current_account.user.blank?
+      - if signed_in? && current_account.bot_user.blank?
         = render(partial: "shared/bot_auth")
 
       .px-2
         = yield
+

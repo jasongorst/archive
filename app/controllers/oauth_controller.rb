@@ -1,13 +1,16 @@
+# noinspection RubyResolve,RubyNilAnalysis
 class OauthController < ApplicationController
   layout "main"
+  before_action :require_login
 
   def index
     response = fetch_access_token
 
-    handle_team_access_token(respone) if response.has_key?(:access_token)
-    handle_user_access_token(respone) if response.dig(:authed_user, :access_token)
+    handle_team_access_token(response) if response.dig(:access_token)
+    handle_user_access_token(response) if response.dig(:authed_user, :access_token)
 
     if @bot_user
+      FetchNewPrivateMessagesJob.perform_later(@bot_user)
       render :confirm
     else
       render :team_confirm
@@ -15,10 +18,6 @@ class OauthController < ApplicationController
   end
 
   private
-
-  def oauth_params
-    params.require(:code).permit(:state)
-  end
 
   def fetch_access_token
     client = Slack::Web::Client.new
@@ -30,7 +29,7 @@ class OauthController < ApplicationController
       client_id: Rails.application.credentials.slack_client_id,
       client_secret: Rails.application.credentials.slack_client_secret,
       code: params[:code],
-      redirect_uri: Rails.application.routes.url_helpers.oauth_root
+      redirect_uri: Rails.application.routes.url_helpers.oauth_url
     }
 
     client.send(SlackRubyBotServer.config.oauth_access_method, options)
@@ -69,8 +68,6 @@ class OauthController < ApplicationController
   end
 
   def handle_user_access_token(response)
-    raise "not signed in" unless signed_in?
-
     # ensure current_account.user has matching slack_user
     raise "mismatched slack user ids" unless current_account.user.slack_user == response.authed_user&.id
 

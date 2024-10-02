@@ -64,7 +64,6 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring", "~> 4.2.1"
 
-  gem "rack-mini-profiler", "~> 3.3.1", require: false
   gem "html2haml", "~> 2.3.0"
 end
 
@@ -130,3 +129,5 @@ gem "pagy_cursor", "~> 0.6.1"
 
 # solid_queue to back ActiveJobs
 gem "solid_queue", "~> 1.0.0"
+# mission_control-jobs to manage solid_queue job runs
+gem "mission_control-jobs", "~> 0.3.1"

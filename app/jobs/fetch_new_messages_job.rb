@@ -4,7 +4,7 @@ class FetchNewMessagesJob < ApplicationJob
   queue_as :default
 
   def perform(*only_channels)
-    # first ensure emoji are up-to-date
+    # ensure emoji are up-to-date
     FetchEmojiJob.perform_now
 
     connection = Slack::FetchMessages.new

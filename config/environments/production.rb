@@ -97,3 +97,5 @@ Rails.application.configure do
   # set default url options
   config.action_mailer.default_url_options = { host: 'archivedm.evilpaws.org' }
 end
+
+Archive::Application.default_url_options = { host: "archivedm.evilpaws.org", protocol: "https" }

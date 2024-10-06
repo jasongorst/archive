@@ -81,7 +81,7 @@ class SearchController < ApplicationController
   end
 
   def default_start_date
-    oldest_message_date
+    Message.first_date
   end
 
   def default_end_date
@@ -98,11 +98,5 @@ class SearchController < ApplicationController
       sort_by: 'best',
       order: 'DESC'
     }
-  end
-
-  def oldest_message_date
-    Rails.cache.fetch("oldest_message_date") do
-      Message.minimum(:posted_on)
-    end
   end
 end

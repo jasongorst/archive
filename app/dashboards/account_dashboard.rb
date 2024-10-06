@@ -11,9 +11,11 @@ class AccountDashboard < Administrate::BaseDashboard
     id: Field::Number,
     email: Field::String,
     password: Field::String.with_options(searchable: false),
+    confirmation_token: Field::String.with_options(searchable: false),
+    remember_token: Field::String.with_options(searchable: false),
     admin: Field::Boolean,
     user: Field::BelongsTo,
-    bot_user: Field::HasOne,
+    bot_user: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze

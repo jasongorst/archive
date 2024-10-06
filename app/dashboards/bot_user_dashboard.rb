@@ -15,7 +15,7 @@ class BotUserDashboard < Administrate::BaseDashboard
     user_oauth_scope: Field::String,
     active: Field::Boolean,
     team: Field::BelongsTo,
-    account: Field::BelongsTo,
+    account: Field::HasOne,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze

@@ -68,6 +68,9 @@ class OauthController < ApplicationController
   end
 
   def handle_user_access_token(response)
+    # ensure current_account has a user
+    raise "account has no user" unless current_account.user_id?
+
     # ensure current_account.user has matching slack_user
     raise "mismatched slack user ids" unless current_account.user.slack_user == response.authed_user&.id
 
@@ -88,8 +91,7 @@ class OauthController < ApplicationController
 
       @bot_user.update!(
         user_oauth_scope: response.authed_user&.scope,
-        user_access_token: response.authed_user&.access_token,
-        active: true
+        user_access_token: response.authed_user&.access_token
       )
 
       logger.info "User access token updated for BotUser #{@bot_user.display_name}"
@@ -115,7 +117,6 @@ class OauthController < ApplicationController
         display_name: display_name,
         user_access_token: response.authed_user&.access_token,
         user_oauth_scope: response.authed_user&.scope,
-        active: true,
         team: @team
       )
 

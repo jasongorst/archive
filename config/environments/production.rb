@@ -95,7 +95,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # set default url options
-  config.action_mailer.default_url_options = { host: 'archivedm.evilpaws.org' }
+  config.action_mailer.default_url_options = { host: 'archive.evilpaws.org' }
 end
 
-Archive::Application.default_url_options = { host: "archivedm.evilpaws.org", protocol: "https" }
+Archive::Application.default_url_options = { host: "archive.evilpaws.org", protocol: "https" }

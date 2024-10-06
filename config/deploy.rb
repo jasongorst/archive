@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.19.1"
 
-set :application, "archivedm"
+set :application, "archive"
 set :repo_url, "git@github.com:jasongorst/archive.git"
 
 # Default branch is :master
@@ -9,7 +9,7 @@ set :repo_url, "git@github.com:jasongorst/archive.git"
 set :branch, "dm"
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/var/www/archivedm"
+set :deploy_to, "/var/www/archive"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh

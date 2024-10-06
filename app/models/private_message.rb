@@ -5,7 +5,7 @@ class PrivateMessage < ApplicationRecord
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
 
-  before_save :set_posted_at_and_posted_on
+  before_save :set_posted_timestamps
 
   ThinkingSphinx::Callbacks.append(self, behaviours: [:real_time])
 
@@ -29,7 +29,7 @@ class PrivateMessage < ApplicationRecord
 
   private
 
-  def set_posted_at_and_posted_on
+  def set_posted_timestamps
     # times are in local server time
     # set in config/application.rb, see "config.time_zone ="
     self.posted_at = Time.zone.at(ts)

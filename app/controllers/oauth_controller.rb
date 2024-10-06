@@ -10,7 +10,7 @@ class OauthController < ApplicationController
     handle_user_access_token(response) if response.dig(:authed_user, :access_token)
 
     if @bot_user
-      FetchNewPrivateMessagesJob.perform_later(@bot_user)
+      FetchNewPrivateMessagesJob.perform_later(current_account)
       render :confirm
     else
       render :team_confirm

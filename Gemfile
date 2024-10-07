@@ -126,4 +126,4 @@ gem "whenever", '~> 1.0.0', require: false
 # solid_queue to back ActiveJobs
 gem "solid_queue", "~> 1.0.0"
 # mission_control-jobs to manage solid_queue job runs
-gem "mission_control-jobs", "~> 0.3.1"
+gem "mission_control-jobs", "= 0.3.1"

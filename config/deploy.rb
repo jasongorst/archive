@@ -4,9 +4,9 @@ lock "~> 3.19.1"
 set :application, "archive"
 set :repo_url, "git@github.com:jasongorst/archive.git"
 
-# Default branch is :master
-# set :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, "main"
+# Default branch is :main
+set :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+# set :branch, "dm"
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/archive"
@@ -25,7 +25,7 @@ set :deploy_to, "/var/www/archive"
 append :linked_files, "config/database.yml", "config/master.key", "config/en.pak"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", "storage", ".bundle", "node_modules"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", "storage", "node_modules"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

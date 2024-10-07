@@ -62,13 +62,10 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
-
-  config.solid_queue.connects_to = { database: { writing: :queue } }
-
   config.active_job.queue_name_prefix = "archive_test"
 
   # set default url options
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 end
 
-Archive::Application.default_url_options = { host: "localhost", port: 3000 }
+Archive::Application.default_url_options = Rails.application.config.action_mailer.default_url_options

@@ -59,14 +59,6 @@ Rails.application.configure do
   config.cache_store = :mem_cache_store
   config.action_mailer.perform_caching = false
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :solid_queue
-  config.solid_queue.connects_to = { database: { writing: :queue } }
-
-  config.active_job.queue_name_prefix = "archive_production"
-
-  config.solid_queue.logger = Logger.new(STDOUT)
-
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -91,11 +83,23 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  # Use a real queuing backend for Active Job (and separate queues per environment).
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+  config.active_job.queue_name_prefix = "archive_production"
+
+  # Log solid_queue to both stdout (and to syslog via systemd) and rails log
+  stdout_logger = ActiveSupport::Logger.new(STDOUT)
+  stdout_logger.formatter = ::Logger::Formatter.new
+  tagged_stdout_logger = ActiveSupport::TaggedLogging.new(stdout_logger)
+
+  config.solid_queue.logger = ActiveSupport::BroadcastLogger.new(config.logger, tagged_stdout_logger)
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
   # set default url options
-  config.action_mailer.default_url_options = { host: 'archive.evilpaws.org' }
+  config.action_mailer.default_url_options = { host: "archivedm.evilpaws.org", protocol: "https" }
 end
 
-Archive::Application.default_url_options = { host: "archive.evilpaws.org", protocol: "https" }
+Archive::Application.default_url_options = Rails.application.config.action_mailer.default_url_options

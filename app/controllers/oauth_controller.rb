@@ -3,6 +3,44 @@ class OauthController < ApplicationController
   layout "main"
   before_action :require_login
 
+  def self.oauth_config
+    Hashie::Mash.new({
+      oauth_version: :v2,
+      oauth_scope: %w[
+        channels:history
+        channels:join
+        channels:read
+        chat:write
+        emoji:read
+        files:read
+        users.profile:read
+        users:read
+      ],
+      user_oauth_scope: %w[
+        groups:history
+        groups:read
+        identify
+        im:history
+        im:read
+        mpim:history
+        mpim:read
+      ]
+    })
+  end
+
+  def self.oauth_url
+    URI::HTTPS.build(
+      host: "slack.com",
+      path: "/oauth/v2/authorize",
+      query: {
+        scope: oauth_config.oauth_scope.join(","),
+        user_scope: oauth_config.user_oauth_scope.join(","),
+        client_id: Rails.application.credentials.slack_client_id,
+        redirect_uri: Rails.application.routes.url_helpers.oauth_url
+      }.to_query
+    )
+  end
+
   def index
     response = fetch_access_token
 
@@ -32,7 +70,7 @@ class OauthController < ApplicationController
       redirect_uri: Rails.application.routes.url_helpers.oauth_url
     }
 
-    client.send(SlackRubyBotServer.config.oauth_access_method, options)
+    client.oauth_v2_access(options)
   end
 
   def handle_team_access_token(response)
@@ -42,7 +80,7 @@ class OauthController < ApplicationController
       @team.update!(
         token: response.access_token,
         active: true,
-        oauth_version: SlackRubyBotServer::Config.oauth_version,
+        oauth_version: OauthController.oauth_config.oauth_version,
         oauth_scope: response.scope,
         activated_user_id: response.authed_user&.id,
         activated_user_access_token: response.access_token,
@@ -56,7 +94,7 @@ class OauthController < ApplicationController
         name: response.team&.name,
         token: response.access_token,
         active: true,
-        oauth_version: SlackRubyBotServer::Config.oauth_version,
+        oauth_version: OauthController.oauth_config.oauth_version,
         oauth_scope: response.scope,
         activated_user_id: response.authed_user&.id,
         activated_user_access_token: response.access_token,

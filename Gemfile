@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.4", "< 7.2"
+gem "rails", "~> 7.2.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails", "~> 3.5.2"
@@ -119,13 +119,6 @@ gem "html-pipeline-mrkdwn", "~> 0.1.8"
 
 # use postmark for outgoing email
 gem "postmark-rails", "~> 0.22.1"
-
-# slack-ruby-bot-server-events
-gem "slack-ruby-bot-server", "~> 2.1.1"
-gem "slack-ruby-bot-server-events", "~> 0.3.2"
-gem "rack", "~> 2.2.9", "< 3.0"
-# gem "otr-activerecord", "~> 2.2.0"
-gem "pagy_cursor", "~> 0.6.1"
 
 # Ruby cron jobs
 gem "whenever", '~> 1.0.0', require: false

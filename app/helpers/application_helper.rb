@@ -19,26 +19,6 @@ module ApplicationHelper
     current_user
   end
 
-  def oauth_url
-    URI::HTTPS.build(
-      host: "slack.com",
-      path: case SlackRubyBotServer::Config.oauth_version
-            when :v2
-              "/oauth/v2/authorize"
-            when :v1
-              "/oauth/authorize"
-            else
-              raise ArgumentError, "Invalid SlackRubyBotServer::Config.oauth_version, must be one of :v1 or :v2."
-            end,
-      query: {
-        scope: SlackRubyBotServer::Config.oauth_scope&.join(","),
-        user_scope: BotServer::USER_OAUTH_SCOPE.join(","),
-        client_id: Rails.application.credentials.slack_client_id,
-        redirect_uri: Rails.application.routes.url_helpers.oauth_url
-      }.to_query
-    )
-  end
-
   def long_date(date)
     "#{date.strftime('%B')} #{date.mday.ordinalize}"
   end

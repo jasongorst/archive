@@ -93,7 +93,7 @@ Rails.application.configure do
   stdout_logger.formatter = ::Logger::Formatter.new
   tagged_stdout_logger = ActiveSupport::TaggedLogging.new(stdout_logger)
 
-  config.solid_queue.logger = ActiveSupport::BroadcastLogger.new(config.logger, tagged_stdout_logger)
+  config.solid_queue.logger = ActiveSupport::BroadcastLogger.new(Rails.logger, tagged_stdout_logger)
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

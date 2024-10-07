@@ -35,7 +35,7 @@
         %a{href: url_for(:root)}
           %span.inline-block.w-5.h-5
             %i.fas.fa-box-archive
-          Archive
+          ArchiveDM
 
     -# horizontal menu
     - if signed_in?
@@ -72,5 +72,4 @@
             rae.evilpaws.org
             %i.fas.fa-external-link-alt
 
-      - if signed_in?
-        %li= render(partial: 'shared/user_menu')
+      %li= render(partial: 'shared/user_menu')

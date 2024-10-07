@@ -6,11 +6,20 @@ default: &default
   password: <%= ENV['ARCHIVE_DATABASE_PASSWORD'] %>
   socket: /var/run/mysqld/mysqld.sock
 
+test:
+  primary: &primary_test
+    <<: *default
+    database: archivedm_test
+  queue:
+    <<: *primary_test
+    database: archivedm_test_queue
+    migrations_paths: db/queue_migrate
+
 production:
   primary: &primary_production
     <<: *default
-    database: archive_production
+    database: archivedm_production
   queue:
     <<: *primary_production
-    database: archive_production_queue
+    database: archivedm_production_queue
     migrations_paths: db/queue_migrate

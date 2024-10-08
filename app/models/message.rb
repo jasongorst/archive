@@ -7,7 +7,6 @@ class Message < ApplicationRecord
   has_many :attachments, as: :attachable, dependent: :destroy
 
   before_save :set_posted_timestamps
-  after_save :expire_cache_keys
 
   ThinkingSphinx::Callbacks.append(self, behaviours: [:real_time])
 

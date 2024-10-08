@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/thoughtbot/administrate.git
-  revision: ff962c3087db4d0e50465d24613ecf94f447a062
+  revision: b7aa546b6b0d7e355731184f2888bf8a671a45d0
   specs:
     administrate (1.0.0.beta1)
       actionpack (>= 6.0, < 8.0)
@@ -266,9 +266,10 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     minitest (5.25.1)
-    mission_control-jobs (0.3.1)
+    mission_control-jobs (0.3.2)
       importmap-rails
       irb (~> 1.13)
+      propshaft
       rails (>= 7.1)
       stimulus-rails
       turbo-rails
@@ -310,6 +311,11 @@ GEM
     postmark-rails (0.22.1)
       actionmailer (>= 3.0.0)
       postmark (>= 1.21.3, < 2.0)
+    propshaft (1.1.0)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
+      railties (>= 7.0.0)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -318,14 +324,14 @@ GEM
     pwned (2.4.1)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (2.2.9)
-    rack-session (1.0.2)
-      rack (< 3)
+    rack (3.1.7)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (1.0.0)
-      rack (< 3)
-      webrick
+    rackup (2.1.0)
+      rack (>= 3)
+      webrick (~> 1.8)
     rails (7.2.1)
       actioncable (= 7.2.1)
       actionmailbox (= 7.2.1)
@@ -390,13 +396,6 @@ GEM
       railties (>= 7.1)
       thor (~> 1.3.1)
     spring (4.2.1)
-    sprockets (4.2.1)
-      concurrent-ruby (~> 1.0)
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      sprockets (>= 3.0.0)
     sshkit (1.23.1)
       base64
       net-scp (>= 1.1.2)
@@ -477,9 +476,10 @@ DEPENDENCIES
   jbuilder (~> 2.13.0)
   jsbundling-rails (~> 1.3.1)
   kaminari (~> 1.2.2)
-  mission_control-jobs (= 0.3.1)
+  mission_control-jobs (~> 0.3.2)
   mysql2 (~> 0.5.6)
   postmark-rails (~> 0.22.1)
+  propshaft (~> 1.1.0)
   puma (~> 6.4.3)
   pwned (~> 2.4.1)
   rails (~> 7.2.1)
@@ -487,7 +487,6 @@ DEPENDENCIES
   slack-ruby-client (~> 2.4.0)
   solid_queue (~> 1.0.0)
   spring (~> 4.2.1)
-  sprockets-rails (~> 3.5.2)
   stimulus-rails (~> 1.3.4)
   thinking-sphinx!
   turbo-rails (~> 2.0.10)

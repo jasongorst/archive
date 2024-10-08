@@ -6,8 +6,8 @@ ruby "3.3.4"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1"
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails", "~> 3.5.2"
+# Propshaft asset pipeline
+gem "propshaft", "~> 1.1.0"
 
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5.6"
@@ -125,5 +125,6 @@ gem "whenever", '~> 1.0.0', require: false
 
 # solid_queue to back ActiveJobs
 gem "solid_queue", "~> 1.0.0"
+
 # mission_control-jobs to manage solid_queue job runs
-gem "mission_control-jobs", "= 0.3.1"
+gem "mission_control-jobs", "~> 0.3.2"

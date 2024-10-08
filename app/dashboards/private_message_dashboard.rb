@@ -30,7 +30,6 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
     id
     private_channel
     user
-    text
     posted_at
   ].freeze
 
@@ -40,7 +39,6 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
     id
     private_channel
     user
-    text
     attachments
     ts
     posted_at
@@ -54,7 +52,6 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     private_channel
     user
-    text
     attachments
     ts
     verbatim

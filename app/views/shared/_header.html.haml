@@ -2,33 +2,32 @@
   .grow.justify-start
 
     -# hamburger menu
-    - if signed_in?
-      .dropdown.lg:hidden
-        %label.btn.btn-ghost{tabindex: 0}
-          %i.fas.fa-bars
-        %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
+    .dropdown.lg:hidden
+      %label.btn.btn-ghost{tabindex: 0}
+        %i.fas.fa-bars
+      %ul.dropdown-content.menu.menu-sm.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
+        %li
+          %details{open: (true if channel_page?)}
+            %summary{class: ("bg-primary-focus" if channel_page?)}
+              Channels
+            %ul.p-2
+              - Channel.with_messages.each do |channel|
+                %li
+                  %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
+                    \##{channel.name}
+
+        %li
+          %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
+            Search
+
+        - if bot_authorized?
           %li
-            %details{open: (true if channel_page?)}
-              %summary{class: ("bg-primary-focus" if channel_page?)}
-                Channels
-              %ul.p-2
-                - Channel.with_messages.each do |channel|
-                  %li
-                    %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
-                      \##{channel.name}
+            %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
+              DMs
 
           %li
-            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
-              Search
-
-          - if current_account&.user
-            %li
-              %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
-                DMs
-
-            %li
-              %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
-                Search DMs
+            %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
+              Search DMs
 
     %div
       %span.btn.btn-ghost.normal-case.text-xl
@@ -38,31 +37,30 @@
           Archive
 
     -# horizontal menu
-    - if signed_in?
-      .hidden.lg:flex
-        %ul.menu.menu-horizontal.p-0
-          %li{tabindex: "0"}
-            %details
-              %summary{class: ("bg-primary-focus" if channel_page?)}
-                Channels
-              %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
-                - Channel.with_messages.each do |channel|
-                  %li
-                    %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
-                      \##{channel.name}
+    .hidden.lg:flex
+      %ul.menu.menu-horizontal.p-0
+        %li{tabindex: "0"}
+          %details
+            %summary{class: ("bg-primary-focus" if channel_page?)}
+              Channels
+            %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
+              - Channel.with_messages.each do |channel|
+                %li
+                  %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
+                    \##{channel.name}
+
+        %li
+          %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
+            Search
+
+        - if bot_authorized?
+          %li
+            %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
+              DMs
 
           %li
-            %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
-              Search
-
-          - if current_account&.user
-            %li
-              %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
-                DMs
-
-            %li
-              %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
-                Search DMs
+            %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
+              Search DMs
 
   .grow.justify-end
     %ul.menu.menu-horizontal.p-0

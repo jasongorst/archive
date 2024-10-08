@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def current_account
+    current_user
+  end
+
+  def bot_authorized?
+    signed_in? && current_account&.bot_user_id?
+  end
+
   def channel_page?
     params[:channel_id]
   end
@@ -13,10 +21,6 @@ module ApplicationHelper
 
   def current_private_channel
     params[:private_channel_id]
-  end
-
-  def current_account
-    current_user
   end
 
   def long_date(date)

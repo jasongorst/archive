@@ -1,7 +1,8 @@
 .alert.w-fit.m-auto.mb-6.flex.flex-row.gap-4.whitespace-nowrap
   %div
     %a.slack-button{href: OauthController.oauth_url}
-      != image_tag("slack.svg", size: "20x20", class: "h-5 w-5")
+      %span.h-5.w-5
+        != Rails.application.assets.load_path.find("slack.svg").content
       Add to Slack
   %div
     Click this button to let the bot archive your Slack DMs.

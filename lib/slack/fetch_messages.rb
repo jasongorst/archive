@@ -30,6 +30,8 @@ module Slack
     private
 
     def archive_messages(channel, last_ts)
+      @client.conversations_join(channel: channel.slack_channel)
+
       @client.conversations_history(
         channel: channel.slack_channel,
         oldest: (sprintf("%.6f", last_ts) if last_ts),

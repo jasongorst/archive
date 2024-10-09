@@ -9,6 +9,10 @@ class PrivateChannel < ApplicationRecord
 
   scope :with_messages, -> { where.associated(:private_messages).distinct.sort_by { |private_channel| private_channel.time_of_latest_message }.reverse! }
 
+  def user_names
+    users.pluck(:display_name).join(", ")
+  end
+
   def message_dates
     private_messages.group(:posted_on).pluck(:posted_on)
   end

@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     resources :channels
     resources :messages
     resources :private_channels
-    resources :private_messages
+    resources :private_messages, only: [:index, :show]
     resources :attachments
   end
 

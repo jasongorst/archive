@@ -12,11 +12,11 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
     private_channel: Field::BelongsTo,
     user: Field::BelongsTo,
     attachments: Field::HasMany,
-    text: Field::Text,
+    text: Field::Text.with_options(searchable: false),
     ts: Field::String.with_options(searchable: false),
     posted_at: Field::DateTime,
     posted_on: Field::Date,
-    verbatim: Field::Text,
+    verbatim: Field::Text.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -43,19 +43,12 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
     ts
     posted_at
     posted_on
-    verbatim
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = %i[
-    private_channel
-    user
-    attachments
-    ts
-    verbatim
-  ].freeze
+  FORM_ATTRIBUTES = [].freeze
 
   # COLLECTION_FILTERS
   # a hash that defines filters that can be used while searching via the search

@@ -11,7 +11,8 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
     id: Field::Number,
     slack_channel: Field::String,
     channel_created_at: Field::DateTime,
-    users: Field::HasMany,
+    users: Field::HasMany.with_options(collection_attributes: %i[id display_name account]),
+    user_names: Field::String.with_options(searchable: false),
     private_messages: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -25,7 +26,7 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     slack_channel
-    users
+    user_names
     channel_created_at
     private_messages
   ].freeze
@@ -36,6 +37,7 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
     id
     slack_channel
     users
+    private_messages
     channel_created_at
   ].freeze
 

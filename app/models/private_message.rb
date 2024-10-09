@@ -1,5 +1,7 @@
 class PrivateMessage < ApplicationRecord
   validates :ts, presence: true, numericality: true
+  encrypts :text
+  encrypts :verbatim
 
   belongs_to :private_channel
   belongs_to :user

@@ -56,6 +56,9 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  # Support unencrypted data in encrypted attributes
+  config.active_record.encryption.support_unencrypted_data = true
+
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 

@@ -99,6 +99,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Support unencrypted data in encrypted attributes
+  config.active_record.encryption.support_unencrypted_data = true
+
   # set default url options
   config.action_mailer.default_url_options = { host: "archive.evilpaws.org", protocol: "https" }
 end

@@ -66,14 +66,10 @@ Rails.application.configure do
   # Use a separate database for solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  config.after_initialize do
-    stdout_logger = ActiveSupport::Logger.new(STDOUT)
-     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+  stdout_logger = ActiveSupport::Logger.new(STDOUT)
+   .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
 
-    Rails.application.configure do
-      config.solid_queue.logger = ActiveSupport::BroadcastLogger.new(Rails.logger, stdout_logger)
-    end
-  end
+  config.solid_queue.logger = stdout_logger
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.

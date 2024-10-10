@@ -44,9 +44,9 @@ Rails.application.configure do
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  # config.logger = ActiveSupport::Logger.new(STDOUT)
+  #   .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+  #   .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -65,6 +65,15 @@ Rails.application.configure do
 
   # Use a separate database for solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
+
+  config.after_initialize do
+    stdout_logger = ActiveSupport::Logger.new(STDOUT)
+     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+
+    Rails.application.configure do
+      config.solid_queue.logger = ActiveSupport::BroadcastLogger.new(Rails.logger, stdout_logger)
+    end
+  end
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.

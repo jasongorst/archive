@@ -120,9 +120,6 @@ gem "html-pipeline-mrkdwn", "~> 0.1.8"
 # use postmark for outgoing email
 gem "postmark-rails", "~> 0.22.1"
 
-# Ruby cron jobs
-gem "whenever", '~> 1.0.0', require: false
-
 # solid_queue to back ActiveJobs
 gem "solid_queue", "~> 1.0.0"
 

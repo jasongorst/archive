@@ -15,7 +15,7 @@
     "@melloware/coloris": "^0.24.0",
     "@tailwindcss/typography": "^0.5.15",
     "autoprefixer": "^10.4.20",
-    "daisyui": "^4.12.12",
+    "daisyui": "^4.12.13",
     "esbuild": "^0.24.0",
     "flowbite": "~2.5.2",
     "mrujs": "^1.0.2",

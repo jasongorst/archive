@@ -55,7 +55,7 @@ mark {
 /* hide daisyui submenu arrows */
 .menu :where(li > details > summary):after,
 .menu :where(li > .menu-dropdown-toggle):after {
-  @apply !w-0;
+  @apply !hidden;
 }
 
 /* recreate daisyui v3 *-focus colors */

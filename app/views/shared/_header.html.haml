@@ -29,11 +29,16 @@
             %a.whitespace-nowrap{href: url_for(:search_dms), class: ("bg-primary-focus" if current_page?(:search_dms))}
               Search DMs
 
+          %li
+            %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
+              %span.whitespace-nowrap
+                rae.evilpaws.org
+                %i.fas.fa-external-link-alt
+
     %div
       %span.btn.btn-ghost.normal-case.text-xl
-        %a{href: url_for(:root)}
-          %span.inline-block.w-5.h-5
-            %i.fas.fa-box-archive
+        %a.whitespace-nowrap{href: url_for(:root)}
+          %i.fas.fa-box-archive.inline-block.w-5.h-5
           Archive
 
     -# horizontal menu
@@ -64,9 +69,9 @@
 
   .grow.justify-end
     %ul.menu.menu-horizontal.p-0
-      %li
+      %li.hidden.lg:flex
         %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
-          %span
+          %span.whitespace-nowrap
             rae.evilpaws.org
             %i.fas.fa-external-link-alt
 

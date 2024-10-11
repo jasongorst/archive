@@ -1,5 +1,3 @@
-require "slack/fetch_private_messages"
-
 class FetchNewPrivateMessagesJob < ApplicationJob
   queue_as :default
 

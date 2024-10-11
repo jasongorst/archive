@@ -1,5 +1,3 @@
-require "slack/emoji"
-
 class FetchEmojiJob < ApplicationJob
   queue_as :default
 

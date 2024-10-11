@@ -67,7 +67,8 @@ Rails.application.configure do
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
   stdout_logger = ActiveSupport::Logger.new(STDOUT)
-   .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+   .tap { |logger| logger.formatter = ::Logger::Formatter.new }
+   .tap { |logger| logger.level = ::Logger::INFO }
 
   config.solid_queue.logger = stdout_logger
 

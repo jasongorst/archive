@@ -19,6 +19,6 @@ class Account < ApplicationRecord
     self.encrypted_password = "*"
     save validate: false
 
-    AccountsMailer.reset_password(self).deliver_now
+    AccountsMailer.reset_password(self).deliver_later
   end
 end

@@ -62,9 +62,9 @@ module Slack
       @text = Slack::Mrkdwn.to_html(@message.text)
 
       if @message.has_key?(:files)
-        @attachments = @message.files.map do |file|
-          { name: file.name, url: file.url_private }
-        end
+        @attachments = @message.files
+                               .reject {|file| file.url_private.nil? }
+                               .map {|file| { name: file.name || "file", url: file.url_private }}
       end
     end
 

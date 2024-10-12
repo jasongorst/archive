@@ -1,11 +1,11 @@
 {
   "name": "Archive",
-  "short_name": "Archive",
+  "short_name": "archive",
   "icons": [{
     "src": "google-touch-icon.png",
     "sizes": "512x512"
   }],
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
-  "display": "fullscreen"
+  "theme_color": "#0069ff",
+  "display": "browser"
 }

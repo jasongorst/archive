@@ -2,10 +2,10 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768">
 	<style>
 		path {
-			fill: #000000;
+			fill: #0069ff;
 		}
 		@media (prefers-color-scheme: dark) {
-			fill: #ffffff;
+			fill: #661ae6;
 		}
 	</style>
 	<path d="M104,104h560c22.12,0,40,17.88,40,40v40c0,22.12-17.88,40-40,40H104c-22.12,0-40-17.88-40-40v-40

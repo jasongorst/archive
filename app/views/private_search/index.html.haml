@@ -14,7 +14,7 @@
       .my-3.lg:mt-4
         = paginate @private_messages
 
-      = render partial: "private_message", collection: @private_messages
+      = render(partial: "private_message", collection: @private_messages)
 
       .my-3.lg:mt-4
         = paginate @private_messages

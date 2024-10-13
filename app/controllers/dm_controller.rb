@@ -9,11 +9,12 @@ class DmController < ApplicationController
 
   def show
     @private_channel = current_account.user.private_channels.find(params[:private_channel_id])
+    @private_message_dates_with_counts = @private_channel.message_dates_with_counts
   end
 
   def by_date
     @private_channel = current_account.user.private_channels.find(params[:private_channel_id])
     @date = params[:date].to_date
-    @private_messages = @private_channel.private_messages.where(posted_on: @date).page(params[:page])
+    @private_messages = @private_channel.private_messages_posted_on(@date).page(params[:page])
   end
 end

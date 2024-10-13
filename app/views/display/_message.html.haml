@@ -1,12 +1,13 @@
-.mb-2.lg:mb-4
-  %div
-    %a{id: "ts_#{message.ts}"}
-      %strong
-        %span{style: ("color: #{message.user.color}" if message.user.color.present?)}
-          = message.user.display_name
-      %span.text-sm= message.posted_at.strftime("%-l:%M%P")
-      %div!= message.text
-      - message.attachments.each do |attachment|
-        %div
-          %i.fas.fa-caret-right
-          %a.link{href: attachment.url}= attachment.name
+- cache message do
+  .mb-2.lg:mb-4
+    %div
+      %a{id: "ts_#{message.ts}"}
+        %strong
+          %span{style: ("color: #{message.user.color}" if message.user.color.present?)}
+            = message.user.display_name
+        %span.text-sm= message.posted_at.strftime("%-l:%M%P")
+        %div!= message.text
+        - message.attachments.each do |attachment|
+          %div
+            %i.fas.fa-caret-right
+            %a.link{href: attachment.url}= attachment.name

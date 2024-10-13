@@ -1,11 +1,12 @@
-.collapse
-  %input.h-10.min-h-0{type: "radio", name: "months-accordion",
-    checked: (year == @private_channel.message_dates_with_counts.first[0].year && month == @private_channel.message_dates_with_counts.first[0].month)}
-  .collapse-title.px-0.py-2.h-10.min-h-0.menu.menu-sm.lg:menu-md
-    = Date::MONTHNAMES[month]
-    - if year != this_year
-      = year
-  .collapse-content.px-0{class: "!pb-0"}
-    %ul.menu.menu-sm.lg:menu-md.py-0.pb-2.px-0
-      = render(partial: "dates_in_month",
-        locals: { private_channel: @private_channel, month: month, year: year })
+- cache [@private_channel, year, month, @private_message_dates_with_counts] do
+  .collapse
+    %input.h-10.min-h-0{type: "radio", name: "months-accordion",
+      checked: (year == @private_message_dates_with_counts.first.first.year && month == @private_message_dates_with_counts.first.first.month)}
+    .collapse-title.px-0.py-2.h-10.min-h-0.menu.menu-sm.lg:menu-md
+      = Date::MONTHNAMES[month]
+      = year unless year == this_year
+    .collapse-content.px-0{class: "!pb-0"}
+      %ul.menu.menu-sm.lg:menu-md.py-0.pb-2.px-0
+        = render(partial: "dates_in_month",
+          locals: { year: year, month: month },
+          cached: [@private_channel, year, month, @private_message_dates_with_counts])

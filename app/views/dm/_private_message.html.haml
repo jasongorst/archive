@@ -1,0 +1,13 @@
+- cache private_message do
+  .mb-2.lg:mb-4
+    %div
+      %a{id: "ts_#{private_message.ts}"}
+        %strong
+          %span{style: ("color: #{private_message.user.color}" if private_message.user.color.present?)}
+            = private_message.user.display_name
+        %span.text-sm= private_message.posted_at.strftime("%-l:%M%P")
+        %div!= private_message.text
+        - private_message.attachments.each do |attachment|
+          %div
+            %i.fas.fa-caret-right
+            %a.link{href: attachment.url}= attachment.name

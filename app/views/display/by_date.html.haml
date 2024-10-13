@@ -1,5 +1,6 @@
 %h1.text-lg.lg:text-2xl.lg:pb-2
-  \##{@channel.name}
+  %a{href: url_for(@channel)}
+    \##{@channel.name}
 
 = render(partial: "next_prev_day")
 = paginate @messages

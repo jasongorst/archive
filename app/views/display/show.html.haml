@@ -2,7 +2,9 @@
   \##{@channel.name}
 
 - this_year.downto(@channel.date_of_oldest_message.year).each do |year|
-  - if year_contained_in?(year, @channel.message_dates_with_counts)
+  - if year_contained_in?(year, @message_dates_with_counts)
     - 12.downto(1).each do |month|
-      - if month_contained_in?(month, year, @channel.message_dates_with_counts)
-        = render(partial: "month", locals: { channel: @channel, month: month, year: year })
+      - if month_contained_in?(month, year, @message_dates_with_counts)
+        = render(partial: "month",
+          locals: { year: year, month: month },
+          cached: [@channel, year, month, @message_dates_with_counts])

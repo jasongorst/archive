@@ -7,10 +7,13 @@ class Message < ApplicationRecord
   has_many :attachments, as: :attachable, dependent: :destroy
 
   before_save :set_posted_timestamps
+  after_save :expire_cache
 
   ThinkingSphinx::Callbacks.append(self, behaviours: [:real_time])
 
   paginates_per 50
+
+  default_scope { order(posted_at: :asc) }
 
   def self.first_date
     minimum(:posted_on)
@@ -33,5 +36,26 @@ class Message < ApplicationRecord
     # set in config/application.rb, see "config.time_zone ="
     self.posted_at = Time.zone.at(ts)
     self.posted_on = posted_at.to_date
+  end
+
+  def expire_cache
+    Rails.cache.delete_multi(
+      %W[
+        #{channel.cache_key_with_version}/message_dates_with_counts
+        #{channel.cache_key_with_version}/messages_posted_on/#{posted_on}
+      ]
+    )
+
+    unless channel.message_dates.include?(posted_on)
+      Rails.cache.delete("#{channel.cache_key_with_version}/message_dates")
+    end
+
+    if posted_at > channel.time_of_latest_message
+      Rails.cache.delete("#{channel.cache_key_with_version}/time_of_latest_message")
+    end
+
+    if posted_on < channel.date_of_oldest_message
+      Rails.cache.delete("#{channel.cache_key_with_version}/date_of_oldest_message")
+    end
   end
 end

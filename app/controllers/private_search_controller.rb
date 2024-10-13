@@ -98,7 +98,7 @@ class PrivateSearchController < ApplicationController
   end
 
   def default_start_date
-    oldest_message_date
+    current_account.user.private_messages.oldest_date
   end
 
   def default_end_date
@@ -115,9 +115,5 @@ class PrivateSearchController < ApplicationController
       sort_by: 'best',
       order: 'DESC'
     }
-  end
-
-  def oldest_message_date
-    current_account.user.private_messages.minimum(:posted_on)
   end
 end

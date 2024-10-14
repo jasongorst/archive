@@ -54,3 +54,6 @@ set :rbenv_roles, :all # default value
 
 # passenger options
 set :passenger_restart_with_touch, false
+
+# rails options
+set :assets_manifests, [release_path.join("public", fetch(:assets_prefix), ".manifest.json")]

@@ -10,7 +10,10 @@ gem "rails", "~> 7.2.1"
 gem "propshaft", "~> 1.1.0"
 
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5.6"
+# gem "mysql2", "~> 0.5.6"
+
+# Use trilogy as the database for Active Record
+gem "trilogy", "~> 2.7"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.4.3"
@@ -51,7 +54,10 @@ gem "ruby-vips", "~> 2.2.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", "~> 1.9.2", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", "~> 1.9.2", platforms: %i[ mri mingw x64_mingw ], require: "debug/prelude"
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
@@ -101,6 +107,8 @@ gem "kaminari", "~> 1.2.2"
 
 # Full-text search middleware for sphinx/manticore
 gem "thinking-sphinx", github: "jasongorst/thinking-sphinx"
+# Thinking Sphinx needs mysql2
+gem "mysql2", "~> 0.5.6"
 
 # Pretty URLs
 gem "friendly_id", '~> 5.5.1'

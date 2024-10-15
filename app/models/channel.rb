@@ -7,7 +7,9 @@ class Channel < ApplicationRecord
 
   has_many :messages, -> { order(posted_at: :asc) }, dependent: :destroy
 
-  scope :with_messages, -> { where.associated(:messages).distinct.order(name: :asc) }
+  default_scope { order(name: :asc) }
+
+  scope :with_messages, -> { where.associated(:messages).distinct }
 
   def message_dates
     Rails.cache.fetch("#{cache_key_with_version}/message_dates") do
@@ -18,6 +20,15 @@ class Channel < ApplicationRecord
   def message_dates_with_counts
     Rails.cache.fetch("#{cache_key_with_version}/message_dates_with_counts") do
       messages.reorder(posted_on: :desc).group(:posted_on).count
+    end
+  end
+
+  def message_counts_by_date
+    Rails.cache.fetch("#{cache_key_with_version}/message_counts_by_date") do
+      message_dates_with_counts
+        .group_by { |date, _| date.year }
+        .transform_values { |counts| counts.group_by { |date, _| date.month} }
+        .transform_values { |month| month.transform_values(&:to_h) }
     end
   end
 

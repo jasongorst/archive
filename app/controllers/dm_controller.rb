@@ -9,7 +9,7 @@ class DmController < ApplicationController
 
   def show
     @private_channel = current_account.user.private_channels.find(params[:private_channel_id])
-    @private_message_dates_with_counts = @private_channel.message_dates_with_counts
+    @private_message_counts_by_date = @private_channel.private_message_counts_by_date
   end
 
   def by_date

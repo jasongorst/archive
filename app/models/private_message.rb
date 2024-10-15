@@ -46,7 +46,8 @@ class PrivateMessage < ApplicationRecord
   def expire_cache
     Rails.cache.delete_multi(
       %W[
-        #{private_channel.cache_key_with_version}/message_dates_with_counts
+        #{private_channel.cache_key_with_version}/private_message_dates_with_counts
+        #{private_channel.cache_key_with_version}/private_message_counts_by_date
         #{private_channel.cache_key_with_version}/private_messages_posted_on/#{posted_on}
       ]
     )

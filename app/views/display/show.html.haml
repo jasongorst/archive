@@ -1,10 +1,9 @@
-%h1.text-lg.lg:text-2xl.pb-2.lg:pb-3
-  \##{@channel.name}
+- cache [@channel, @channel.time_of_latest_message] do
+  %h1.text-lg.lg:text-2xl.pb-2.lg:pb-3
+    \##{@channel.name}
 
-- this_year.downto(@channel.date_of_oldest_message.year).each do |year|
-  - if year_contained_in?(year, @message_dates_with_counts)
-    - 12.downto(1).each do |month|
-      - if month_contained_in?(month, year, @message_dates_with_counts)
-        = render(partial: "month",
-          locals: { year: year, month: month },
-          cached: [@channel, year, month, @message_dates_with_counts])
+  - @message_counts_by_date.each do |year, months|
+    - months.each do |month, dates|
+      = render(partial: "month",
+        locals: { year: year, month: month, dates: dates },
+        cached: [@channel, year, month, ActiveSupport::Digest.hexdigest(dates.to_s)])

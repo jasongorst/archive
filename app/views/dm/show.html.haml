@@ -1,10 +1,9 @@
-%h1.text-lg.lg:text-2xl.pb-2.lg:pb-3
-  #{@private_channel.other_users_as_sentence(current_account.user)}
+- cache [@private_channel, @private_channel.time_of_latest_message] do
+  %h1.text-lg.lg:text-2xl.pb-2.lg:pb-3
+    #{@private_channel.other_users_as_sentence(current_account.user)}
 
-- this_year.downto(@private_channel.date_of_oldest_message.year).each do |year|
-  - if year_contained_in?(year, @private_message_dates_with_counts)
-    - 12.downto(1).each do |month|
-      - if month_contained_in?(month, year, @private_message_dates_with_counts)
-        = render(partial: "month",
-          locals: { year: year, month: month },
-          cached: [@private_channel, year, month, @private_message_dates_with_counts])
+  - @private_message_counts_by_date.each do |year, months|
+    - months.each do |month, dates|
+      = render(partial: "month",
+        locals: { year: year, month: month, dates: dates },
+        cached: [@private_channel, year, month, ActiveSupport::Digest.hexdigest(dates.to_s)])

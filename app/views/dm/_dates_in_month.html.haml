@@ -1,5 +1,5 @@
-- cache [@private_channel, year, month, @private_message_dates_with_counts] do
-  - dates_in_month(month, year, @private_message_dates_with_counts).each do |date, count|
+- cache [@private_channel, year, month, ActiveSupport::Digest.hexdigest(dates.to_s)] do
+  - dates.each do |date, count|
     = render(partial: "date",
-      locals: { date: date, count: count },
-      cached: [@private_channel, date, count])
+        locals: { date: date, count: count },
+        cached: [@private_channel, date, count])

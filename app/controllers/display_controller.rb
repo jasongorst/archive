@@ -7,7 +7,7 @@ class DisplayController < ApplicationController
 
   def show
     @channel = Channel.friendly.find(params[:channel_id])
-    @message_dates_with_counts = @channel.message_dates_with_counts
+    @message_counts_by_date = @channel.message_counts_by_date
   end
 
   def by_date

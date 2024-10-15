@@ -7,7 +7,13 @@ class PrivateChannel < ApplicationRecord
 
   default_scope { order(channel_created_at: :desc) }
 
-  scope :with_messages, -> { where.associated(:private_messages).distinct.sort_by { |private_channel| private_channel.time_of_latest_message }.reverse! }
+  scope :with_messages, lambda {
+    where
+      .associated(:private_messages)
+      .distinct
+      .sort_by(&:time_of_latest_message)
+      .reverse!
+  }
 
   def user_names
     users.pluck(:display_name).to_sentence
@@ -19,9 +25,18 @@ class PrivateChannel < ApplicationRecord
     end
   end
 
-  def message_dates_with_counts
-    Rails.cache.fetch("#{cache_key_with_version}/message_dates_with_counts") do
+  def private_message_dates_with_counts
+    Rails.cache.fetch("#{cache_key_with_version}/private_message_dates_with_counts") do
       private_messages.reorder(posted_on: :desc).group(:posted_on).count
+    end
+  end
+
+  def private_message_counts_by_date
+    Rails.cache.fetch("#{cache_key_with_version}/private_message_counts_by_date") do
+      private_message_dates_with_counts
+        .group_by { |date, _| date.year }
+        .transform_values { |counts| counts.group_by { |date, _| date.month} }
+        .transform_values { |month| month.transform_values(&:to_h) }
     end
   end
 

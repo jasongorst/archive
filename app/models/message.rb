@@ -42,6 +42,7 @@ class Message < ApplicationRecord
     Rails.cache.delete_multi(
       %W[
         #{channel.cache_key_with_version}/message_dates_with_counts
+        #{channel.cache_key_with_version}/message_counts_by_date
         #{channel.cache_key_with_version}/messages_posted_on/#{posted_on}
       ]
     )

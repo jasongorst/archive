@@ -49,6 +49,7 @@ module Slack
 
         messages.each do |m|
           slack_message = Slack::Message.new(m)
+          next if slack_message.user.nil?
 
           message = channel.messages.create!(
             user: slack_message.user,

@@ -6,6 +6,7 @@ module Slack
 
     def initialize(user_id)
       @user_id = user_id
+
       # initialize Slack client
       sc = Slack::Client.new
 
@@ -23,7 +24,7 @@ module Slack
                         elsif u.profile.real_name.present?
                           u.profile.real_name
                         else
-                          @user_id
+                          "Unnamed User <#{@user_id}>"
                         end
 
         @is_bot = u.is_bot

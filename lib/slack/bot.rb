@@ -15,7 +15,7 @@ module Slack
         @display_name = "Unknown Bot <#{@bot_id}>"
         @deleted = true
       else
-        @display_name = bot.name
+        @display_name = bot.name || "Unnamed Bot <#{@bot_id}>"
         @deleted = bot.deleted
       end
     end

@@ -16,7 +16,13 @@ module Slack
     end
 
     def fetch_channels
-      @user_client.conversations_list(types: CONVERSATION_TYPES, exclude_archived: false).channels
+      channels = []
+
+      @user_client.conversations_list(types: CONVERSATION_TYPES, exclude_archived: false) do |response|
+        channels.concat(response.channels)
+      end
+
+      channels
     end
 
     def fetch_messages(slack_channels)
@@ -55,7 +61,6 @@ module Slack
       @user_client.conversations_history(
         channel: private_channel.slack_channel,
         oldest: (format("%.6f", last_ts) if last_ts),
-        latest: (Date.new(2018, 1, 1).to_time.to_i if Rails.env.development?),
         inclusive: false
       ) do |response|
         messages = response.messages

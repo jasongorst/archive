@@ -16,6 +16,8 @@ module Slack
       "#a30200" => "danger"
     }.freeze
 
+    EARLIEST_ROLLER_MESSAGE_TS = Date.parse("2018-03-14").to_time.to_i
+
     attr_reader :message,
                 :user,
                 :text,
@@ -27,10 +29,11 @@ module Slack
       @message = message
 
       if @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
-        @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
+         @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
         parse_roller_v2_message!
       elsif @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
-        @message.bot_id == ::User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user
+            @message.bot_id == ::User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user &&
+            @message.ts.to_d > EARLIEST_ROLLER_MESSAGE_TS
         parse_roller_message!
       else
         parse_message!
@@ -118,6 +121,7 @@ module Slack
       m = @message.attachments.first
       color = ROLLER_COLORS[m.color]
       text = Slack::Mrkdwn.to_html(m.text)
+
       fields = m.fields.each do |f|
         f["value"] = Slack::Mrkdwn.to_html(f["value"])
       end

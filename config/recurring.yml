@@ -2,6 +2,9 @@
    new_messages:
      class: FetchNewMessagesJob
      schedule: at 3am every day
+   new_archived_messages:
+     class: FetchNewArchivedMessagesJob
+     schedule: at 3:15am every day
    new_private_messages:
      class: FetchNewPrivateMessagesJob
      schedule: at 3:30am every day

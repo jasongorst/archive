@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_10_173728) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_17_023619) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
@@ -84,6 +84,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_10_173728) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "archived", default: false, null: false
     t.index ["name"], name: "index_channels_on_name"
     t.index ["slack_channel"], name: "index_channels_on_slack_channel"
   end
@@ -126,6 +127,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_10_173728) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "channel_created_at"
+    t.string "name"
+    t.boolean "archived", default: false, null: false
+    t.index ["slack_channel"], name: "index_private_channels_on_slack_channel"
   end
 
   create_table "private_channels_users", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -177,4 +181,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_10_173728) do
     t.boolean "deleted", default: false, null: false
     t.index ["slack_user"], name: "index_users_on_slack_user"
   end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bot_users", "teams"
+  add_foreign_key "messages", "channels"
+  add_foreign_key "messages", "users"
+  add_foreign_key "private_messages", "private_channels"
+  add_foreign_key "private_messages", "users"
 end

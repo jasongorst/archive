@@ -6,6 +6,7 @@ class PrivateChannel < ApplicationRecord
   has_many :private_messages, -> { order(posted_at: :asc) }, dependent: :destroy
 
   default_scope { order(channel_created_at: :desc) }
+  scope :archived, -> { where(archived: true) }
 
   scope :with_messages, lambda {
     where

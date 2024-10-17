@@ -6,7 +6,7 @@ class FetchNewPrivateMessagesJob < ApplicationJob
     FetchEmojiJob.perform_now
 
     bot_users = if only_accounts.present?
-                  only_accounts.map { |account| account.bot_user }.compact
+                  only_accounts.map(&:bot_user).compact
                 else
                   Team.find_by_name("Firnost & Friends").bot_users.all
                 end

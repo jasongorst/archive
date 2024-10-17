@@ -11,7 +11,13 @@ module Slack
     end
 
     def fetch_channels
-      @client.conversations_list(types: "public_channel", exclude_archived: true).channels
+      channels = []
+
+      @client.conversations_list(types: "public_channel", exclude_archived: true) do |response|
+        channels.concat(response.channels)
+      end
+
+      channels
     end
 
     def fetch_messages(slack_channels)
@@ -20,9 +26,10 @@ module Slack
 
         channel = ::Channel.find_or_create_by!(slack_channel: slack_channel.id) do |c|
           c.name = slack_channel.name
+          c.archived = slack_channel.is_archived
         end
 
-        last_ts = channel.messages&.last&.ts
+        last_ts = channel.messages.maximum(:ts)
         archive_messages(channel, last_ts)
       end
     end
@@ -30,14 +37,14 @@ module Slack
     private
 
     def archive_messages(channel, last_ts)
-      @client.conversations_join(channel: channel.slack_channel)
+      @client.conversations_join(channel: channel.slack_channel) unless channel.archived?
 
       @client.conversations_history(
         channel: channel.slack_channel,
-        oldest: (sprintf("%.6f", last_ts) if last_ts),
+        oldest: (format("%.6f", last_ts) if last_ts),
+        latest: (Date.new(2018, 1, 1).to_time.to_i if Rails.env.development?),
         inclusive: false
       ) do |response|
-
         messages = response.messages
         @logger.info "Archiving #{messages.count} messages from \##{channel.name}"
 

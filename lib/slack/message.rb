@@ -28,10 +28,14 @@ module Slack
     def initialize(message)
       @message = message
 
-      if @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
-         @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
+      if @message.user.nil? && @message.bot_id.nil?
+        Rails.logger.warn "Message without user or bot_id: #{message}"
+        @user = nil
+        @text = nil
+      elsif @message.subtype == "bot_message" &&
+            @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
         parse_roller_v2_message!
-      elsif @message.has_key?(:subtype) && @message.subtype == "bot_message" &&
+      elsif @message.subtype == "bot_message" &&
             @message.bot_id == ::User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user &&
             @message.ts.to_d > EARLIEST_ROLLER_MESSAGE_TS
         parse_roller_message!
@@ -46,7 +50,7 @@ module Slack
     private
 
     def parse_message!
-      @user = if @message.has_key?(:subtype) && @message.subtype == "bot_message"
+      @user = if @message.subtype == "bot_message"
                 ::User.find_or_create_by!(slack_user: @message.bot_id) do |u|
                   bot = Slack::Bot.new(@message.bot_id)
                   u.display_name = bot.display_name

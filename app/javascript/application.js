@@ -1,11 +1,8 @@
 import "@hotwired/turbo-rails"
 import "flowbite/dist/flowbite.turbo.js"
-
-import mrujs from "mrujs"
 import "./controllers"
 
 window.Turbo = Turbo
-mrujs.start()
 
 // fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core"

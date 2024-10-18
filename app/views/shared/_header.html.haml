@@ -5,7 +5,7 @@
     .dropdown.lg:hidden
       %label.btn.btn-ghost{tabindex: 0}
         %i.fas.fa-bars
-      %ul.dropdown-content.menu.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0}
+      %ul.dropdown-content.menu.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0, data: { controller: "confirm" }}
         %li
           %details{open: (true if channel_page?)}
             %summary{class: ("bg-primary-focus" if channel_page?)}
@@ -30,7 +30,8 @@
               Search DMs
 
           %li
-            %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
+            %a{href: "https://rae.evilpaws.org/", rel: "nofollow",
+              data: { action: "click->confirm#leave", "confirm-prompt-param": "Ready to leave?"}}
               %span.whitespace-nowrap
                 rae.evilpaws.org
                 %i.fas.fa-external-link-alt
@@ -68,9 +69,10 @@
               Search DMs
 
   .grow.justify-end
-    %ul.menu.menu-horizontal.p-0
+    %ul.menu.menu-horizontal.p-0{data: { controller: "confirm"}}
       %li.hidden.lg:flex
-        %a{href: "https://rae.evilpaws.org/", rel: "nofollow", data: { confirm: "Ready to leave?" }}
+        %a{href: "https://rae.evilpaws.org/", rel: "nofollow",
+          data: { action: "click->confirm#leave", "confirm-prompt-param": "Ready to leave?"}}
           %span.whitespace-nowrap
             rae.evilpaws.org
             %i.fas.fa-external-link-alt

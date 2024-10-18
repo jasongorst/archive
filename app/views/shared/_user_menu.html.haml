@@ -18,8 +18,10 @@
           %a{href: mission_control_jobs_path}
             Jobs
 
-      %li
-        = button_to("Sign Out", sign_out_path, { method: :delete, form_class: "p-0 flex", class: "block w-full select-none px-4 py-2 text-left whitespace-nowrap", data: { confirm: "Are you sure?" } })
+      %li{data: { controller: "confirm" }}
+        = button_to("Sign Out", sign_out_path,
+          { form_class: "p-0 flex", class: "block w-full select-none px-4 py-2 text-left whitespace-nowrap",
+          method: :delete, data: { action: "click->confirm#leave", "confirm-prompt-param": "Are you sure?"} })
 
     - else
       %li

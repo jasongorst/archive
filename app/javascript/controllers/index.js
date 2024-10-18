@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import ConfirmController from "./confirm_controller"
+application.register("confirm", ConfirmController)
+
 import SearchController from "./search_controller"
 application.register("search", SearchController)

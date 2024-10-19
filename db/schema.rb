@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_17_023619) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_19_045402) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_17_023619) do
 
   create_table "attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
-    t.string "url"
+    t.text "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "attachable_type", null: false

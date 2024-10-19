@@ -1,4 +1,4 @@
-class FetchNewMessagesJob < ApplicationJob
+class FetchOldMessagesJob < ApplicationJob
   queue_as :default
 
   def perform(*only_channels)

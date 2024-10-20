@@ -11,6 +11,7 @@ class ChannelDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     slack_channel: Field::String,
+    archived: Field::Boolean,
     messages: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -25,6 +26,7 @@ class ChannelDashboard < Administrate::BaseDashboard
     id
     name
     slack_channel
+    archived
     messages
   ].freeze
 
@@ -34,6 +36,8 @@ class ChannelDashboard < Administrate::BaseDashboard
     id
     name
     slack_channel
+    archived
+    messages
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -42,6 +46,7 @@ class ChannelDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     name
     slack_channel
+    archived
   ].freeze
 
   # COLLECTION_FILTERS

@@ -10,6 +10,8 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     slack_channel: Field::String,
+    name: Field::String,
+    archived: Field::Boolean,
     channel_created_at: Field::DateTime,
     users: Field::HasMany.with_options(collection_attributes: %i[id display_name account]),
     user_names: Field::String.with_options(searchable: false),
@@ -26,7 +28,9 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     slack_channel
+    name
     user_names
+    archived
     channel_created_at
     private_messages
   ].freeze
@@ -36,7 +40,9 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     slack_channel
+    name
     users
+    archived
     private_messages
     channel_created_at
   ].freeze
@@ -46,7 +52,9 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     slack_channel
+    name
     users
+    archived
     channel_created_at
   ].freeze
 
@@ -66,6 +74,6 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(private_channel)
-    "Private Channel ##{private_channel.id}"
+    private_channel.name || private_channel.user_names
   end
 end

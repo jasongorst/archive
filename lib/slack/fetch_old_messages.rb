@@ -44,21 +44,23 @@ module Slack
         latest: (format("%.6f", oldest_ts) if oldest_ts),
         inclusive: false
       ) do |response|
-        messages = response.messages
-        @logger.info "Archiving #{messages.count} messages from \##{channel.name}"
+        ::Message.transaction do
+          messages = response.messages
+          @logger.info "Archiving #{messages.count} messages from \##{channel.name}"
 
-        messages.each do |m|
-          slack_message = Slack::Message.new(m)
-          next if slack_message.user.nil?
+          messages.each do |m|
+            slack_message = Slack::Message.new(m)
+            next if slack_message.user.nil?
 
-          message = channel.messages.create!(
-            user: slack_message.user,
-            text: slack_message.text,
-            ts: slack_message.ts,
-            verbatim: slack_message.verbatim
-          )
+            message = channel.messages.create!(
+              user: slack_message.user,
+              text: slack_message.text,
+              ts: slack_message.ts,
+              verbatim: slack_message.verbatim
+            )
 
-          message.attachments.create!(slack_message.attachments) if slack_message.attachments
+            message.attachments.create!(slack_message.attachments) if slack_message.attachments
+          end
         end
       end
     end

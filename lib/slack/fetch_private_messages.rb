@@ -33,7 +33,7 @@ module Slack
 
         private_channel = ::PrivateChannel.find_or_create_by(slack_channel: slack_channel.id) do |c|
           c.channel_created_at = Time.at(slack_channel.created)
-          c.name = slack_channel.name
+          c.name = (slack_channel.name unless slack_channel.is_mpim)
           c.archived = slack_channel.is_archived
         end
 
@@ -63,21 +63,23 @@ module Slack
         oldest: (format("%.6f", last_ts) if last_ts),
         inclusive: false
       ) do |response|
-        messages = response.messages
-        @logger.info "Archiving #{messages.count} private messages in #{private_channel.slack_channel} for #{@bot_user.display_name}"
+        ::PrivateMessage.transaction do
+          messages = response.messages
+          @logger.info "Archiving #{messages.count} private messages in #{private_channel.slack_channel} for #{@bot_user.display_name}"
 
-        messages.each do |m|
-          slack_message = Slack::Message.new(m)
-          next if slack_message.user.nil?
+          messages.each do |m|
+            slack_message = Slack::Message.new(m)
+            next if slack_message.user.nil?
 
-          private_message = private_channel.private_messages.create!(
-            user: slack_message.user,
-            text: slack_message.text,
-            ts: slack_message.ts,
-            verbatim: slack_message.verbatim
-          )
+            private_message = private_channel.private_messages.create!(
+              user: slack_message.user,
+              text: slack_message.text,
+              ts: slack_message.ts,
+              verbatim: slack_message.verbatim
+            )
 
-          private_message.attachments.create!(slack_message.attachments) if slack_message.attachments
+            private_message.attachments.create!(slack_message.attachments) if slack_message.attachments
+          end
         end
       end
     end

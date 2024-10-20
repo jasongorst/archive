@@ -115,6 +115,7 @@ gem "friendly_id", '~> 5.5.1'
 
 # use administrate for model dashboards
 gem "administrate", github: "thoughtbot/administrate"
+gem "administrate-field-active_storage", "~> 1.0.3"
 
 # use clearance for authentication
 gem "clearance", "~> 2.8.0"

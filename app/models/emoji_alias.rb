@@ -6,9 +6,7 @@ class EmojiAlias < ApplicationRecord
     # ensure all CustomEmoji have been added to Emoji
     CustomEmoji.create_all
 
-    all.each do |emoji_alias|
-      emoji_alias.create_emoji_alias
-    end
+    all.each(&:create_emoji_alias)
   end
 
   def create_emoji_alias

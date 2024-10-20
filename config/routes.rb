@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resources :private_channels
     resources :private_messages, only: [:index, :show]
     resources :attachments
+    resources :custom_emojis
+    resources :emoji_aliases
   end
 
   scope "/dm" do

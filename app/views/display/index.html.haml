@@ -5,3 +5,15 @@
         \##{channel.name}
         %span.text-xs.lg:text-sm
           = time_ago(channel.time_of_latest_message)
+
+  %li
+    %details.dropdown
+      %summary
+        Archived
+      %ul.dropdown-content
+        %li
+          - @archived_channels.each do |archived|
+            %a.px-4{href: url_for(archived)}
+              \##{archived.name}
+              %span.text-xs.lg:text-sm
+                = time_ago(archived.time_of_latest_message)

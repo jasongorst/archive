@@ -3,12 +3,22 @@
     - @private_channels.each do |private_channel|
       %li
         %a.px-4{href: url_for(private_channel)}
-          - if private_channel.name.present?
-            = "#" + private_channel.name
-          - else
-            = private_channel.other_users_as_sentence(current_account.user)
+          = private_channel.display_name(current_account.user)
           %span.text-xs.lg:text-sm
             = time_ago(private_channel.time_of_latest_message)
+
+    %li
+      %details.dropdown
+        %summary
+          Archived
+        %ul.dropdown-content
+          %li
+            - @archived_private_channels.each do |archived|
+              %a.px-4{href: url_for(archived)}
+                = archived.display_name(current_account.user)
+                %span.text-xs.lg:text-sm
+                  = time_ago(archived.time_of_latest_message)
+
 - else
   .card.bg-base-200.shadow-2xl.prose.mx-auto
     .card-title.px-8.pt-12

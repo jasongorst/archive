@@ -4,7 +4,8 @@ class DmController < ApplicationController
   before_action :require_user
 
   def index
-    @private_channels = current_account.user.private_channels.with_messages
+    @private_channels = current_account.user.private_channels.unarchived.with_messages
+    @archived_private_channels = current_account.user.private_channels.archived.with_messages
   end
 
   def show

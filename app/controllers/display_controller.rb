@@ -2,7 +2,8 @@ class DisplayController < ApplicationController
   layout "main"
 
   def index
-    @channels = Channel.with_messages
+    @channels = Channel.unarchived.with_messages
+    @archived_channels = Channel.archived.with_messages
   end
 
   def show

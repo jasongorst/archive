@@ -11,10 +11,19 @@
             %summary{class: ("bg-primary-focus" if channel_page?)}
               Channels
             %ul.p-2
-              - Channel.with_messages.each do |channel|
+              - Channel.unarchived.with_messages.each do |channel|
                 %li
                   %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
                     \##{channel.name}
+              %li
+                %details{open: Channel.archived.with_messages.pluck(:name).include?(current_channel)}
+                  %summary{class: ("bg-primary-focus" if Channel.archived.with_messages.pluck(:name).include?(current_channel))}
+                    Archived
+                  %ul
+                    - Channel.archived.with_messages.each do |channel|
+                      %li
+                        %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
+                          \##{channel.name}
 
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
@@ -22,7 +31,7 @@
 
         - if bot_authorized?
           %li
-            %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
+            %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms) || private_channel_page?)}
               DMs
 
           %li
@@ -45,15 +54,24 @@
     -# horizontal menu
     .hidden.lg:flex
       %ul.menu.menu-horizontal.p-0
-        %li{tabindex: "0"}
+        %li
           %details
             %summary{class: ("bg-primary-focus" if channel_page?)}
               Channels
             %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
-              - Channel.with_messages.each do |channel|
+              - Channel.unarchived.with_messages.each do |channel|
                 %li
                   %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
                     \##{channel.name}
+              %li
+                %details{open: Channel.archived.with_messages.pluck(:name).include?(current_channel)}
+                  %summary{class: ("bg-primary-focus" if Channel.archived.with_messages.pluck(:name).include?(current_channel))}
+                    Archived
+                  %ul
+                    - Channel.archived.with_messages.each do |channel|
+                      %li
+                        %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
+                          \##{channel.name}
 
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
@@ -61,7 +79,7 @@
 
         - if bot_authorized?
           %li
-            %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms))}
+            %a{href: url_for(:dms), class: ("bg-primary-focus" if current_page?(:dms) || private_channel_page?)}
               DMs
 
           %li

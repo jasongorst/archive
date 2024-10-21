@@ -1,60 +1,127 @@
-= form_with scope: :search, url: "/search", method: "get", data: { turbo: false, controller: "search" } do |f|
+= form_with scope: :search, url: "/search", method: "get",
+  data: { turbo: false, controller: "search" }, class: "flex flex-col gap-3 lg:gap-0" do |f|
+
+  -# query
   .form-control.w-full
     = f.label :query, "Keywords", class: "label label-text"
-    = f.search_field :query, value: params[:search][:query], placeholder: "", class: "input input-bordered input-sm lg:input-md w-full"
-    %small
-      %em You can search for an exact phrase by putting it in quotes, "like this".
+    = f.search_field :query, value: params[:search][:query], placeholder: "",
+      class: "input input-bordered input-sm lg:input-md w-full"
+    %small.text-xs.lg:text-sm
+      %em Search for an exact phrase by putting it in quotes, "like this".
 
+  -# start/end date
   .grid.grid-cols-1.md:grid-cols-2.gap-x-4{"date-rangepicker": true, "datepicker-format": "yyyy-mm-dd"}
     .form-control
       = f.label :start, "Between", class: "label label-text"
       .join
-        = f.text_field :start, value: params[:search][:start], class: "input input-bordered input-sm lg:input-md join-item w-full"
+        = f.text_field :start, value: params[:search][:start],
+          class: "input input-bordered input-sm lg:input-md join-item w-full"
         %label.btn.btn-square.btn-sm.lg:btn-md.join-item{for: "search_start"}
           %i.fas.fa-calendar-alt
     .form-control
       = f.label :end, "and", class: "label label-text"
       .join
-        = f.text_field :end, value: params[:search][:end], class: "input input-bordered input-sm lg:input-md join-item w-full"
+        = f.text_field :end, value: params[:search][:end],
+          class: "input input-bordered input-sm lg:input-md join-item w-full"
         %label.btn.btn-square.btn-sm.lg:btn-md.join-item{for: "search_end"}
           %i.fas.fa-calendar-alt
 
-  .form-control.w-full
-    - options = [["Any channel", ""]] + @channels.map {|channel| [channel.name, channel.id]}
-    = f.label :channel_id, "Channel", class: "label label-text"
-    = f.select :channel_id, options_for_select(options, selected: params[:search][:channel_id]), {}, class: "select select-bordered select-sm lg:select-md w-full"
-  .form-control.w-full
-    - options = [["Any user", ""]] + @users.map {|user| [user.display_name, user.id]}
-    = f.label :user_id, "User", class: "label label-text"
-    = f.select :user_id, options_for_select(options, selected: params[:search][:user_id]), {}, class: "select select-bordered select-sm lg:select-md w-full"
+  -# channel
+  .form-control.md:flex-row.md:gap-4{data: { search_target: "channels" }}
+    .md:flex-grow
+      .flex.flex-row.md:block
+        = f.label :channel_id, "Channel", class: "label label-text flex-grow"
+        .form-control.md:hidden
+          %label.label.cursor-pointer.justify-start.gap-4
+            %span.label-text
+              Show archived?
+            = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm",
+              data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxSm" } }
+      - options = @channels.map {|channel| [channel.name, channel.id]}
+      = f.select :channel_id, options_for_select(options, selected: params[:search][:channel_id]),
+        { prompt: "Any channel" }, class: "select select-bordered select-sm lg:select-md w-full",
+        data: { action: "search#handleChannelsSelect", search_target: "channelsSelect" }
+    .hidden.md:block
+      = f.label :show_archived, "Show archived?", class: "label label-text md:invisible"
+      .form-control
+        %label.label.cursor-pointer.justify-start.gap-4
+          %span.label-text
+            Show archived?
+          = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm lg:checkbox-md",
+            data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxLg" } }
 
+  -# channel (including archived)
+  .form-control.md:flex-row.md:gap-4{hidden: true, data: { search_target: "allChannels" }}
+    .md:flex-grow
+      .flex.flex-row.md:block
+        = f.label :channel_id, "Channel", class: "label label-text flex-grow"
+        .form-control.md:hidden
+          %label.label.cursor-pointer.justify-start.gap-4
+            %span.label-text
+              Show archived?
+            = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm",
+              data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxSm" } }
+      - options = @channels.map {|channel| [channel.name, channel.id]}
+      - archived_options = [ ["Archived", @archived_channels.map {|channel| [channel.name, channel.id]}] ]
+      - grouped_options = options_for_select(options, selected: params[:search][:user_id])
+      - grouped_options << grouped_options_for_select(archived_options, selected: params[:search][:channel_id])
+      = f.select :channel_id, grouped_options, { prompt: "Any channel" },
+        class: "select select-bordered select-sm lg:select-md w-full",
+        data: { action: "search#handleAllChannelsSelect", search_target: "allChannelsSelect" }
+    .hidden.md:block
+      = f.label :show_archived, "Show archived?", class: "label label-text md:invisible"
+      .form-control
+        %label.label.cursor-pointer.justify-start.gap-4
+          %span.label-text
+            Show archived?
+          = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm lg:checkbox-md",
+            data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxLg" } }
+
+  -# user
+  .form-control.w-full
+    - options = @users.map {|user| [user.display_name, user.id]}
+    = f.label :user_id, "User", class: "label label-text"
+    = f.select :user_id, options_for_select(options, selected: params[:search][:user_id]), { prompt: "Any user" },
+      class: "select select-bordered select-sm lg:select-md w-full"
+
+  -# sort
   .grid.grid-cols-1.md:grid-cols-2.gap-x-4
+
+    -# sort by
     .form-control
       = f.label :sort_by, "Sort by", class: "label label-text"
       .flex.gap-6
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :sort_by, "best", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "best"), data: { action: "search#update", search_target: "best" }
+            = f.radio_button :sort_by, "best", class: "radio radio-sm lg:radio-md",
+              checked: (params[:search][:sort_by] == "best"),
+              data: { action: "search#handleSortBy", search_target: "bestMatch" }
             %span.label-text.pl-2
               Best match
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :sort_by, "date", class: "radio radio-sm lg:radio-md", checked: (params[:search][:sort_by] == "date"), data: { action: "search#update", search_target: "date" }
+            = f.radio_button :sort_by, "date", class: "radio radio-sm lg:radio-md",
+              checked: (params[:search][:sort_by] == "date"),
+              data: { action: "search#handleSortBy", search_target: "date" }
             %span.label-text.pl-2
               Date
 
+    -# sort order
     .form-control#order{data: { search_target: "order" }}
       = f.label :order, "Order", class: "label label-text"
       .flex.gap-6
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :order, "DESC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "DESC"), data: { search_target: "newest" }
+            = f.radio_button :order, "DESC", class: "radio radio-sm lg:radio-md",
+              checked: (params[:search][:order] == "DESC"), data: { search_target: "newestFirst" }
             %span.label-text.pl-2
               Newest first
         .flex.gap-2.flex-nowrap.form-control
           %label.label.cursor-pointer
-            = f.radio_button :order, "ASC", class: "radio radio-sm lg:radio-md", checked: (params[:search][:order] == "ASC"), data: { search_target: "oldest" }
+            = f.radio_button :order, "ASC", class: "radio radio-sm lg:radio-md",
+              checked: (params[:search][:order] == "ASC"), data: { search_target: "oldestFirst" }
             %span.label-text.pl-2
               Oldest first
 
+  -# submit
   = f.submit "Search", class: "btn btn-sm lg:btn-md w-full mt-3 lg:mt-4"

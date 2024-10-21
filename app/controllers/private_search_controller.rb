@@ -10,7 +10,8 @@ class PrivateSearchController < ApplicationController
   ROLLER_DISPLAY_NAME = "Roller".freeze
 
   def index
-    @private_channels = current_account.user.private_channels.with_messages
+    @private_channels = current_account.user.private_channels.unarchived.with_messages
+    @archived_channels = current_account.user.private_channels.archived.with_messages
 
     roller_user_ids = [
       User.find_by_display_name(ROLLER_DISPLAY_NAME).id,
@@ -77,19 +78,19 @@ class PrivateSearchController < ApplicationController
   def search_with_excerpts(query, filters, order)
     # search messages with really big excerpts (i.e. the entire message)
     private_messages = PrivateMessage.search query,
-                              select: '*, weight() as w',
-                              with: filters,
-                              order: order,
-                              page: params[:page],
-                              per_page: RESULTS_PER_PAGE,
-                              max_matches: MAX_RESULTS,
-                              excerpts: {
-                                before_match: '<mark>',
-                                after_match: '</mark>',
-                                limit: 2**16,
-                                around: 2**16,
-                                force_all_words: true
-                              }
+                                             select: '*, weight() as w',
+                                             with: filters,
+                                             order: order,
+                                             page: params[:page],
+                                             per_page: RESULTS_PER_PAGE,
+                                             max_matches: MAX_RESULTS,
+                                             excerpts: {
+                                               before_match: '<mark>',
+                                               after_match: '</mark>',
+                                               limit: 2**16,
+                                               around: 2**16,
+                                               force_all_words: true
+                                             }
 
     # highlight search terms in results using excerpts pane
     private_messages.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane

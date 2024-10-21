@@ -5,7 +5,8 @@ class SearchController < ApplicationController
   MAX_RESULTS = 10_000
 
   def index
-    @channels = Channel.order(name: :asc)
+    @channels = Channel.unarchived.with_messages
+    @archived_channels = Channel.archived.with_messages
     @users = User.where(is_bot: false, deleted: false).order(display_name: :asc)
 
     if params.has_key? :search

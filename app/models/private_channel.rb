@@ -6,6 +6,7 @@ class PrivateChannel < ApplicationRecord
   has_many :private_messages, -> { order(posted_at: :asc) }, dependent: :destroy
 
   default_scope { order(channel_created_at: :desc) }
+  scope :unarchived, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
 
   scope :with_messages, lambda {
@@ -18,6 +19,24 @@ class PrivateChannel < ApplicationRecord
 
   def user_names
     users.pluck(:display_name).to_sentence
+  end
+
+  def display_name(current_user = nil)
+    if name.present?
+      "\##{name}"
+    elsif current_user.present?
+      other_users_as_sentence(current_user)
+    else
+      user_names
+    end
+  end
+
+  def other_users_as_sentence(current_user)
+    if users.count == 1 && users.first == current_user
+      "myself"
+    else
+      users.excluding(current_user).pluck(:display_name).to_sentence
+    end
   end
 
   def message_dates
@@ -76,14 +95,6 @@ class PrivateChannel < ApplicationRecord
       nil
     else
       message_dates[index - 1]
-    end
-  end
-
-  def other_users_as_sentence(current_user)
-    if users.count == 1 && users.first == current_user
-      "myself"
-    else
-      users.excluding(current_user).pluck(:display_name).to_sentence
     end
   end
 end

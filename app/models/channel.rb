@@ -8,9 +8,9 @@ class Channel < ApplicationRecord
   has_many :messages, -> { order(posted_at: :asc) }, dependent: :destroy
 
   default_scope { order(name: :asc) }
-
-  scope :with_messages, -> { where.associated(:messages).distinct }
+  scope :unarchived, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
+  scope :with_messages, -> { where.associated(:messages).distinct }
 
   def message_dates
     Rails.cache.fetch("#{cache_key_with_version}/message_dates") do

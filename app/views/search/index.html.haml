@@ -7,7 +7,8 @@
   .mt-4.lg:mt-6
     .text-sm
       - if @messages.count > SearchController::MAX_RESULTS
-        showing #{number_with_delimiter(SearchController::MAX_RESULTS)} of
+        showing only #{number_with_delimiter(SearchController::MAX_RESULTS)} of
+
       #{pluralize(number_with_delimiter(@messages.count), "message")} found
 
     .my-3.lg:mt-4

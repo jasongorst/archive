@@ -35,8 +35,8 @@
           %label.label.cursor-pointer.justify-start.gap-4
             %span.label-text
               Show archived?
-            = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm",
-              data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxSm" } }
+            = check_box_tag :channels_sm, class: "checkbox checkbox-sm",
+              data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxSm" }
       - options = @channels.map {|channel| [channel.name, channel.id]}
       = f.select :channel_id, options_for_select(options, selected: params[:search][:channel_id]),
         { prompt: "Any channel" }, class: "select select-bordered select-sm lg:select-md w-full",
@@ -47,8 +47,8 @@
         %label.label.cursor-pointer.justify-start.gap-4
           %span.label-text
             Show archived?
-          = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm lg:checkbox-md",
-            data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxLg" } }
+          = check_box_tag :channels_lg, class: "checkbox checkbox-sm lg:checkbox-md",
+            data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxLg" }
 
   -# channel (including archived)
   .form-control.md:flex-row.md:gap-4{hidden: true, data: { search_target: "allChannels" }}
@@ -59,11 +59,11 @@
           %label.label.cursor-pointer.justify-start.gap-4
             %span.label-text
               Show archived?
-            = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm",
-              data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxSm" } }
+            = check_box_tag :all_channels_sm, class: "checkbox checkbox-sm",
+              data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxSm" }
       - options = @channels.map {|channel| [channel.name, channel.id]}
       - archived_options = [ ["Archived", @archived_channels.map {|channel| [channel.name, channel.id]}] ]
-      - grouped_options = options_for_select(options, selected: params[:search][:user_id])
+      - grouped_options = options_for_select(options, selected: params[:search][:channel_id])
       - grouped_options << grouped_options_for_select(archived_options, selected: params[:search][:channel_id])
       = f.select :channel_id, grouped_options, { prompt: "Any channel" },
         class: "select select-bordered select-sm lg:select-md w-full",
@@ -74,8 +74,11 @@
         %label.label.cursor-pointer.justify-start.gap-4
           %span.label-text
             Show archived?
-          = f.check_box :show_archived, { checked: false, class: "checkbox checkbox-sm lg:checkbox-md",
-            data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxLg" } }
+          = check_box_tag :all_channels_lg, class: "checkbox checkbox-sm lg:checkbox-md",
+            data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxLg" }
+
+  -# hidden :show_archived field
+  = f.hidden_field :show_archived, value: params[:search][:show_archived], data: { search_target: "hiddenShowArchived"}
 
   -# user
   .form-control.w-full

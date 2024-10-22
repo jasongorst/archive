@@ -11,6 +11,7 @@ export default class extends Controller {
     "allChannelsCheckboxSm",
     "allChannelsCheckboxLg",
     "allChannelsSelect",
+    "hiddenShowArchived",
     "order",
     "bestMatch",
     "date",
@@ -22,17 +23,27 @@ export default class extends Controller {
     if (this.bestMatchTarget.checked) {
       this.orderTarget.hidden = true
     }
+
+    let showArchived = (this.hiddenShowArchivedTarget.value === "1")
+    this.setShowArchivedStates(showArchived)
   }
 
   handleChannelsCheckbox(event) {
     let showArchived = event.target.checked
-    this.setChannelCheckboxes(showArchived)
+    this.setShowArchivedStates(showArchived)
 
-    this.channelsTarget.hidden = showArchived
-    this.allChannelsTarget.hidden = !showArchived
+    if (!showArchived && (this.getChannelsSelectValue() !== this.getAllChannelsSelectValue())) {
+      this.setSelectToFirstOption(this.allChannelsSelectTarget)
+    }
   }
 
-  setChannelCheckboxes(checkedState) {
+  setShowArchivedStates(showArchived) {
+    this.setChannelCheckboxes(showArchived)
+    this.setChannelSelectsHidden(showArchived)
+    this.hiddenShowArchivedTarget.value = showArchived ? "1" : "0"
+  }
+
+  setChannelCheckboxes(showArchived) {
     const checkboxTargets = [
       this.channelsCheckboxSmTarget,
       this.channelsCheckboxLgTarget,
@@ -41,18 +52,21 @@ export default class extends Controller {
     ]
 
     for (let target of checkboxTargets) {
-      target.checked = checkedState
+      target.checked = showArchived
     }
   }
 
+  setChannelSelectsHidden(showArchived) {
+    this.channelsTarget.hidden = showArchived
+    this.allChannelsTarget.hidden = !showArchived
+  }
+
   handleChannelsSelect(event) {
-    let selectedChannel = this.getSelectedOptionValue(this.channelsSelectTarget)
-    this.setSelectedOptionByValue(this.allChannelsSelectTarget, selectedChannel)
+    this.setSelectedOptionByValue(this.allChannelsSelectTarget, this.getChannelsSelectValue())
   }
 
   handleAllChannelsSelect(event) {
-    let selectedChannel = this.getSelectedOptionValue(this.allChannelsSelectTarget)
-    this.setSelectedOptionByValue(this.channelsSelectTarget, selectedChannel)
+    this.setSelectedOptionByValue(this.channelsSelectTarget, this.getAllChannelsSelectValue())
   }
 
   handleSortBy() {
@@ -60,6 +74,14 @@ export default class extends Controller {
     this.orderTarget.hidden = sortByBestMatch
     this.newestFirstTarget.checked = !sortByBestMatch
     this.oldestFirstTarget.checked = sortByBestMatch
+  }
+
+  getChannelsSelectValue() {
+    return this.getSelectedOptionValue(this.channelsSelectTarget)
+  }
+
+  getAllChannelsSelectValue() {
+    return this.getSelectedOptionValue(this.allChannelsSelectTarget)
   }
 
   getSelectedOptionValue(target) {
@@ -70,5 +92,9 @@ export default class extends Controller {
     for (let option of target.options) {
       option.selected = (option.value === value)
     }
+  }
+
+  setSelectToFirstOption(target) {
+    target.selectedIndex = 0
   }
 }

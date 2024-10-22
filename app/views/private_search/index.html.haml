@@ -8,7 +8,8 @@
     .mt-4.lg:mt-6
       .text-sm
         - if @private_messages.count > PrivateSearchController::MAX_RESULTS
-          showing #{number_with_delimiter(PrivateSearchController::MAX_RESULTS)} of
+          showing only #{number_with_delimiter(PrivateSearchController::MAX_RESULTS)} of
+
         #{pluralize(number_with_delimiter(@private_messages.count), "DM")} found
 
       .my-3.lg:mt-4

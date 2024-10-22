@@ -1,11 +1,11 @@
-%h1.text-lg.lg:text-2xl.lg:pb-2
+%h1.text-lg.lg:text-2xl.lg:pl-6.lg:pb-2
   %a{href: url_for(@channel)}
     \##{@channel.name}
 
 = render(partial: "next_prev_day")
 = paginate @messages
 
-%h5.text-lg.lg:text-xl.py-3.lg:py-6= long_date_with_year(@date)
+%h5.text-lg.lg:text-xl.lg:pl-6.py-3.lg:py-6= long_date_with_year(@date)
 
 .pb-2.lg:pb-0
   = render(partial: "message", collection: @messages, cached: true)

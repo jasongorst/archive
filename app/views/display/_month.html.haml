@@ -1,5 +1,5 @@
 - cache [@channel, year, month, ActiveSupport::Digest.hexdigest(dates.to_s)] do
-  .collapse
+  .collapse.pl-6
     %input.h-10.min-h-0{type: "radio", name: "months-accordion",
         checked: (year == @message_counts_by_date.keys.first &&
           month == @message_counts_by_date[@message_counts_by_date.keys.first].keys.first)}

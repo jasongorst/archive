@@ -15,7 +15,7 @@ class Message < ApplicationRecord
 
   default_scope { order(posted_at: :asc) }
 
-  def self.first_date
+  def self.earliest_date
     minimum(:posted_on)
   end
 
@@ -41,7 +41,6 @@ class Message < ApplicationRecord
   def expire_cache
     Rails.cache.delete_multi(
       %W[
-        #{channel.cache_key_with_version}/message_dates_with_counts
         #{channel.cache_key_with_version}/message_counts_by_date
         #{channel.cache_key_with_version}/messages_posted_on/#{posted_on}
       ]

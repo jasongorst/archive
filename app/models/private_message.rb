@@ -16,10 +16,6 @@ class PrivateMessage < ApplicationRecord
 
   default_scope { order(posted_at: :asc) }
 
-  def self.oldest_date
-    minimum(:posted_on)
-  end
-
   def user_ids
     private_channel.users.pluck(:id)
   end
@@ -46,7 +42,6 @@ class PrivateMessage < ApplicationRecord
   def expire_cache
     Rails.cache.delete_multi(
       %W[
-        #{private_channel.cache_key_with_version}/private_message_dates_with_counts
         #{private_channel.cache_key_with_version}/private_message_counts_by_date
         #{private_channel.cache_key_with_version}/private_messages_posted_on/#{posted_on}
       ]

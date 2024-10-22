@@ -19,9 +19,7 @@ class Channel < ApplicationRecord
   end
 
   def message_dates_with_counts
-    Rails.cache.fetch("#{cache_key_with_version}/message_dates_with_counts") do
-      messages.reorder(posted_on: :desc).group(:posted_on).count
-    end
+    messages.reorder(posted_on: :desc).group(:posted_on).count
   end
 
   def message_counts_by_date

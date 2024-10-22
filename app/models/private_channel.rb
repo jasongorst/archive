@@ -46,9 +46,7 @@ class PrivateChannel < ApplicationRecord
   end
 
   def private_message_dates_with_counts
-    Rails.cache.fetch("#{cache_key_with_version}/private_message_dates_with_counts") do
-      private_messages.reorder(posted_on: :desc).group(:posted_on).count
-    end
+    private_messages.reorder(posted_on: :desc).group(:posted_on).count
   end
 
   def private_message_counts_by_date

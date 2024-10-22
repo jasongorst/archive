@@ -6,28 +6,15 @@ class PrivateSearchController < ApplicationController
   RESULTS_PER_PAGE = 20
   MAX_RESULTS = 10_000
 
-  ROLLER_V2_DISPLAY_NAME = "RollerBot 2".freeze
-  ROLLER_DISPLAY_NAME = "Roller".freeze
-
   def index
     @private_channels = current_account.user.private_channels.unarchived.with_messages
     @archived_channels = current_account.user.private_channels.archived.with_messages
-
-    roller_user_ids = [
-      User.find_by_display_name(ROLLER_DISPLAY_NAME).id,
-      User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).id
-    ]
-
-    @users = User.where(is_bot: false, deleted: false)
-                 .or(User.where(id: roller_user_ids))
-                 .order(display_name: :asc)
+    @users = User.where(is_bot: false, deleted: false).order(display_name: :asc)
 
     if params.has_key? :search
       query = query_from_params(params[:search])
       filters = filters_from_params(params[:search])
       order = order_from_params(params[:search])
-
-      logger.info [query, filters, order]
 
       @private_messages = search_with_excerpts(query, filters, order)
     else
@@ -55,6 +42,12 @@ class PrivateSearchController < ApplicationController
     filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
     filters[:private_channel_id] = search[:private_channel_id].to_i if search[:private_channel_id].present?
     filters[:user_id] = search[:user_id].to_i if search[:user_id].present?
+
+    if search[:private_channel_id].present?
+      filters[:private_channel_id] = search[:private_channel_id].to_i
+    elsif search[:show_archived] == "0"
+      filters[:private_channel_id] = current_account.user.private_channels.unarchived.with_messages.pluck(:id).sort
+    end
 
     filters[:user_ids] = current_account.user.id
 
@@ -99,7 +92,7 @@ class PrivateSearchController < ApplicationController
   end
 
   def default_start_date
-    current_account.user.private_messages.oldest_date
+    PrivateMessage.where(private_channel: current_account.user.private_channels).minimum(:posted_on)
   end
 
   def default_end_date
@@ -112,6 +105,7 @@ class PrivateSearchController < ApplicationController
       start: default_start_date,
       end: default_end_date,
       private_channel_id: nil,
+      show_archived: 0,
       user_id: nil,
       sort_by: 'best',
       order: 'DESC'

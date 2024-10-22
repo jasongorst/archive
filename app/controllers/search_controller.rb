@@ -38,8 +38,13 @@ class SearchController < ApplicationController
 
     # filter search on attributes
     filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
-    filters[:channel_id] = search[:channel_id].to_i if search[:channel_id].present?
     filters[:user_id] = search[:user_id].to_i if search[:user_id].present?
+
+    if search[:channel_id].present?
+      filters[:channel_id] = search[:channel_id].to_i
+    elsif search[:show_archived] == "0"
+      filters[:channel_id] = Channel.unarchived.with_messages.pluck(:id).sort
+    end
 
     filters
   end
@@ -82,7 +87,7 @@ class SearchController < ApplicationController
   end
 
   def default_start_date
-    Message.first_date
+    Message.earliest_date
   end
 
   def default_end_date
@@ -95,6 +100,7 @@ class SearchController < ApplicationController
       start: default_start_date,
       end: default_end_date,
       channel_id: nil,
+      show_archived: 0,
       user_id: nil,
       sort_by: 'best',
       order: 'DESC'

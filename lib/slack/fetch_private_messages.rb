@@ -34,8 +34,10 @@ module Slack
         private_channel = ::PrivateChannel.find_or_create_by(slack_channel: slack_channel.id) do |c|
           c.channel_created_at = Time.at(slack_channel.created)
           c.name = (slack_channel.name unless slack_channel.is_mpim)
-          c.archived = slack_channel.is_archived
         end
+
+        private_channel.archived = slack_channel.is_archived
+        private_channel.save!
 
         members = @user_client.conversations_members(channel: slack_channel.id).members
 

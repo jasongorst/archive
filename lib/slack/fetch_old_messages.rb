@@ -26,8 +26,10 @@ module Slack
 
         channel = ::Channel.find_or_create_by!(slack_channel: slack_channel.id) do |c|
           c.name = slack_channel.name
-          c.archived = slack_channel.is_archived
         end
+
+        channel.archived = slack_channel.is_archived
+        channel.save!
 
         oldest_ts = channel.messages.minimum(:ts)
         archive_messages(channel, oldest_ts)

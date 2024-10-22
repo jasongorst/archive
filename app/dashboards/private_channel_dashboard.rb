@@ -74,6 +74,6 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(private_channel)
-    private_channel.name || private_channel.user_names
+    private_channel.display_name
   end
 end

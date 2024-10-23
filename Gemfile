@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 7.2.1.1"
 
 # Propshaft asset pipeline
 gem "propshaft", "~> 1.1.0"
@@ -13,7 +13,7 @@ gem "propshaft", "~> 1.1.0"
 # gem "mysql2", "~> 0.5.6"
 
 # Use trilogy as the database for Active Record
-gem "trilogy", "~> 2.7"
+gem "trilogy", "~> 2.9.0"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.4.3"
@@ -22,7 +22,7 @@ gem "puma", "~> 6.4.3"
 gem "jsbundling-rails", "~> 1.3.1"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", "~> 2.0.10"
+gem "turbo-rails", "~> 2.0.11"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails", "~> 1.3.4"
@@ -57,7 +57,7 @@ group :development, :test do
   gem "debug", "~> 1.9.2", platforms: %i[ mri mingw x64_mingw ], require: "debug/prelude"
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+  gem "rubocop-rails-omakase", "~> 1.0.0", require: false
 end
 
 group :development do
@@ -133,4 +133,4 @@ gem "postmark-rails", "~> 0.22.1"
 gem "solid_queue", "~> 1.0.0"
 
 # mission_control-jobs to manage solid_queue job runs
-gem "mission_control-jobs", "~> 0.3.2"
+gem "mission_control-jobs", "~> 0.3.3"

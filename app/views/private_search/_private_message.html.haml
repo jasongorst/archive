@@ -1,9 +1,8 @@
 .mb-2.lg:mb-4.hover:bg-base-200
   %a{href: private_channel_date_path(private_message.private_channel, private_message.posted_on,
-    page: private_message.page_by_date, anchor: "ts_#{private_message.ts}")}
+    page: private_message.page_by_date, anchor: "ts_#{format('%.6f', private_message.ts)}")}
     %div.text-sm
-      - if params[:search][:private_channel_id].empty?
-        #{private_message.private_channel.other_users_as_sentence(current_account.user)}
+      = private_message.private_channel.display_name(current_account.user) if params[:search][:private_channel_id].empty?
     %div
       %strong
         %span{style: ("color: #{private_message.user.color}" if private_message.user.color.present?)}

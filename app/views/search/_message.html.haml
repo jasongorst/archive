@@ -1,9 +1,8 @@
 .mb-2.lg:mb-4.hover:bg-base-200
-  %a{href: channel_date_path(message.channel, message.posted_on,
-    page: message.page_by_date, anchor: "ts_#{message.ts}")}
+  %a{href: channel_date_path(message.channel, message.posted_on, page: message.page_by_date,
+    anchor: "ts_#{format('%.6f', message.ts)}")}
     %div.text-sm
-      - if params[:search][:channel_id].empty?
-        \##{message.channel.name}
+      = "\##{message.channel.name}" if params[:search][:channel_id].empty?
     %div
       %strong
         %span{style: ("color: #{message.user.color}" if message.user.color.present?)}

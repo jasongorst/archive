@@ -1,7 +1,7 @@
 - cache message do
   .mb-2.lg:mb-4
     %div
-      %a{id: "ts_#{message.ts}"}
+      %a{id: "ts_#{format('%.6f', message.ts)}"}
         %strong
           %span{style: ("color: #{message.user.color}" if message.user.color.present?)}
             = message.user.display_name

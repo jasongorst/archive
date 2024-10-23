@@ -1,7 +1,7 @@
 - cache private_message do
   .mb-2.lg:mb-4
     %div
-      %a{id: "ts_#{private_message.ts}"}
+      %a{id: "ts_#{format('%.6f', private_message.ts)}"}
         %strong
           %span{style: ("color: #{private_message.user.color}" if private_message.user.color.present?)}
             = private_message.user.display_name

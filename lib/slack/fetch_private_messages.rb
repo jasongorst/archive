@@ -67,7 +67,7 @@ module Slack
       ) do |response|
         ::PrivateMessage.transaction do
           messages = response.messages
-          @logger.info "Archiving #{messages.count} private messages in #{private_channel.slack_channel} for #{@bot_user.display_name}"
+          @logger.info "Archiving #{messages.count} private messages from #{private_channel.slack_channel} for #{@bot_user.display_name}"
 
           messages.each do |m|
             slack_message = Slack::Message.new(m)

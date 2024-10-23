@@ -9,9 +9,6 @@ gem "rails", "~> 7.2.1.1"
 # Propshaft asset pipeline
 gem "propshaft", "~> 1.1.0"
 
-# Use mysql as the database for Active Record
-# gem "mysql2", "~> 0.5.6"
-
 # Use trilogy as the database for Active Record
 gem "trilogy", "~> 2.9.0"
 
@@ -134,3 +131,6 @@ gem "solid_queue", "~> 1.0.0"
 
 # mission_control-jobs to manage solid_queue job runs
 gem "mission_control-jobs", "~> 0.3.3"
+
+# bullet for n+1 checks
+gem "bullet", "~> 7.2.0", group: "development"

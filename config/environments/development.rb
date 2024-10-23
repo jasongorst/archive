@@ -77,6 +77,15 @@ Rails.application.configure do
   config.active_job.queue_name_prefix = "archive_development"
 
   config.hosts << "exactly-mint-chamois.ngrok-free.app"
+
+  # bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.add_footer = true
+    Bullet.skip_html_injection = false
+  end
 end
 
 Archive::Application.default_url_options = Rails.application.config.action_mailer.default_url_options
+

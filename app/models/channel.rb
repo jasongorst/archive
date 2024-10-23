@@ -45,7 +45,7 @@ class Channel < ApplicationRecord
 
   def messages_posted_on(date)
     Rails.cache.fetch("#{cache_key_with_version}/messages_posted_on/#{date}") do
-      messages.where(posted_on: date)
+      messages.includes(:user, :attachments).where(posted_on: date)
     end
   end
 

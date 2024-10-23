@@ -72,7 +72,7 @@ class PrivateChannel < ApplicationRecord
 
   def private_messages_posted_on(date)
     Rails.cache.fetch("#{cache_key_with_version}/private_messages_posted_on/#{date}") do
-      private_messages.where(posted_on: date)
+      private_messages.includes(:user, :attachments).where(posted_on: date)
     end
   end
 

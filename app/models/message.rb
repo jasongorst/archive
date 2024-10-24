@@ -1,4 +1,6 @@
 class Message < ApplicationRecord
+  include ThinkingSphinx::Scopes
+
   validates :channel_id, :user_id, presence: true
   validates :ts, presence: true, numericality: true
 
@@ -14,6 +16,12 @@ class Message < ApplicationRecord
   paginates_per 50
 
   default_scope { order(posted_at: :asc) }
+
+  sphinx_scope :with_includes do
+    { sql: { include: [ :channel, :user, :attachments ] } }
+  end
+
+  default_sphinx_scope :with_includes
 
   def self.earliest_date
     minimum(:posted_on)

@@ -1,4 +1,6 @@
 class PrivateMessage < ApplicationRecord
+  include ThinkingSphinx::Scopes
+
   validates :ts, presence: true, numericality: true
   encrypts :text
   encrypts :verbatim
@@ -15,6 +17,12 @@ class PrivateMessage < ApplicationRecord
   paginates_per 50
 
   default_scope { order(posted_at: :asc) }
+
+  sphinx_scope :with_includes do
+    { sql: { include: [ :private_channel, :user, :attachments ] } }
+  end
+
+  default_sphinx_scope :with_includes
 
   def user_ids
     private_channel.users.pluck(:id)

@@ -46,7 +46,7 @@ class PrivateSearchController < ApplicationController
 
     if search[:private_channel_id].present?
       filters[:private_channel_id] = search[:private_channel_id].to_i
-    elsif search[:show_archived] == "0"
+    elsif search[:include_archived] == "0"
       filters[:private_channel_id] = current_account.user.private_channels.unarchived.with_messages.pluck(:id).sort
     end
 
@@ -106,7 +106,7 @@ class PrivateSearchController < ApplicationController
       start: default_start_date,
       end: default_end_date,
       private_channel_id: nil,
-      show_archived: 0,
+      include_archived: 0,
       user_id: nil,
       sort_by: "best",
       order: "DESC"

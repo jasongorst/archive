@@ -42,7 +42,7 @@ class SearchController < ApplicationController
 
     if search[:channel_id].present?
       filters[:channel_id] = search[:channel_id].to_i
-    elsif search[:show_archived] == "0"
+    elsif search[:include_archived] == "0"
       filters[:channel_id] = Channel.unarchived.with_messages.pluck(:id).sort
     end
 
@@ -100,7 +100,7 @@ class SearchController < ApplicationController
       start: default_start_date,
       end: default_end_date,
       channel_id: nil,
-      show_archived: 0,
+      include_archived: 0,
       user_id: nil,
       sort_by: "best",
       order: "DESC"

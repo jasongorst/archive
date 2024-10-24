@@ -1,5 +1,5 @@
-= form_with scope: :search, url: "/search", method: "get",
-  data: { turbo: false, controller: "search" }, class: "flex flex-col gap-3 lg:gap-0" do |f|
+= form_with scope: :search, url: "/search", method: "get", data: { turbo: false, controller: "search" },
+  class: "flex flex-col gap-3 lg:gap-0" do |f|
 
   -# query
   .form-control.w-full
@@ -34,7 +34,7 @@
         .form-control.md:hidden
           %label.label.cursor-pointer.justify-start.gap-4
             %span.label-text
-              Show archived?
+              Include archived?
             = check_box_tag :channels_sm, class: "checkbox checkbox-sm",
               data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxSm" }
       - options = @channels.map {|channel| [channel.name, channel.id]}
@@ -42,11 +42,12 @@
         { prompt: "Any channel" }, class: "select select-bordered select-sm lg:select-md w-full",
         data: { action: "search#handleChannelsSelect", search_target: "channelsSelect" }
     .hidden.md:block
-      = f.label :show_archived, "Show archived?", class: "label label-text md:invisible"
+      %label.label.label-text.invisible
+        &nbsp;
       .form-control
         %label.label.cursor-pointer.justify-start.gap-4
           %span.label-text
-            Show archived?
+            Include archived?
           = check_box_tag :channels_lg, class: "checkbox checkbox-sm lg:checkbox-md",
             data: { action: "search#handleChannelsCheckbox", search_target: "channelsCheckboxLg" }
 
@@ -58,7 +59,7 @@
         .form-control.md:hidden
           %label.label.cursor-pointer.justify-start.gap-4
             %span.label-text
-              Show archived?
+              Include archived?
             = check_box_tag :all_channels_sm, class: "checkbox checkbox-sm",
               data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxSm" }
       - options = @channels.map {|channel| [channel.name, channel.id]}
@@ -69,16 +70,17 @@
         class: "select select-bordered select-sm lg:select-md w-full",
         data: { action: "search#handleAllChannelsSelect", search_target: "allChannelsSelect" }
     .hidden.md:block
-      = f.label :show_archived, "Show archived?", class: "label label-text md:invisible"
+      %label.label.label-text.invisible
+        &nbsp;
       .form-control
         %label.label.cursor-pointer.justify-start.gap-4
           %span.label-text
-            Show archived?
+            Include archived?
           = check_box_tag :all_channels_lg, class: "checkbox checkbox-sm lg:checkbox-md",
             data: { action: "search#handleChannelsCheckbox", search_target: "allChannelsCheckboxLg" }
 
-  -# hidden :show_archived field
-  = f.hidden_field :show_archived, value: params[:search][:show_archived], data: { search_target: "hiddenShowArchived"}
+  -# hidden :include_archived field
+  = f.hidden_field :include_archived, value: params[:search][:include_archived], data: { search_target: "hiddenIncludeArchived"}
 
   -# user
   .form-control.w-full

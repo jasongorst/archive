@@ -11,7 +11,7 @@ export default class extends Controller {
     "allChannelsCheckboxSm",
     "allChannelsCheckboxLg",
     "allChannelsSelect",
-    "hiddenShowArchived",
+    "hiddenIncludeArchived",
     "order",
     "bestMatch",
     "date",
@@ -24,26 +24,26 @@ export default class extends Controller {
       this.orderTarget.hidden = true
     }
 
-    let showArchived = (this.hiddenShowArchivedTarget.value === "1")
-    this.setShowArchivedStates(showArchived)
+    let includeArchived = (this.hiddenIncludeArchivedTarget.value === "1")
+    this.setIncludeArchivedStates(includeArchived)
   }
 
   handleChannelsCheckbox(event) {
-    let showArchived = event.target.checked
-    this.setShowArchivedStates(showArchived)
+    let includeArchived = event.target.checked
+    this.setIncludeArchivedStates(includeArchived)
 
-    if (!showArchived && (this.getChannelsSelectValue() !== this.getAllChannelsSelectValue())) {
+    if (!includeArchived && (this.getChannelsSelectValue() !== this.getAllChannelsSelectValue())) {
       this.setSelectToFirstOption(this.allChannelsSelectTarget)
     }
   }
 
-  setShowArchivedStates(showArchived) {
-    this.setChannelCheckboxes(showArchived)
-    this.setChannelSelectsHidden(showArchived)
-    this.hiddenShowArchivedTarget.value = showArchived ? "1" : "0"
+  setIncludeArchivedStates(includeArchived) {
+    this.setChannelCheckboxes(includeArchived)
+    this.setChannelSelectsHidden(includeArchived)
+    this.hiddenIncludeArchivedTarget.value = includeArchived ? "1" : "0"
   }
 
-  setChannelCheckboxes(showArchived) {
+  setChannelCheckboxes(includeArchived) {
     const checkboxTargets = [
       this.channelsCheckboxSmTarget,
       this.channelsCheckboxLgTarget,
@@ -52,13 +52,13 @@ export default class extends Controller {
     ]
 
     for (let target of checkboxTargets) {
-      target.checked = showArchived
+      target.checked = includeArchived
     }
   }
 
-  setChannelSelectsHidden(showArchived) {
-    this.channelsTarget.hidden = showArchived
-    this.allChannelsTarget.hidden = !showArchived
+  setChannelSelectsHidden(includeArchived) {
+    this.channelsTarget.hidden = includeArchived
+    this.allChannelsTarget.hidden = !includeArchived
   }
 
   handleChannelsSelect(_) {

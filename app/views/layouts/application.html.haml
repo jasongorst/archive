@@ -1,9 +1,9 @@
 !!!
 %html
   %head
-    = render(partial: 'shared/head')
+    = render(partial: "shared/head")
 
   %body
-    .container.mx-auto
-      = render(partial: 'shared/alerts')
+    .w-full.mx-auto.lg:container
+      = render(partial: "shared/alerts")
       = yield

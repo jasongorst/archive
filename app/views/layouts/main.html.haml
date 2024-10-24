@@ -11,5 +11,5 @@
       - if signed_in? && current_account.bot_user.blank?
         = render(partial: "shared/bot_auth")
 
-      .px-2
+      .px-2.mb-4.lg:mb-6
         = yield

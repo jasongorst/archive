@@ -9,7 +9,7 @@ class FetchOldMessagesJob < ApplicationJob
     channels = connection.fetch_channels
 
     # in development, default to only "ooc" channel
-    only_channels = ["ooc"] if Rails.env.development? && only_channels.blank?
+    only_channels = [ "ooc" ] if Rails.env.development? && only_channels.blank?
 
     # filter channels (by name)
     channels.filter! { |channel| only_channels.include? channel.name } if only_channels.present?

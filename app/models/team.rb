@@ -1,6 +1,6 @@
 class Team < ApplicationRecord
   attr_accessor :server # server at runtime
-  SORT_ORDERS = ['created_at', '-created_at', 'updated_at', '-updated_at'].freeze
+  SORT_ORDERS = %w[created_at -created_at updated_at -updated_at].freeze
 
   validates :team_id, presence: true
   validates :token, presence: true, uniqueness: true
@@ -10,7 +10,7 @@ class Team < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   def self.purge!(dt = 2.weeks.ago)
-    Team.where(active: false).where('updated_at <= ?', dt).each do |team|
+    Team.where(active: false).where("updated_at <= ?", dt).each do |team|
       begin
         logger.info "Destroying #{team}, inactive since #{team.updated_at}."
         team.destroy
@@ -35,7 +35,7 @@ class Team < ApplicationRecord
       id: team_id
     }.map do |k, v|
       "#{k}=#{v}" if v
-    end.compact.join(', ')
+    end.compact.join(", ")
   end
 
   def ping!
@@ -43,7 +43,7 @@ class Team < ApplicationRecord
     auth = client.auth_test
 
     presence = begin
-                 client.users_getPresence(user: auth['user_id'])
+                 client.users_getPresence(user: auth["user_id"])
                rescue Slack::Web::Api::Errors::MissingScope
                  nil
                end
@@ -61,8 +61,9 @@ class Team < ApplicationRecord
   rescue Slack::Web::Api::Errors::SlackError => e
     logger.warn "Active team #{self} ping, #{e.message}."
 
+    # noinspection RubyCaseWithoutElseBlockInspection
     case e.message
-    when 'account_inactive', 'invalid_auth'
+    when "account_inactive", "invalid_auth"
       deactivate!
     end
   end

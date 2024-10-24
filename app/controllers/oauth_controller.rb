@@ -60,7 +60,7 @@ class OauthController < ApplicationController
   def fetch_access_token
     client = Slack::Web::Client.new
 
-    raise 'Missing slack_client_id or slack_client_secret.' unless
+    raise "Missing slack_client_id or slack_client_secret." unless
       Rails.application.credentials.slack_client_id && Rails.application.credentials.slack_client_secret
 
     options = {
@@ -144,11 +144,11 @@ class OauthController < ApplicationController
       # set display_name from profile or default
       display_name = if slack_user.profile.display_name.present?
                        slack_user.profile.display_name
-                     elsif slack_user.profile.real_name.present?
+      elsif slack_user.profile.real_name.present?
                        slack_user.profile.real_name
-                     else
+      else
                        "Unknown User <#{response.authed_user&.id}>"
-                     end
+      end
 
       @bot_user = BotUser.create!(
         slack_user: response.authed_user&.id,

@@ -58,7 +58,7 @@ module Slack
     private
 
     def slack_emoji
-      @client.emoji_list&.emoji
+      @client.emoji_list.emoji
     end
   end
 end

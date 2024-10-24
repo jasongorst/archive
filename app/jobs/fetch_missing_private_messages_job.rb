@@ -7,9 +7,9 @@ class FetchMissingPrivateMessagesJob < ApplicationJob
 
     bot_users = if only_accounts.present?
                   only_accounts.map(&:bot_user).compact
-                else
+    else
                   Team.find_by_name("Firnost & Friends").bot_users.all
-                end
+    end
 
     bot_users.each do |bot_user|
       connection = Slack::FetchMissingPrivateMessages.new(bot_user)

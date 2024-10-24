@@ -1,6 +1,6 @@
 import Coloris from "@melloware/coloris"
 
-document.addEventListener("turbo:load", (e) => init_coloris())
+document.addEventListener("turbo:load", (_) => init_coloris())
 init_coloris()
 
 function init_coloris() {

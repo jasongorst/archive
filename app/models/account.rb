@@ -9,7 +9,7 @@ class Account < ApplicationRecord
               message: "has been pwned at least %{count} times",
               on_error: :invalid
             },
-            on: [:create, :update]
+            on: [ :create, :update ]
 
   belongs_to :user, optional: true
   belongs_to :bot_user, optional: true

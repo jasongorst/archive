@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  layout 'main'
+  layout "main"
 
   RESULTS_PER_PAGE = 20
   MAX_RESULTS = 10_000
@@ -56,7 +56,7 @@ class SearchController < ApplicationController
   end
 
   def order_from_params(search)
-    if search[:sort_by] == 'date'
+    if search[:sort_by] == "date"
       "posted_at #{search[:order]}, w DESC"
     else
       "w DESC"
@@ -66,15 +66,15 @@ class SearchController < ApplicationController
   def search_with_excerpts(query, filters, order)
     # search messages with really big excerpts (i.e. the entire message)
     messages = Message.search query,
-                              select: '*, weight() as w',
+                              select: "*, weight() as w",
                               with: filters,
                               order: order,
                               page: params[:page],
                               per_page: RESULTS_PER_PAGE,
                               max_matches: MAX_RESULTS,
                               excerpts: {
-                                before_match: '<mark>',
-                                after_match: '</mark>',
+                                before_match: "<mark>",
+                                after_match: "</mark>",
                                 limit: 2**16,
                                 around: 2**16,
                                 force_all_words: true
@@ -102,8 +102,8 @@ class SearchController < ApplicationController
       channel_id: nil,
       show_archived: 0,
       user_id: nil,
-      sort_by: 'best',
-      order: 'DESC'
+      sort_by: "best",
+      order: "DESC"
     }
   end
 end

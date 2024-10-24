@@ -1,5 +1,5 @@
 namespace :deploy do
-  desc 'Restart manticore searchd and solid_queue services.'
+  desc "Restart manticore searchd and solid_queue services."
   before :published, :restart_manticore do
     on roles(:app) do
       execute :sudo, "systemctl", "restart", "manticore-archive"

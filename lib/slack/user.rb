@@ -21,11 +21,11 @@ module Slack
         # set @display_name to first present display_name, real_name, or default
         @display_name = if u.profile.display_name.present?
                           u.profile.display_name
-                        elsif u.profile.real_name.present?
+        elsif u.profile.real_name.present?
                           u.profile.real_name
-                        else
+        else
                           "Unnamed User <#{@user_id}>"
-                        end
+        end
 
         @is_bot = u.is_bot
         @deleted = u.deleted

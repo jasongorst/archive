@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root to: "display#index", as: :root
 
-  resources :passwords, controller: "clearance/passwords", only: [:create, :new]
+  resources :passwords, controller: "clearance/passwords", only: [ :create, :new ]
 
-  resource :session, controller: "clearance/sessions", only: [:create]
+  resource :session, controller: "clearance/sessions", only: [ :create ]
   get "sign_in", to: "clearance/sessions#new", as: "sign_in"
-  match "sign_out", to: "clearance/sessions#destroy", via: [:get, :delete], as: "sign_out"
+  match "sign_out", to: "clearance/sessions#destroy", via: [ :get, :delete ], as: "sign_out"
 
   if Clearance.configuration.allow_sign_up?
     get "sign_up", to: "clearance/users#new", as: "sign_up"
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :accounts, controller: "clearance/users", only: Clearance.configuration.user_actions do
     resource :password,
              controller: "clearance/passwords",
-             only: [:edit, :update]
+             only: [ :edit, :update ]
   end
 
   get "oauth", to: "oauth#index", as: :oauth
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     resources :channels
     resources :messages
     resources :private_channels
-    resources :private_messages, only: [:index, :show]
+    resources :private_messages, only: [ :index, :show ]
     resources :attachments
     resources :custom_emojis
     resources :emoji_aliases

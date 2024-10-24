@@ -19,7 +19,7 @@ class UserDashboard < Administrate::BaseDashboard
     private_channels: Field::HasMany,
     private_messages: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

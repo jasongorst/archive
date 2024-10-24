@@ -26,7 +26,7 @@ class Channel < ApplicationRecord
     Rails.cache.fetch("#{cache_key_with_version}/message_counts_by_date") do
       message_dates_with_counts
         .group_by { |date, _| date.year }
-        .transform_values { |counts| counts.group_by { |date, _| date.month} }
+        .transform_values { |counts| counts.group_by { |date, _| date.month } }
         .transform_values { |month| month.transform_values(&:to_h) }
     end
   end

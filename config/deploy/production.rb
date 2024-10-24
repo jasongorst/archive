@@ -1,7 +1,7 @@
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
-server "evilpaws.org", user: "deploy", port: 7822, roles: %w{app db web}, primary: true
+server "evilpaws.org", user: "deploy", port: 7822, roles: %w[app db web], primary: true
 
 # Configuration
 # =============

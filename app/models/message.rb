@@ -9,7 +9,7 @@ class Message < ApplicationRecord
   before_save :set_posted_timestamps
   after_save :expire_cache
 
-  ThinkingSphinx::Callbacks.append(self, behaviours: [:real_time])
+  ThinkingSphinx::Callbacks.append(self, behaviours: [ :real_time ])
 
   paginates_per 50
 

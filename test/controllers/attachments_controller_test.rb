@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class AttachmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -16,7 +16,7 @@ class AttachmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create attachment" do
-    assert_difference('Attachment.count') do
+    assert_difference("Attachment.count") do
       post attachments_url, params: { attachment: { message_id: @attachment.message_id, name: @attachment.name, url: @attachment.url } }
     end
 
@@ -39,7 +39,7 @@ class AttachmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy attachment" do
-    assert_difference('Attachment.count', -1) do
+    assert_difference("Attachment.count", -1) do
       delete attachment_url(@attachment)
     end
 

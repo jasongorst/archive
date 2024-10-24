@@ -1,3 +1,4 @@
+# noinspection RubyNilAnalysis
 class PrivateSearchController < ApplicationController
   layout "main"
   before_action :require_login
@@ -61,7 +62,7 @@ class PrivateSearchController < ApplicationController
   end
 
   def order_from_params(search)
-    if search[:sort_by] == 'date'
+    if search[:sort_by] == "date"
       "posted_at #{search[:order]}, w DESC"
     else
       "w DESC"
@@ -71,15 +72,15 @@ class PrivateSearchController < ApplicationController
   def search_with_excerpts(query, filters, order)
     # search messages with really big excerpts (i.e. the entire message)
     private_messages = PrivateMessage.search query,
-                                             select: '*, weight() as w',
+                                             select: "*, weight() as w",
                                              with: filters,
                                              order: order,
                                              page: params[:page],
                                              per_page: RESULTS_PER_PAGE,
                                              max_matches: MAX_RESULTS,
                                              excerpts: {
-                                               before_match: '<mark>',
-                                               after_match: '</mark>',
+                                               before_match: "<mark>",
+                                               after_match: "</mark>",
                                                limit: 2**16,
                                                around: 2**16,
                                                force_all_words: true
@@ -107,8 +108,8 @@ class PrivateSearchController < ApplicationController
       private_channel_id: nil,
       show_archived: 0,
       user_id: nil,
-      sort_by: 'best',
-      order: 'DESC'
+      sort_by: "best",
+      order: "DESC"
     }
   end
 end

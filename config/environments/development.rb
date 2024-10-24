@@ -78,6 +78,8 @@ Rails.application.configure do
 
   config.hosts << "exactly-mint-chamois.ngrok-free.app"
 
+  config.generators.apply_rubocop_autocorrect_after_generate!
+
   # bullet
   config.after_initialize do
     Bullet.enable = true
@@ -88,4 +90,3 @@ Rails.application.configure do
 end
 
 Archive::Application.default_url_options = Rails.application.config.action_mailer.default_url_options
-

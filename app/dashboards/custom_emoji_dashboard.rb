@@ -11,7 +11,7 @@ class CustomEmojiDashboard < Administrate::BaseDashboard
     id: Field::Number,
     emoji: Field::ActiveStorage
              .with_options(
-               show_preview_size: [16, 16],
+               show_preview_size: [ 16, 16 ],
                show_preview_variant: :emoji
              ),
     name: Field::String,

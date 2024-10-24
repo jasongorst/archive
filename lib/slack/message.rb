@@ -7,6 +7,7 @@ module Slack
     ROLLER_V2_DISPLAY_NAME = "RollerBot 2".freeze
     ROLLER_DISPLAY_NAME = "Roller".freeze
 
+    # noinspection RubyStringKeysInHashInspection
     ROLLER_COLORS = {
       "2eb886" => "good",
       "#2eb886" => "good",
@@ -57,21 +58,21 @@ module Slack
                   u.is_bot = bot.is_bot
                   u.deleted = bot.deleted
                 end
-              else
+      else
                 ::User.find_or_create_by!(slack_user: @message.user) do |u|
                   user = Slack::User.new(@message.user)
                   u.display_name = user.display_name
                   u.is_bot = user.is_bot
                   u.deleted = user.deleted
                 end
-              end
+      end
 
       @text = Slack::Mrkdwn.to_html(@message.text)
 
       if @message.has_key?(:files)
         @attachments = @message.files
-                               .reject {|file| file.url_private.nil? }
-                               .map {|file| { name: file.name || "file", url: file.url_private }}
+                               .reject { |file| file.url_private.nil? }
+                               .map { |file| { name: file.name || "file", url: file.url_private } }
       end
     end
 
@@ -86,10 +87,10 @@ module Slack
       text = Slack::Mrkdwn.to_html(block.text.text)
 
       fields = case block.fields.count
-               when 1
+      when 1
                  # /coin
                  block.fields[0].text.split("\n")
-               when 4
+      when 4
                  # /dice or /roll (no extra rolls)
                  [
                    block.fields[0].text,
@@ -97,7 +98,7 @@ module Slack
                    block.fields[1].text,
                    block.fields[3].text
                  ]
-               when 7
+      when 7
                  # /roll (with extra rolls)
                  [
                    block.fields[0].text,
@@ -107,9 +108,9 @@ module Slack
                    block.fields[4].text,
                    block.fields[6].text
                  ]
-               else
-                 # ?
-               end
+      else
+        # ?
+      end
 
       fields = fields.map do |field|
         Slack::Mrkdwn.to_html(field)

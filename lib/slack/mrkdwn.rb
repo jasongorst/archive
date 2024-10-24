@@ -14,8 +14,8 @@ module Slack
       slack_users: ::User.pluck(:slack_user, :display_name).to_h
     }
 
-    PIPELINE = HTML::Pipeline.new [HTML::Pipeline::PlainTextInputFilter,
-                                   HTML::Pipeline::Mrkdwn], CONTEXT
+    PIPELINE = HTML::Pipeline.new [ HTML::Pipeline::PlainTextInputFilter,
+                                   HTML::Pipeline::Mrkdwn ], CONTEXT
 
     def self.to_html(text)
       PIPELINE.to_html(text)

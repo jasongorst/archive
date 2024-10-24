@@ -17,7 +17,7 @@ class PrivateChannelDashboard < Administrate::BaseDashboard
     user_names: Field::String.with_options(searchable: false),
     private_messages: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

@@ -46,7 +46,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", "~> 1.18.4", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", '~> 1.13.0'
+gem "image_processing", "~> 1.13.0"
 gem "ruby-vips", "~> 2.2.2"
 
 group :development, :test do
@@ -97,7 +97,7 @@ gem "dalli", "~> 3.2.8"
 gem "bigdecimal", "~> 3.1.8"
 
 # Slack api client
-gem "slack-ruby-client", '~> 2.4.0'
+gem "slack-ruby-client", "~> 2.4.0"
 
 # Pagination
 gem "kaminari", "~> 1.2.2"
@@ -108,7 +108,7 @@ gem "thinking-sphinx", github: "jasongorst/thinking-sphinx"
 gem "mysql2", "~> 0.5.6"
 
 # Pretty URLs
-gem "friendly_id", '~> 5.5.1'
+gem "friendly_id", "~> 5.5.1"
 
 # use administrate for model dashboards
 gem "administrate", github: "thoughtbot/administrate"

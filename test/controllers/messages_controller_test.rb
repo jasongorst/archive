@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -16,7 +16,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create message" do
-    assert_difference('Message.count') do
+    assert_difference("Message.count") do
       post messages_url, params: { message: { channel_id: @message.channel_id, text: @message.text, ts: @message.ts, user_id: @message.user_id } }
     end
 
@@ -39,7 +39,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy message" do
-    assert_difference('Message.count', -1) do
+    assert_difference("Message.count", -1) do
       delete message_url(@message)
     end
 

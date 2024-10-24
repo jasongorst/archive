@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class ChannelsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -16,7 +16,7 @@ class ChannelsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create channel" do
-    assert_difference('Channel.count') do
+    assert_difference("Channel.count") do
       post channels_url, params: { channel: { name: @channel.name, slack_channel: @channel.slack_channel } }
     end
 
@@ -39,7 +39,7 @@ class ChannelsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy channel" do
-    assert_difference('Channel.count', -1) do
+    assert_difference("Channel.count", -1) do
       delete channel_url(@channel)
     end
 

@@ -18,7 +18,7 @@ class PrivateMessageDashboard < Administrate::BaseDashboard
     posted_on: Field::Date,
     verbatim: Field::Text.with_options(searchable: false),
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

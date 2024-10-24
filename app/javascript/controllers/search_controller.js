@@ -61,11 +61,11 @@ export default class extends Controller {
     this.allChannelsTarget.hidden = !showArchived
   }
 
-  handleChannelsSelect(event) {
+  handleChannelsSelect(_) {
     this.setSelectedOptionByValue(this.allChannelsSelectTarget, this.getChannelsSelectValue())
   }
 
-  handleAllChannelsSelect(event) {
+  handleAllChannelsSelect(_) {
     this.setSelectedOptionByValue(this.channelsSelectTarget, this.getAllChannelsSelectValue())
   }
 

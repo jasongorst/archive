@@ -44,7 +44,10 @@ module Slack
             message.attachments.create!(slack_message.attachments) if slack_message.attachments
           end
 
-          @logger.info "checked channel #{channel.slack_channel}: #{messages.first.ts} - #{messages.last.ts}"
+          if messages.count > 0
+            @logger.info "checked channel #{channel.slack_channel}: #{messages.first.ts} - #{messages.last.ts}"
+          end
+
           sleep 1
         end
       end

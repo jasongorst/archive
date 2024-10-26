@@ -37,7 +37,12 @@ module Slack
           unless custom_emoji.emoji.attached?
             @logger.info "CustomEmoji #{name}: downloading #{url} and attaching"
             extension = File.extname(URI(url).path)
-            custom_emoji.emoji.attach(io: URI.open(url), filename: name + extension)
+
+            begin
+              custom_emoji.emoji.attach(io: URI.open(url), filename: name + extension)
+            rescue OpenURI::HTTPError
+              nil
+            end
           end
 
           custom_emoji.save

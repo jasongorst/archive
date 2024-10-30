@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1.1"
+gem "rails", "~> 7.2.1.2"
 
 # Propshaft asset pipeline
 gem "propshaft", "~> 1.1.0"
@@ -121,7 +121,7 @@ gem "clearance", "~> 2.8.0"
 gem "pwned", "~> 2.4.1"
 
 # convert slack mrkdwn to html
-gem "html-pipeline-mrkdwn", "~> 0.1.8"
+gem "html-pipeline-mrkdwn", "~> 0.2.0"
 
 # use postmark for outgoing email
 gem "postmark-rails", "~> 0.22.1"

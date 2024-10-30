@@ -17,6 +17,11 @@
   @apply btn-sm lg:btn-md text-sm lg:text-base;
 }
 
+/* large only-emoji-and-whitespace message */
+.emoji-lg {
+  @apply text-[2rem] leading-10;
+}
+
 /* slack legacy attachment appearance */
 .bot-attachment {
   @apply flex flex-row flex-nowrap items-stretch;

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.4"
+ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1.2"
@@ -73,7 +73,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40.0"
-  gem "webdrivers", "~> 5.3.1"
 end
 
 # Use capistrano for deployment
@@ -115,7 +114,7 @@ gem "administrate", github: "thoughtbot/administrate"
 gem "administrate-field-active_storage", "~> 1.0.3"
 
 # use clearance for authentication
-gem "clearance", "~> 2.8.0"
+gem "clearance", "~> 2.9.1"
 
 # check passwords against haveibeenpwned.com
 gem "pwned", "~> 2.4.1"

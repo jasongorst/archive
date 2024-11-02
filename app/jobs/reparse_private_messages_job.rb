@@ -2,7 +2,7 @@ class ReparsePrivateMessagesJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    PrivateMessage.all.each do |private_message|
+    PrivateMessage.find_each do |private_message|
       verbatim = Hashie::Mash.new(JSON.parse(private_message.verbatim))
       next unless /:[\w+-_]+?:/ =~ verbatim.text
 

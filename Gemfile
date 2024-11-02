@@ -120,7 +120,7 @@ gem "clearance", "~> 2.9.1"
 gem "pwned", "~> 2.4.1"
 
 # convert slack mrkdwn to html
-gem "html-pipeline-mrkdwn", "~> 0.2.0"
+gem "html-pipeline-mrkdwn", "~> 0.2.1"
 
 # use postmark for outgoing email
 gem "postmark-rails", "~> 0.22.1"

@@ -29,7 +29,7 @@ module Slack
     def initialize(message)
       @message = message
 
-      if @message.subtype == "bot_message" && @message.bot_id.blank?
+      if @message.subtype == "bot_message" && @message.bot_id.blank? && @message&.user != "USLACKBOT"
         Rails.logger.warn "Bot message without bot_id: #{message}"
       elsif @message.user.blank?
         Rails.logger.warn "Message without user: #{message}"
@@ -51,21 +51,27 @@ module Slack
     private
 
     def parse_message!
-      @user = if @message.subtype == "bot_message"
+      @user = if @message.subtype == "bot_message" && @message&.user == "USLACKBOT"
+                ::User.find_or_create_by!(slack_user: "USLACKBOT") do |u|
+                  u.display_name = "Slackbot"
+                  u.is_bot = true
+                  u.deleted = false
+                end
+              elsif @message.subtype == "bot_message"
                 ::User.find_or_create_by!(slack_user: @message.bot_id) do |u|
                   bot = Slack::Bot.new(@message.bot_id)
                   u.display_name = bot.display_name
                   u.is_bot = bot.is_bot
                   u.deleted = bot.deleted
                 end
-      else
+              else
                 ::User.find_or_create_by!(slack_user: @message.user) do |u|
                   user = Slack::User.new(@message.user)
                   u.display_name = user.display_name
                   u.is_bot = user.is_bot
                   u.deleted = user.deleted
                 end
-      end
+              end
 
       @text = Slack::Mrkdwn.to_html(@message.text)
 

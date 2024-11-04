@@ -15,8 +15,13 @@ module Slack
         @display_name = "Unknown Bot <#{@bot_id}>"
         @deleted = true
       else
-        @display_name = bot&.name || "Unnamed Bot <#{@bot_id}>"
-        @deleted = bot&.deleted || true
+        @display_name = if bot&.name.present?
+                          bot.name
+                        else
+                          "Unnamed Bot <#{@bot_id}>"
+                        end
+
+        @deleted = bot.deleted || true
       end
     end
   end

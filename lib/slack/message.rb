@@ -29,10 +29,10 @@ module Slack
     def initialize(message)
       @message = message
 
-      if @message.user.nil? && @message.bot_id.nil?
-        Rails.logger.warn "Message without user or bot_id: #{message}"
-        @user = nil
-        @text = nil
+      if @message.subtype == "bot_message" && @message.bot_id.blank?
+        Rails.logger.warn "Bot message without bot_id: #{message}"
+      elsif @message.user.blank?
+        Rails.logger.warn "Message without user: #{message}"
       elsif @message.subtype == "bot_message" &&
             @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
         parse_roller_v2_message!

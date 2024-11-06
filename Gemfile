@@ -90,7 +90,7 @@ gem "haml", "~> 6.3.0"
 gem "haml-rails", "~> 2.1.0"
 
 # use memcached for caching
-gem "dalli", "~> 3.2.8"
+# gem "dalli", "~> 3.2.8"
 
 # BigDecimal for nanosecond timestamps
 gem "bigdecimal", "~> 3.1.8"
@@ -133,3 +133,9 @@ gem "mission_control-jobs", "~> 0.3.3"
 
 # bullet for n+1 checks
 gem "bullet", "~> 7.2.0", group: "development"
+
+# solid_cache
+gem "solid_cache", "~> 1.0.6"
+
+# sqlite3 for solid_cache
+gem "sqlite3", "~> 2.2.0"

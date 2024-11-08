@@ -3,13 +3,13 @@ class CustomEmoji < ApplicationRecord
   validates :name, uniqueness: true
 
   has_one_attached :emoji do |attachable|
-    attachable.variant :emoji, resize_and_pad: [ 16, 16, alpha: true, size: :down ], preprocessed: true
-    attachable.variant :emoji_1x, resize_and_pad: [ 16, 16, alpha: true, size: :down ], preprocessed: true
-    attachable.variant :emoji_2x, resize_and_pad: [ 32, 32, alpha: true, size: :down ], preprocessed: true
-    attachable.variant :emoji_3x, resize_and_pad: [ 48, 48, alpha: true, size: :down ], preprocessed: true
-    attachable.variant :emoji_lg_1x, resize_and_pad: [ 32, 32, alpha: true, size: :down ], preprocessed: true
-    attachable.variant :emoji_lg_2x, resize_and_pad: [ 64, 64, alpha: true, size: :down ], preprocessed: true
-    attachable.variant :emoji_lg_3x, resize_and_pad: [ 96, 96, alpha: true, size: :down ], preprocessed: true
+    attachable.variant :emoji, resize_to_fit: [ 16, 16, size: :down ], preprocessed: true
+    attachable.variant :emoji_1x, resize_to_fit: [ 16, 16, size: :down ], preprocessed: true
+    attachable.variant :emoji_2x, resize_to_fit: [ 32, 32, size: :down ], preprocessed: true
+    attachable.variant :emoji_3x, resize_to_fit: [ 48, 48, size: :down ], preprocessed: true
+    attachable.variant :emoji_lg_1x, resize_to_fit: [ 32, 32, size: :down ], preprocessed: true
+    attachable.variant :emoji_lg_2x, resize_to_fit: [ 64, 64, size: :down ], preprocessed: true
+    attachable.variant :emoji_lg_3x, resize_to_fit: [ 96, 96, size: :down ], preprocessed: true
   end
 
   def self.create_all

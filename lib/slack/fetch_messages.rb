@@ -20,7 +20,7 @@ module Slack
       channels
     end
 
-    def fetch_messages(slack_channels)
+    def fetch_messages(slack_channels, oldest: nil)
       slack_channels.each do |slack_channel|
         @logger.info "Archiving channel \##{slack_channel.name}"
 
@@ -32,11 +32,11 @@ module Slack
         channel.save!
 
         last_ts = channel.messages.maximum(:ts)
+        last_ts = [last_ts, oldest].max if last_ts && oldest
+
         archive_messages(channel, last_ts)
       end
     end
-
-    private
 
     def archive_messages(channel, last_ts)
       @client.conversations_join(channel: channel.slack_channel) unless channel.archived?

@@ -10,7 +10,12 @@ class PrivateMessage < ApplicationRecord
   has_many :attachments, as: :attachable, dependent: :destroy
 
   before_save :set_posted_timestamps
-  after_save :expire_cache
+
+  after_save :set_last_message_at
+  after_save :delete_caches_for_new_message
+
+  before_destroy :update_last_message_at
+  before_destroy :delete_caches_for_destroyed_message
 
   ThinkingSphinx::Callbacks.append(self, behaviours: [ :real_time ])
 
@@ -47,24 +52,48 @@ class PrivateMessage < ApplicationRecord
     self.posted_on = posted_at.to_date
   end
 
-  def expire_cache
-    Rails.cache.delete_multi(
+  def set_last_message_at
+    if private_channel.last_message_at.nil? || posted_at > private_channel.last_message_at
+      private_channel.update(last_message_at: posted_at)
+    end
+  end
+
+  def update_last_message_at
+    if posted_at == private_channel.last_message_at
+      private_channel.update(last_message_at: private_channel.private_messages.maximum(:posted_at))
+    end
+  end
+
+  def delete_caches_for_new_message
+    delete_caches_for_posted_on
+
+    # delete message_dates cache if it doesn't contain posted_on
+    Rails.cache.delete("#{private_channel.cache_key_with_version}/message_dates") unless posted_on.in?(private_channel.message_dates)
+
+    # delete date_of_oldest_message cache if posted_on is before then
+    Rails.cache.delete("#{private_channel.cache_key_with_version}/date_of_oldest_message") if posted_on < private_channel.date_of_oldest_message
+  end
+
+  def delete_caches_for_destroyed_message
+    delete_caches_for_posted_on
+
+    # delete message_dates cache if this message is the only message posted on that date in this channel
+    if private_channel.private_messages_posted_on(posted_on).size == 1
+      Rails.cache.delete("#{private_channel.cache_key_with_version}/message_dates")
+
+      # also delete date_of_oldest_message cache if this message is the oldest
+      if posted_on == private_channel.date_of_oldest_message
+        Rails.cache.delete("#{private_channel.cache_key_with_version}/date_of_oldest_message")
+      end
+    end
+  end
+
+  def delete_caches_for_posted_on
+  Rails.cache.delete_multi(
       %W[
         #{private_channel.cache_key_with_version}/private_message_counts_by_date
         #{private_channel.cache_key_with_version}/private_messages_posted_on/#{posted_on}
       ]
     )
-
-    unless private_channel.message_dates.include?(posted_on)
-      Rails.cache.delete("#{private_channel.cache_key_with_version}/message_dates")
-    end
-
-    if posted_at > private_channel.time_of_latest_message
-      Rails.cache.delete("#{private_channel.cache_key_with_version}/time_of_latest_message")
-    end
-
-    if posted_on < private_channel.date_of_oldest_message
-      Rails.cache.delete("#{private_channel.cache_key_with_version}/date_of_oldest_message")
-    end
   end
 end

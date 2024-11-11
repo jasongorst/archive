@@ -4,7 +4,7 @@
       %a.px-4{href: url_for(channel)}
         \##{channel.name}
         %span.text-xs.lg:text-sm
-          = time_ago(channel.time_of_latest_message)
+          = time_ago(channel.last_message_at)
 
   %li
     %details.dropdown
@@ -16,4 +16,4 @@
             %a.px-4{href: url_for(archived)}
               \##{archived.name}
               %span.text-xs.lg:text-sm
-                = time_ago(archived.time_of_latest_message)
+                = time_ago(archived.last_message_at)

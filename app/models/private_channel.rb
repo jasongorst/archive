@@ -8,14 +8,7 @@ class PrivateChannel < ApplicationRecord
   default_scope { order(channel_created_at: :desc) }
   scope :unarchived, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
-
-  scope :with_messages, lambda {
-    where
-      .associated(:private_messages)
-      .distinct
-      .sort_by(&:time_of_latest_message)
-      .reverse!
-  }
+  scope :with_messages, -> { where.associated(:private_messages).distinct.reorder(last_message_at: :desc) }
 
   def user_names
     users.pluck(:display_name).to_sentence
@@ -55,12 +48,6 @@ class PrivateChannel < ApplicationRecord
         .group_by { |date, _| date.year }
         .transform_values { |counts| counts.group_by { |date, _| date.month } }
         .transform_values { |month| month.transform_values(&:to_h) }
-    end
-  end
-
-  def time_of_latest_message
-    Rails.cache.fetch("#{cache_key_with_version}/time_of_latest_message") do
-      private_messages.maximum(:posted_at)
     end
   end
 

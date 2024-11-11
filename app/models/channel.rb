@@ -31,12 +31,6 @@ class Channel < ApplicationRecord
     end
   end
 
-  def time_of_latest_message
-    Rails.cache.fetch("#{cache_key_with_version}/time_of_latest_message") do
-      messages.maximum(:posted_at)
-    end
-  end
-
   def date_of_oldest_message
     Rails.cache.fetch("#{cache_key_with_version}/date_of_oldest_message") do
       messages.minimum(:posted_on)

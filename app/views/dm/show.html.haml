@@ -1,4 +1,4 @@
-- cache [@private_channel, @private_channel.time_of_latest_message] do
+- cache @private_channel do
   %h1.text-lg.lg:text-2xl.pl-6.pb-2.lg:pb-3
     = @private_channel.display_name(current_account.user)
 

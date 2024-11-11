@@ -5,7 +5,7 @@
         %a.px-4{href: url_for(private_channel)}
           = private_channel.display_name(current_account.user)
           %span.text-xs.lg:text-sm
-            = time_ago(private_channel.time_of_latest_message)
+            = time_ago(private_channel.last_message_at)
 
     %li
       %details.dropdown
@@ -17,7 +17,7 @@
               %a.px-4{href: url_for(archived)}
                 = archived.display_name(current_account.user)
                 %span.text-xs.lg:text-sm
-                  = time_ago(archived.time_of_latest_message)
+                  = time_ago(archived.last_message_at)
 
 - else
   .card.bg-base-200.shadow-2xl.prose.mx-auto

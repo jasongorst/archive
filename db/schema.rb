@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_20_170607) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_11_063643) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_20_170607) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "archived", default: false, null: false
+    t.datetime "last_message_at"
     t.index ["archived"], name: "index_channels_on_archived"
     t.index ["name"], name: "index_channels_on_name"
     t.index ["slack_channel"], name: "index_channels_on_slack_channel"
@@ -130,6 +131,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_20_170607) do
     t.datetime "channel_created_at"
     t.string "name"
     t.boolean "archived", default: false, null: false
+    t.datetime "last_message_at"
     t.index ["archived"], name: "index_private_channels_on_archived"
     t.index ["channel_created_at"], name: "index_private_channels_on_channel_created_at"
     t.index ["slack_channel"], name: "index_private_channels_on_slack_channel"

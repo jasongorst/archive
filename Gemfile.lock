@@ -325,6 +325,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
+    prosopite (1.4.2)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -524,6 +525,7 @@ DEPENDENCIES
   mysql2 (~> 0.5.6)
   postmark-rails (~> 0.22.1)
   propshaft (~> 1.1.0)
+  prosopite (~> 1.4.2)
   puma (~> 6.4.3)
   pwned (~> 2.4.1)
   rails (~> 7.2.1.2)

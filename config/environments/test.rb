@@ -72,6 +72,18 @@ Rails.application.configure do
 
   # set default url options
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+
+  # bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+  end
+
+  # prosopite
+  config.after_initialize do
+    Prosopite.rails_logger = true
+    Prosopite.raise = true
+  end
 end
 
 Archive::Application.default_url_options = Rails.application.config.action_mailer.default_url_options

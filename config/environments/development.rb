@@ -23,8 +23,8 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    # config.cache_store = :memory_store
-    config.cache_store = :solid_cache_store
+    config.cache_store = :memory_store
+    # config.cache_store = :solid_cache_store
     config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
@@ -87,6 +87,12 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.add_footer = true
     Bullet.skip_html_injection = false
+  end
+
+  # prosopite
+  config.after_initialize do
+    Prosopite.rails_logger = true
+    Prosopite.stderr_logger = true
   end
 end
 

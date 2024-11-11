@@ -1,6 +1,17 @@
 class ApplicationController < ActionController::Base
   include Clearance::Controller
 
+  unless Rails.env.production?
+    around_action :n_plus_one_detection
+
+    def n_plus_one_detection
+      Prosopite.scan
+      yield
+    ensure
+      Prosopite.finish
+    end
+  end
+
   def current_account
     current_user
   end

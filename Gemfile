@@ -134,6 +134,9 @@ gem "mission_control-jobs", "~> 0.3.3"
 # bullet for n+1 checks
 gem "bullet", "~> 7.2.0", group: "development"
 
+# also prospite for n+1 checks
+gem "prosopite", "~> 1.4.2"
+
 # solid_cache
 gem "solid_cache", "~> 1.0.6"
 

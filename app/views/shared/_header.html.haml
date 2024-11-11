@@ -7,23 +7,10 @@
         %i.fas.fa-bars
       %ul.dropdown-content.menu.mt-3.p-2.shadow.bg-primary.rounded-box.z-10{tabindex: 0, data: { controller: "confirm" }}
         %li
-          %details{open: (true if channel_page?)}
+          %details{open: channel_page?}
             %summary{class: ("bg-primary-focus" if channel_page?)}
               Channels
-            %ul.p-2
-              - Channel.unarchived.with_messages.each do |channel|
-                %li
-                  %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
-                    \##{channel.name}
-              %li
-                %details{open: Channel.archived.with_messages.pluck(:name).include?(current_channel)}
-                  %summary{class: ("bg-primary-focus" if Channel.archived.with_messages.pluck(:name).include?(current_channel))}
-                    Archived
-                  %ul
-                    - Channel.archived.with_messages.each do |channel|
-                      %li
-                        %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
-                          \##{channel.name}
+            = render(partial: 'shared/channels')
 
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}
@@ -58,20 +45,7 @@
           %details
             %summary{class: ("bg-primary-focus" if channel_page?)}
               Channels
-            %ul.p-2.z-10.text-primary-content{class: "!bg-primary text-primary-content/80"}
-              - Channel.unarchived.with_messages.each do |channel|
-                %li
-                  %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
-                    \##{channel.name}
-              %li
-                %details{open: Channel.archived.with_messages.pluck(:name).include?(current_channel)}
-                  %summary{class: ("bg-primary-focus" if Channel.archived.with_messages.pluck(:name).include?(current_channel))}
-                    Archived
-                  %ul
-                    - Channel.archived.with_messages.each do |channel|
-                      %li
-                        %a{href: url_for(channel), class: ("bg-primary-focus" if channel.name == current_channel)}
-                          \##{channel.name}
+            = render(partial: 'shared/channels')
 
         %li
           %a{href: url_for(:search), class: ("bg-primary-focus" if current_page?(:search))}

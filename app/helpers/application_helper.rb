@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def channel_page?
-    params[:channel_id]
+    params[:channel_id].present?
   end
 
   def current_channel
@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def private_channel_page?
-    params[:private_channel_id]
+    params[:private_channel_id].present?
   end
 
   def current_private_channel

@@ -2,12 +2,12 @@
   .navbar-start.flex
     - previous_date = @channel.previous_date_before(@date)
     - unless previous_date.nil?
-      = link_to raw("&lsaquo;&nbsp;#{long_date(previous_date)}"),
+      = link_to raw("&lsaquo; #{long_date(previous_date)}"),
         channel_date_path(@channel, previous_date),
-        class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal"
+        class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal whitespace-nowrap"
   .navbar-end.flex.text-sm.lg:text-md
     - next_date = @channel.next_date_after(@date)
     - unless next_date.nil?
-      = link_to raw("#{long_date(next_date)}&nbsp;&rsaquo;"),
+      = link_to raw("#{long_date(next_date)} &rsaquo;"),
         channel_date_path(@channel, next_date),
-        class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal"
+        class: "btn btn-ghost btn-sm lg:btn-md normal-case font-normal whitespace-nowrap"

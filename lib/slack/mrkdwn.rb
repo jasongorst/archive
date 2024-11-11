@@ -4,9 +4,11 @@ require "html/pipeline/mrkdwn"
 
 module Slack
   class Mrkdwn
+    # slack text is already html-escaped, so skip PlainTextInputFilter
+    #   and just wrap text in a div tag
     def self.to_html(text)
       pipeline = HTML::Pipeline.new(
-        [ HTML::Pipeline::PlainTextInputFilter, HTML::Pipeline::Mrkdwn ],
+        [ HTML::Pipeline::Mrkdwn ],
         {
           emoji_image_tag: ->(emoji) {
             ::CustomEmoji
@@ -24,7 +26,7 @@ module Slack
         }
       )
 
-      pipeline.to_html(text)
+      pipeline.to_html("<div>#{text}</div>")
     end
   end
 end

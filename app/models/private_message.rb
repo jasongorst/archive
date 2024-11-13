@@ -29,10 +29,6 @@ class PrivateMessage < ApplicationRecord
 
   default_sphinx_scope :with_includes
 
-  def user_ids
-    private_channel.users.pluck(:id)
-  end
-
   def index_by_date
     private_channel
       .private_messages_posted_on(self.posted_on).pluck(:posted_at)

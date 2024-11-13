@@ -40,17 +40,22 @@ class PrivateSearchController < ApplicationController
     end_date = parse_date(search[:end]) || default_end_date
 
     # filter search on attributes
-    filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
-    filters[:private_channel_id] = search[:private_channel_id].to_i if search[:private_channel_id].present?
+    filters = { posted_on: (start_date.to_time)..(end_date.end_of_day.to_time) }
+
     filters[:user_id] = search[:user_id].to_i if search[:user_id].present?
 
+    # ensure that only private channels belonging to the current user are included in search
     if search[:private_channel_id].present?
-      filters[:private_channel_id] = search[:private_channel_id].to_i
+      if search[:private_channel_id].to_i.in?(current_account.user.private_channels.pluck(:id))
+        filters[:private_channel_id] = search[:private_channel_id].to_i
+      else
+        raise ArgumentError, "Current account doesn't have access to the private channel #{search[:private_channel_id].to_i}."
+      end
     elsif search[:include_archived] == "0"
-      filters[:private_channel_id] = current_account.user.private_channels.unarchived.with_messages.pluck(:id).sort
+      filters[:private_channel_id] = current_account.user.private_channels.unarchived.with_messages.pluck(:id)
+    else
+      filters[:private_channel_id] = current_account.user.private_channels.with_messages.pluck(:id)
     end
-
-    filters[:user_ids] = current_account.user.id
 
     filters
   end
@@ -81,9 +86,8 @@ class PrivateSearchController < ApplicationController
                                              excerpts: {
                                                before_match: "<mark>",
                                                after_match: "</mark>",
-                                               limit: 2**16,
-                                               around: 2**16,
-                                               force_all_words: true
+                                               limit: 0,
+                                               html_strip_mode: "retain"
                                              }
 
     # highlight search terms in results using excerpts pane

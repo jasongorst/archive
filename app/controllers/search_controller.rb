@@ -37,13 +37,13 @@ class SearchController < ApplicationController
     end_date = parse_date(search[:end]) || default_end_date
 
     # filter search on attributes
-    filters = { posted_on: (start_date.to_time)..(end_date.to_time + 1.day - 1.second) }
+    filters = { posted_on: (start_date.to_time)..(end_date.end_of_day.to_time) }
     filters[:user_id] = search[:user_id].to_i if search[:user_id].present?
 
     if search[:channel_id].present?
       filters[:channel_id] = search[:channel_id].to_i
     elsif search[:include_archived] == "0"
-      filters[:channel_id] = Channel.unarchived.with_messages.pluck(:id).sort
+      filters[:channel_id] = Channel.unarchived.with_messages.pluck(:id)
     end
 
     filters
@@ -75,9 +75,8 @@ class SearchController < ApplicationController
                               excerpts: {
                                 before_match: "<mark>",
                                 after_match: "</mark>",
-                                limit: 2**16,
-                                around: 2**16,
-                                force_all_words: true
+                                limit: 0,
+                                html_strip_mode: "retain"
                               }
 
     # highlight search terms in results using excerpts pane

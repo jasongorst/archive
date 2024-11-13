@@ -3,18 +3,21 @@ development:
   morphology: lemmatize_en
   lemmatizer_base: /Users/jason/Projects/archive/config
   charset_table: non_cjk
+  html_strip: true
   socket: /tmp/development.sphinx.sock
 test:
   common_sphinx_configuration: true
   morphology: lemmatize_en
   lemmatizer_base: /Users/jason/Projects/archive/config
   charset_table: non_cjk
+  html_strip: true
   socket: /tmp/test.sphinx.sock
 production:
   common_sphinx_configuration: true
   morphology: lemmatize_en
   lemmatizer_base: /var/www/archive/current/config
   charset_table: non_cjk
+  html_strip: true
   socket: /var/www/archive/shared/tmp/sockets/production.sphinx.sock
   pid_file: /var/www/archive/shared/tmp/pids/searchd.pid
   indices_location: /var/www/archive/shared/db/sphinx

@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1.2"
+gem "rails", "~> 8.0"
 
 # Propshaft asset pipeline
 gem "propshaft", "~> 1.1.0"
@@ -29,15 +29,6 @@ gem "cssbundling-rails", "~> 1.4.1"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.13.0"
-
-# Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
@@ -79,7 +70,7 @@ end
 group :development do
   gem "bcrypt_pbkdf", "~> 1.1.1", require: false
   gem "ed25519", "~> 1.3.0", require: false
-  gem "capistrano", "~> 3.19.1", require: false
+  gem "capistrano", "~> 3.19.2", require: false
   gem "capistrano-rails", "~> 1.6.3", require: false
   gem "capistrano-rbenv", "~> 2.2.0", require: false
   gem "capistrano-passenger", "~> 0.2.1", require: false
@@ -88,9 +79,6 @@ end
 # Use haml for templates
 gem "haml", "~> 6.3.0"
 gem "haml-rails", "~> 2.1.0"
-
-# use memcached for caching
-# gem "dalli", "~> 3.2.8"
 
 # BigDecimal for nanosecond timestamps
 gem "bigdecimal", "~> 3.1.8"
@@ -110,11 +98,11 @@ gem "mysql2", "~> 0.5.6"
 gem "friendly_id", "~> 5.5.1"
 
 # use administrate for model dashboards
-gem "administrate", github: "thoughtbot/administrate"
-gem "administrate-field-active_storage", "~> 1.0.3"
+# gem "administrate", github: "thoughtbot/administrate"
+# gem "administrate-field-active_storage", "~> 1.0.3"
 
 # use clearance for authentication
-gem "clearance", "~> 2.9.1"
+gem "clearance", "~> 2.9.2"
 
 # check passwords against haveibeenpwned.com
 gem "pwned", "~> 2.4.1"
@@ -126,13 +114,13 @@ gem "html-pipeline-mrkdwn", "~> 0.2.1"
 gem "postmark-rails", "~> 0.22.1"
 
 # solid_queue to back ActiveJobs
-gem "solid_queue", "~> 1.0.0"
+gem "solid_queue", "~> 1.0.2"
 
 # mission_control-jobs to manage solid_queue job runs
 gem "mission_control-jobs", "~> 0.3.3"
 
 # bullet for n+1 checks
-gem "bullet", "~> 7.2.0", group: "development"
+# gem "bullet", "~> 7.2.0", group: "development"
 
 # also prospite for n+1 checks
 gem "prosopite", "~> 1.4.2"
@@ -142,3 +130,6 @@ gem "solid_cache", "~> 1.0.6"
 
 # sqlite3 for solid_cache
 gem "sqlite3", "~> 2.2.0"
+
+# trestle admin framework
+gem "trestle", "~> 0.10.1"

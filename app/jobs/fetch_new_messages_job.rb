@@ -15,9 +15,6 @@ class FetchNewMessagesJob < ApplicationJob
     connection = Slack::FetchMessages.new
     channels = connection.fetch_channels
 
-    # in development, default to only "ooc" channel
-    only_channels = [ "ooc" ] if Rails.env.development? && only_channels.nil?
-
     # filter channels (by name)
     channels.filter! { |channel| only_channels.include? channel.name } if only_channels
 

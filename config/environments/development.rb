@@ -81,14 +81,6 @@ Rails.application.configure do
 
   config.generators.apply_rubocop_autocorrect_after_generate!
 
-  # bullet
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
-    Bullet.add_footer = true
-    Bullet.skip_html_injection = false
-  end
-
   # prosopite
   config.after_initialize do
     Prosopite.rails_logger = true

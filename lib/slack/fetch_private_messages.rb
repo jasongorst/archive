@@ -25,7 +25,7 @@ module Slack
       channels
     end
 
-    def fetch_messages(slack_channels)
+    def fetch_messages(slack_channels, oldest: nil)
       @logger.info "Archiving #{slack_channels.count} private channels for #{@bot_user.display_name}"
 
       slack_channels.each do |slack_channel|
@@ -53,6 +53,8 @@ module Slack
         end
 
         last_ts = private_channel.private_messages.maximum(:ts)
+        last_ts = [ last_ts, oldest ].max if last_ts && oldest
+
         archive_messages(private_channel, last_ts)
       end
     end

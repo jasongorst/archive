@@ -1,6 +1,6 @@
 module Slack
   class FetchMissingPrivateMessages < FetchPrivateMessages
-    def fetch_messages(slack_channels)
+    def fetch_messages(slack_channels, oldest: nil)
       @logger.info "Checking for missing messages in #{slack_channels.count} private channels for #{@bot_user.display_name}"
 
       slack_channels.each do |slack_channel|
@@ -27,15 +27,17 @@ module Slack
           end
         end
 
-        archive_messages(private_channel)
+        archive_messages(private_channel, oldest: oldest)
       end
     end
 
     private
 
-    def archive_messages(private_channel)
+    def archive_messages(private_channel, oldest: nil)
       @user_client.conversations_history(
         channel: private_channel.slack_channel,
+        oldest: (format("%.6f", oldest) if oldest),
+        inclusive: false,
         request: { timeout: 60 * 60 }
       ) do |response|
         ::PrivateMessage.transaction do

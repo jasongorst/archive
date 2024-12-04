@@ -29,17 +29,17 @@ module Slack
     def initialize(message)
       @message = message
 
-      if @message.subtype == "bot_message" && @message.bot_id.blank? && @message&.user != "USLACKBOT"
-        Rails.logger.warn "Bot message without bot_id: #{message}"
+      if @message.subtype == "bot_message"
+        if @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
+          parse_roller_v2_message!
+        elsif @message.bot_id == ::User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user &&
+          @message.ts.to_d > EARLIEST_ROLLER_MESSAGE_TS
+          parse_roller_message!
+        elsif @message.bot_id.blank? && @message&.user != "USLACKBOT"
+          Rails.logger.warn "Bot message without bot_id: #{message}"
+        end
       elsif @message.user.blank?
         Rails.logger.warn "Message without user: #{message}"
-      elsif @message.subtype == "bot_message" &&
-            @message.bot_id == ::User.find_by_display_name(ROLLER_V2_DISPLAY_NAME).slack_user
-        parse_roller_v2_message!
-      elsif @message.subtype == "bot_message" &&
-            @message.bot_id == ::User.find_by_display_name(ROLLER_DISPLAY_NAME).slack_user &&
-            @message.ts.to_d > EARLIEST_ROLLER_MESSAGE_TS
-        parse_roller_message!
       else
         parse_message!
       end
@@ -51,18 +51,20 @@ module Slack
     private
 
     def parse_message!
-      @user = if @message.subtype == "bot_message" && @message&.user == "USLACKBOT"
-                ::User.find_or_create_by!(slack_user: "USLACKBOT") do |u|
-                  u.display_name = "Slackbot"
-                  u.is_bot = true
-                  u.deleted = false
-                end
-              elsif @message.subtype == "bot_message"
-                ::User.find_or_create_by!(slack_user: @message.bot_id) do |u|
-                  bot = Slack::Bot.new(@message.bot_id)
-                  u.display_name = bot.display_name
-                  u.is_bot = bot.is_bot
-                  u.deleted = bot.deleted
+      @user = if @message.subtype == "bot_message"
+                if @message&.user == "USLACKBOT"
+                  ::User.find_or_create_by!(slack_user: "USLACKBOT") do |u|
+                    u.display_name = "Slackbot"
+                    u.is_bot = true
+                    u.deleted = false
+                  end
+                else @message.subtype == "bot_message"
+                  ::User.find_or_create_by!(slack_user: @message.bot_id) do |u|
+                    bot = Slack::Bot.new(@message.bot_id)
+                    u.display_name = bot.display_name
+                    u.is_bot = bot.is_bot
+                    u.deleted = bot.deleted
+                  end
                 end
               else
                 ::User.find_or_create_by!(slack_user: @message.user) do |u|
@@ -93,30 +95,22 @@ module Slack
       text = Slack::Mrkdwn.to_html(block.text.text)
 
       fields = case block.fields.count
-      when 1
+               when 1
                  # /coin
                  block.fields[0].text.split("\n")
-      when 4
+               when 2, 3
+                 # /roll (with or without extra rolls) from 2024-11-23 forward
+                 block.fields.map { |field| field.text.split("\n") }.flatten
+               when 4
                  # /dice or /roll (no extra rolls)
-                 [
-                   block.fields[0].text,
-                   block.fields[2].text,
-                   block.fields[1].text,
-                   block.fields[3].text
-                 ]
-      when 7
+                 [0, 2, 1, 3].map { |index| block.fields[index].text }
+               when 7
                  # /roll (with extra rolls)
-                 [
-                   block.fields[0].text,
-                   block.fields[2].text,
-                   block.fields[1].text,
-                   block.fields[3].text,
-                   block.fields[4].text,
-                   block.fields[6].text
-                 ]
-      else
-        # ?
-      end
+                 [ 0, 2, 1, 3, 4, 6 ].map { |index| block.fields[index].text }
+               else
+                 # no idea, just grab all of the field text
+                 block.fields.map { |field| field.text}
+               end
 
       fields = fields.map do |field|
         Slack::Mrkdwn.to_html(field)

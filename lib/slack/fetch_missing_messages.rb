@@ -1,6 +1,6 @@
 module Slack
   class FetchMissingMessages < FetchMessages
-    def fetch_messages(slack_channels)
+    def fetch_messages(slack_channels, oldest: nil)
       slack_channels.each do |slack_channel|
         @logger.info "Checking for missing messages in channel \##{slack_channel.name}"
 
@@ -11,17 +11,19 @@ module Slack
         channel.archived = slack_channel.is_archived
         channel.save!
 
-        archive_messages(channel)
+        archive_messages(channel, oldest: oldest)
       end
     end
 
     private
 
-    def archive_messages(channel)
+    def archive_messages(channel, oldest: nil)
       @client.conversations_join(channel: channel.slack_channel) unless channel.archived?
 
       @client.conversations_history(
         channel: channel.slack_channel,
+        oldest: (format("%.6f", oldest) if oldest),
+        inclusive: false,
         request: { timeout: 60 * 60 }
       ) do |response|
         ::Message.transaction do

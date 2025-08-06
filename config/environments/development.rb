@@ -1,5 +1,6 @@
 require "active_support/core_ext/integer/time"
 
+# noinspection RubyResolve
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -71,15 +72,25 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
+  # Speed up propshaft checking for asset updates
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
   # Use a real queuing backend for Active Job (and separate queues per environment).
   config.active_job.queue_adapter = :solid_queue
-  config.solid_queue.connects_to = { database: { writing: :queue } }
-
   config.active_job.queue_name_prefix = "archive_development"
+  config.solid_queue.connects_to = { database: { writing: :queue } }
 
   config.hosts << "exactly-mint-chamois.ngrok-free.app"
 
   config.generators.apply_rubocop_autocorrect_after_generate!
+
+  # bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.add_footer = true
+    Bullet.skip_html_injection = false
+  end
 
   # prosopite
   config.after_initialize do
@@ -88,4 +99,5 @@ Rails.application.configure do
   end
 end
 
+# noinspection RubyResolve
 Archive::Application.default_url_options = Rails.application.config.action_mailer.default_url_options

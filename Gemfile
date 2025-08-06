@@ -31,7 +31,7 @@ gem "cssbundling-rails", "~> 1.4"
 gem "jbuilder", "~> 2.13"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", "~> 1.18", require: false
@@ -42,7 +42,7 @@ gem "ruby-vips", "~> 2.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", "~> 1.11", platforms: %i[ mri mingw x64_mingw ], require: "debug/prelude"
+  gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", "~> 1.1", require: false

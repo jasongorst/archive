@@ -1,4 +1,4 @@
 web: bin/rails server -p $PORT
-js: yarn build --watch
-css: yarn build:css --watch
+js: pnpm build --watch
+css: pnpm build:css --watch
 searchd: bundle exec rake ts:restart NODETACH=true

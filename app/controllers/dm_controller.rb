@@ -1,6 +1,6 @@
 # noinspection RubyNilAnalysis
 class DmController < ApplicationController
-  layout "main"
+  layout :main_layout
   before_action :require_login
   before_action :require_user
 

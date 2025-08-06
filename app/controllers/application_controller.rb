@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def main_layout
+    return "turbo_rails/frame" if turbo_frame_request?
+
+    "main"
+  end
+
   def current_account
     current_user
   end

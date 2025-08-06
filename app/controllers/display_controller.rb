@@ -1,5 +1,5 @@
 class DisplayController < ApplicationController
-  layout "main"
+  layout :main_layout
 
   def index
     @channels = Channel.unarchived.with_messages

@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  layout "main"
+  layout :main_layout
 
   RESULTS_PER_PAGE = 20
   MAX_RESULTS = 10_000

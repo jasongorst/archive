@@ -1,6 +1,6 @@
 # noinspection RubyResolve,RubyNilAnalysis
 class OauthController < ApplicationController
-  layout "main"
+  layout :main_layout
   before_action :require_login
 
   def self.oauth_config

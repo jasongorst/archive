@@ -66,10 +66,10 @@ class Message < ApplicationRecord
   def delete_caches_for_new_message
     delete_caches_for_posted_on
 
-    # delete message_dates cache if it doesn't contain posted_on
+    # delete message_dates cache unless it contains posted_on
     Rails.cache.delete("#{channel.cache_key_with_version}/message_dates") unless posted_on.in?(channel.message_dates)
 
-    # delete date_of_oldest_message cache if posted_on is before then
+    # delete date_of_oldest_message cache if posted_on is older
     Rails.cache.delete("#{channel.cache_key_with_version}/date_of_oldest_message") if posted_on < channel.date_of_oldest_message
   end
 
@@ -80,7 +80,7 @@ class Message < ApplicationRecord
     if channel.messages_posted_on(posted_on).size == 1
       Rails.cache.delete("#{channel.cache_key_with_version}/message_dates")
 
-      # also delete date_of_oldest_message cache if this message is the oldest
+      # also delete date_of_oldest_message cache if this message has the same date
       if posted_on == channel.date_of_oldest_message
         Rails.cache.delete("#{channel.cache_key_with_version}/date_of_oldest_message")
       end

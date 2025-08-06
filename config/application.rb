@@ -36,6 +36,9 @@ module Archive
     config.time_zone = "Eastern Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Disable HTTP Basic Auth in Mission Control - Jobs
+    config.mission_control.jobs.http_basic_auth_enabled = false
+
     # Set layouts for Clearance views
     config.to_prepare do
       Clearance::PasswordsController.layout "main"

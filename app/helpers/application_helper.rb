@@ -12,15 +12,11 @@ module ApplicationHelper
   end
 
   def current_channel
-    params[:channel_id]
+    Channel.friendly.find params[:channel_id] if channel_page?
   end
 
   def private_channel_page?
     params[:private_channel_id].present?
-  end
-
-  def current_private_channel
-    params[:private_channel_id]
   end
 
   def long_date(date)

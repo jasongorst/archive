@@ -1,4 +1,14 @@
-- if @private_channels.present?
+- if @private_channels.blank? && @archived_private_channels.blank?
+  .card.bg-base-200.shadow-2xl.prose.mx-auto
+    .card-title.px-8.pt-12
+      %h1.m-0.text-2xl.lg:text-3xl.font-semibold.m-0.text-accent
+        Nothing to see here.
+
+    .card-body.pt-3.lg:pt-4
+      %p.mt-0.mb-1.lg:mb-2mb-2.text-md.lg:text-lg.font-normal
+        You don&rsquo;t have any DMs archived yet.
+
+- else
   %ul.menu.lg:menu-lg.pl-0.pt-0
     - @private_channels.each do |private_channel|
       %li
@@ -7,24 +17,16 @@
           %span.text-xs.lg:text-sm
             = time_ago(private_channel.last_message_at)
 
-    %li
-      %details.dropdown
-        %summary
+    - if @archived_private_channels.present?
+      %li
+        .menu-title
           Archived
-        %ul.dropdown-content
+
+      %li
+        %ul
           %li
             - @archived_private_channels.each do |archived|
               %a.px-4{href: url_for(archived)}
                 = archived.display_name(current_account.user)
                 %span.text-xs.lg:text-sm
                   = time_ago(archived.last_message_at)
-
-- else
-  .card.bg-base-200.shadow-2xl.prose.mx-auto
-    .card-title.px-8.pt-12
-      %h1.m-0.text-2xl.lg:text-3xl.font-semibold.m-0.text-accent
-        Check back later.
-
-    .card-body.pt-3.lg:pt-4
-      %p.mt-0.mb-1.lg:mb-2mb-2.text-md.lg:text-lg.font-normal
-        You don&rsquo;t have any DMs archived yet.

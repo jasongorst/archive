@@ -30,6 +30,15 @@ gem "cssbundling-rails", "~> 1.4"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.13"
 
+# Use Redis adapter to run Action Cable in production
+# gem "redis", "~> 4.0"
+
+# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
+# gem "kredis"
+
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# gem "bcrypt", "~> 3.1.7"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -57,28 +66,21 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring", "~> 4.3"
+end
 
-  # Speed up propshaft checking for asset updates
-  gem "listen", "~> 3.9"
+group :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara", "~> 3.40"
+end
 
-  # bullet for n+1 checks
-  gem "bullet", "~> 8.0"
-
-  # also prospite for n+1 checks
-  gem "prosopite", "~> 2.1"
-
-  # Use capistrano for deployment
+# Use capistrano for deployment
+group :development do
   gem "bcrypt_pbkdf", "~> 1.1", require: false
   gem "ed25519", "~> 1.4", require: false
   gem "capistrano", "~> 3.19", require: false
   gem "capistrano-rails", "~> 1.7", require: false
   gem "capistrano-rbenv", "~> 2.2", require: false
   gem "capistrano-passenger", "~> 0.2", require: false
-end
-
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara", "~> 3.40"
 end
 
 # Use haml for templates
@@ -102,6 +104,9 @@ gem "mysql2", "~> 0.5"
 # Pretty URLs
 gem "friendly_id", "~> 5.5"
 
+# trestle admin framework
+gem "trestle", "~> 0.10"
+
 # use clearance for authentication
 gem "clearance", "~> 2.10"
 
@@ -120,11 +125,14 @@ gem "solid_queue", "~> 1.2"
 # mission_control-jobs to manage solid_queue job runs
 gem "mission_control-jobs", "~> 1.1"
 
+# bullet for n+1 checks
+gem "bullet", "~> 8.0", group: "development"
+
+# also prospite for n+1 checks
+gem "prosopite", "~> 2.1"
+
 # solid_cache
 gem "solid_cache", "~> 1.0"
 
 # sqlite3 for solid_cache
 gem "sqlite3", "~> 2.7"
-
-# trestle admin framework
-gem "trestle", "~> 0.10"

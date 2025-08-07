@@ -5,9 +5,13 @@
 # Puma starts a configurable number of processes (workers) and each process
 # serves each request in a thread from an internal thread pool.
 #
+# You can control the number of workers using ENV["WEB_CONCURRENCY"]. You
+# should only set this value when you want to run 2 or more workers. The
+# default is already 1.
+#
 # The ideal number of threads per worker depends both on how much time the
 # application spends waiting for IO operations and on how much you wish to
-# to prioritize throughput over latency.
+# prioritize throughput over latency.
 #
 # As a rule of thumb, increasing the number of threads will increase how much
 # traffic a given process can handle (throughput), but due to CRuby's
@@ -29,7 +33,8 @@ port ENV.fetch("PORT", 3000)
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
-# solid_queue plugin
+# Run the Solid Queue supervisor inside of Puma for single-server deployments
+# plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 plugin :solid_queue
 
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.

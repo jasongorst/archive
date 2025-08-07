@@ -1,14 +1,14 @@
 %ul.p-2.z-10.text-primary-content{class: "!bg-primary"}
   - Channel.unarchived.with_messages.each do |channel|
     %li
-      %a{href: url_for(channel), class: ("bg-primary-focus" if current_channel == channel.name)}
+      %a{href: url_for(channel), class: ("bg-primary-focus" if current_channel == channel)}
         \##{channel.name}
   %li
-    %details{open: current_channel.in?(Channel.archived.with_messages.pluck(:name))}
-      %summary{class: ("bg-primary-focus" if current_channel.in?(Channel.archived.with_messages.pluck(:name)))}
+    %details{open: current_channel&.archived?}
+      %summary{class: ("bg-primary-focus" if current_channel&.archived?)}
         Archived
       %ul
         - Channel.archived.with_messages.each do |channel|
           %li
-            %a{href: url_for(channel), class: ("bg-primary-focus" if current_channel == channel.name)}
+            %a{href: url_for(channel), class: ("bg-primary-focus" if current_channel == channel)}
               \##{channel.name}

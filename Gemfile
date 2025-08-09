@@ -28,7 +28,7 @@ gem "stimulus-rails", "~> 1.3"
 gem "cssbundling-rails", "~> 1.4"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder", "~> 2.13"
+gem "jbuilder", "~> 2.14"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -65,7 +65,7 @@ group :development do
   # gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  gem "spring", "~> 4.3"
+  gem "spring", "~> 4.4"
 end
 
 group :test do

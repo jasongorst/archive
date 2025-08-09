@@ -14,15 +14,13 @@ class FetchNewPrivateMessagesJob < ApplicationJob
     FetchEmojiJob.perform_now
 
     bot_users = if only_accounts
-                  only_accounts.map(&:bot_user).compact
-                else
-                  Team.find_by_name("Firnost & Friends").bot_users.all
-                end
+      only_accounts.map(&:bot_user).compact
+    else
+      Team.find_by_name("Firnost & Friends").bot_users.all
+    end
 
     bot_users.each do |bot_user|
-      connection = Slack::FetchPrivateMessages.new(bot_user)
-      channels = connection.fetch_channels
-      connection.fetch_messages(channels, oldest: oldest)
+      FetchPrivateMessagesJob.perform_later(bot_user, oldest)
     end
   end
 end

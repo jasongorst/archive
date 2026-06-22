@@ -4,7 +4,7 @@
   -# query
   .form-control.w-full
     = f.label :query, "Keywords", class: "label label-text"
-    = f.search_field :query, value: params[:search][:query], placeholder: "",
+    = f.search_field :query, value: params[:search][:query], placeholder: "", autofocus: params[:search][:query].blank?,
       class: "input input-bordered input-sm lg:input-md w-full"
     %small.text-xs.lg:text-sm
       %em Search for an exact phrase by putting it in quotes, "like this".

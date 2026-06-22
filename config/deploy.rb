@@ -39,18 +39,18 @@ set :default_env, { ci: "true" }
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-# # rbenv options
-# set :rbenv_type, :system
-#
-# # in case you want to set ruby version from the file:
-# set :rbenv_ruby, File.read(".ruby-version").strip
-#
-# # in case you use fullstaq-ruby or have a different path for your ruby versions
-# set :rbenv_ruby_dir, "/usr/local/rbenv/versions"
-#
-# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-# set :rbenv_map_bins, %w[rake gem bundle ruby rails]
-# set :rbenv_roles, :all # default value
+# rbenv options
+set :rbenv_type, :system
+
+# in case you want to set ruby version from the file:
+set :rbenv_ruby, File.read(".ruby-version").strip
+
+# in case you use fullstaq-ruby or have a different path for your ruby versions
+set :rbenv_ruby_dir, "/usr/local/rbenv/versions"
+
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w[rake gem bundle ruby rails]
+set :rbenv_roles, :all # default value
 
 # passenger options
 set :passenger_restart_with_touch, false

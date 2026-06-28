@@ -1,8 +1,8 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.20.0"
+lock "~> 3.20.1"
 
 set :application, "archive"
-set :repo_url, "git@github.com:jasongorst/archive.git"
+set :repo_url, "ssh://gogs@gogs.evilpaws.org:7822/jason/archive.git"
 
 # Default branch is :main
 set :branch, `git rev-parse --abbrev-ref HEAD`.chomp
